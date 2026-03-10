@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [email, setEmail] = useState('')
-  const [hoveredPath, setHoveredPath] = useState(null)
+  const [hoveredPath, setHoveredPath] = useState<number | null>(null)
 
   return (
     <div style={{ minHeight: '100vh', fontFamily: "'Segoe UI', Arial, sans-serif", overflowX: 'hidden' }}>
