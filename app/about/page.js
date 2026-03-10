@@ -14,12 +14,18 @@ export default function About() {
         zIndex: 100
       }}>
         <a href="/" style={{ 
-          fontSize: '1.5rem', 
-          fontWeight: 'bold', 
-          color: '#667eea',
+          display: 'flex',
+          alignItems: 'center',
           textDecoration: 'none'
         }}>
-          GAI Academy
+          <img 
+            src="/goodlet-ai-logo.png" 
+            alt="Goodlet AI Academy"
+            style={{
+              height: '50px',
+              width: 'auto'
+            }}
+          />
         </a>
         <div style={{ display: 'flex', gap: '30px' }}>
           <a href="/" style={{ color: '#333', textDecoration: 'none' }}>Home</a>
@@ -29,47 +35,37 @@ export default function About() {
         </div>
       </nav>
 
-      {/* Hero Section with Photo */}
+      {/* Hero Section */}
       <header style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         color: 'white',
         padding: '80px 20px',
+        textAlign: 'center'
       }}>
-        <div style={{ 
-          maxWidth: '1000px',
-          margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '40px'
+        <h1 style={{ 
+          fontSize: 'clamp(2rem, 5vw, 3.5rem)', 
+          marginBottom: '20px',
+          fontWeight: 'bold',
+          lineHeight: '1.2'
         }}>
-                    {/* Text Content */}
-          <div style={{ textAlign: 'center' }}>
-            <h1 style={{ 
-              fontSize: 'clamp(2rem, 5vw, 3.5rem)', 
-              marginBottom: '20px',
-              fontWeight: 'bold',
-              lineHeight: '1.2'
-            }}>
-              About Goodlet AI Academy
-            </h1>
-            <p style={{ 
-              fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
-              maxWidth: '800px',
-              margin: '0 auto',
-              opacity: 0.95,
-              lineHeight: '1.6'
-            }}>
-              Clarity over confusion. Skills over hype. Access over gatekeeping.
-            </p>
-          </div>
-        </div>
+          About Goodlet AI Academy
+        </h1>
+        <p style={{ 
+          fontSize: 'clamp(1.1rem, 3vw, 1.4rem)', 
+          maxWidth: '800px',
+          margin: '0 auto',
+          opacity: 0.95,
+          lineHeight: '1.6'
+        }}>
+          Training the next generation of AI-powered professionals, automation enthusiasts, 
+          and those ready to thrive in the AI era.
+        </p>
       </header>
 
       {/* Main Content */}
       <main style={{ maxWidth: '900px', margin: '0 auto', padding: '60px 20px' }}>
         
-        {/* Opening Paragraph */}
+        {/* Opening */}
         <div style={{ 
           fontSize: '1.2rem', 
           lineHeight: '1.8', 
@@ -77,13 +73,13 @@ export default function About() {
           marginBottom: '50px'
         }}>
           <p style={{ marginBottom: '25px' }}>
-            Goodlet Owusu Ansah's journey into Generative AI did not begin with a computer science degree 
-            or a traditional engineering background. It began with research—academic rigor, business analysis, 
-            and a deep curiosity about how information shapes decision-making.
+            Goodlet Owusu Ansah's journey into AI did not begin with a computer science degree 
+            or traditional engineering background. It began with research—academic rigor, business 
+            analysis, and a deep curiosity about how information shapes decision-making.
           </p>
         </div>
 
-        {/* Section: The Foundation */}
+        {/* The Foundation */}
         <section style={{ marginBottom: '60px' }}>
           <h2 style={{ 
             fontSize: '2rem', 
@@ -106,7 +102,7 @@ export default function About() {
           </p>
         </section>
 
-        {/* Quote Callout Box */}
+        {/* Quote Callout */}
         <div style={{
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
@@ -147,7 +143,7 @@ export default function About() {
           </p>
         </div>
 
-        {/* Section: The Disruption */}
+        {/* The Disruption */}
         <section style={{ marginBottom: '60px' }}>
           <h2 style={{ 
             fontSize: '2rem', 
@@ -166,19 +162,18 @@ export default function About() {
           </p>
           <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568', marginBottom: '20px' }}>
             Rather than resist the shift, he leaned into it, becoming one of the earliest adopters and 
-            internal champions of ChatGPT at AskWonder.
+            internal champions of AI automation at AskWonder.
           </p>
           <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568' }}>
             This curiosity earned him a place on <strong>AskWonder's Product and Innovation Team</strong>, 
-            where he helped reimagine how research could be done with Generative AI. Through internal 
+            where he helped reimagine how research could be done with AI. Through internal 
             competitions, experimentation, and real-world deployments, Goodlet emerged as the{' '}
             <strong style={{ color: '#667eea' }}>Best AI Prompt Engineer</strong>, recognized for his 
-            ability to design reliable prompt systems that transformed AI from a novelty into a 
-            production-ready research tool.
+            ability to design reliable AI systems that transformed research from manual to automated.
           </p>
         </section>
 
-        {/* Stats/Achievement Box - UPDATED WITH AI MODELS */}
+        {/* Achievement Stats */}
         <div style={{
           background: '#f7fafc',
           padding: '40px',
@@ -226,7 +221,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* AI Models Used Section */}
+          {/* AI Models Mastered */}
           <div style={{ 
             marginTop: '50px',
             paddingTop: '40px',
@@ -272,7 +267,7 @@ export default function About() {
                   Anthropic Claude
                 </div>
                 <div style={{ color: '#718096', fontSize: '0.9rem' }}>
-                  Claude 2, Claude 3 (Opus, Sonnet, Haiku)
+                  Claude 2, Claude 3 (Opus, Sonnet)
                 </div>
               </div>
               <div style={{
@@ -293,7 +288,7 @@ export default function About() {
           </div>
         </div>
 
-        {/* Section: Today */}
+        {/* Today - UPDATED */}
         <section style={{ marginBottom: '60px' }}>
           <h2 style={{ 
             fontSize: '2rem', 
@@ -302,22 +297,26 @@ export default function About() {
             paddingBottom: '15px',
             borderBottom: '3px solid #667eea'
           }}>
-            Today: AI Prompt Engineer & Orchestrator
+            Today: AI Professional & Educator
           </h2>
           <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568', marginBottom: '20px' }}>
             Today, Goodlet works as an <strong>AI Prompt Engineer and Orchestrator at Waldo Fyi</strong>, 
-            a Dallas, Texas–based AI-powered strategy engine built for marketers, brand strategists, and 
-            agencies. His work focuses on orchestrating LLMs to automate deep research, competitive 
-            intelligence, and trend discovery, giving professionals faster and sharper strategic insights.
+            a Dallas, Texas–based AI-powered strategy engine. His work focuses on orchestrating LLMs to automate 
+            deep research, competitive intelligence, and trend discovery.
           </p>
-          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568' }}>
+          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568', marginBottom: '20px' }}>
             What makes Goodlet's journey unique is this: he is <strong>non-technical by background</strong>. 
             His transition into AI was driven not by code-first thinking, but by problem-solving, 
             structured reasoning, and practical experimentation.
           </p>
+          <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568' }}>
+            What started as learning prompt engineering evolved into mastering AI automation, workflow orchestration, 
+            and building production AI systems. Today, he teaches not just prompting, but the full spectrum of 
+            AI skills that professionals need to thrive.
+          </p>
         </section>
 
-        {/* Section: The Mission */}
+        {/* The Mission - UPDATED */}
         <section style={{ marginBottom: '60px' }}>
           <h2 style={{ 
             fontSize: '2rem', 
@@ -326,27 +325,27 @@ export default function About() {
             paddingBottom: '15px',
             borderBottom: '3px solid #667eea'
           }}>
-            The Mission: Democratizing AI Education
+            The Mission: Empowering the AI Generation
           </h2>
           <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568', marginBottom: '20px' }}>
             That belief led to the creation of <strong>Goodlet AI Academy</strong>.
           </p>
           <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568', marginBottom: '20px' }}>
-            Goodlet AI Academy exists to help beginners, non-technical professionals, and career switchers 
-            who feel stuck asking, <em>"How do I level up with Generative AI without getting left behind?"</em>
+            Goodlet AI Academy exists to help beginners, non-technical professionals, automation enthusiasts, 
+            and career switchers who feel stuck asking, <em>"How do I level up with AI without getting left behind?"</em>
           </p>
           <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568', marginBottom: '20px' }}>
-            The platform cuts through noise and jargon, offering clear, practical learning paths, explained 
-            in simple language, designed to transition learners into confident AI practitioners.
+            The platform cuts through noise and jargon, offering clear, practical learning paths—from prompt 
+            engineering fundamentals to AI automation, workflow design, and career transformation.
           </p>
           <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#4a5568' }}>
             Beyond education, the Academy provides first-hand exposure to in-demand AI roles, the skills 
             required to land them, and direct pipelines to opportunities through hiring partners and 
-            recruitment agencies. It is not about chasing trends. It is about preparing for the jobs that matter.
+            recruitment agencies. It's not about chasing trends. It's about preparing for the future that matters.
           </p>
         </section>
 
-        {/* Core Values Box */}
+        {/* Core Values */}
         <div style={{
           background: 'linear-gradient(135deg, #1a202c 0%, #2d3748 100%)',
           color: 'white',
@@ -399,12 +398,11 @@ export default function About() {
             fontWeight: '500',
             marginBottom: '30px'
           }}>
-            If you are ready to learn, adapt, and grow alongside the rapid evolution of Generative AI, 
-            you are in the right place.
+            If you're ready to learn, adapt, and thrive in the age of AI, you're in the right place.
           </p>
         </section>
 
-        {/* CTA Section */}
+        {/* CTA */}
         <div style={{
           background: '#f7fafc',
           padding: '50px 40px',
@@ -425,7 +423,7 @@ export default function About() {
             marginBottom: '35px',
             lineHeight: '1.6'
           }}>
-            Join hundreds of non-technical professionals who are building careers in AI.
+            Join the next generation of AI-powered professionals.
             <br />
             Learn from someone who's walked the path and emerged successful.
           </p>
@@ -446,11 +444,10 @@ export default function About() {
                 textDecoration: 'none',
                 fontWeight: 'bold',
                 fontSize: '1.1rem',
-                boxShadow: '0 4px 6px rgba(102, 126, 234, 0.4)',
-                transition: 'transform 0.2s'
+                boxShadow: '0 4px 6px rgba(102, 126, 234, 0.4)'
               }}
             >
-              Browse Courses →
+              Explore Learning Paths →
             </a>
             <a 
               href="/jobs"
@@ -466,7 +463,7 @@ export default function About() {
                 border: '2px solid #667eea'
               }}
             >
-              Explore AI Jobs
+              View AI Careers
             </a>
           </div>
         </div>
@@ -488,7 +485,7 @@ export default function About() {
           Clarity over confusion. Skills over hype. Access over gatekeeping.
         </p>
         <p style={{ color: '#718096', marginTop: '30px' }}>
-          © 2024 Goodlet AI Academy. All rights reserved.
+          © 2025 Goodlet AI Academy. All rights reserved.
         </p>
       </footer>
     </div>
