@@ -63,7 +63,6 @@ export default function Home() {
         position: 'relative',
         overflow: 'hidden'
       }}>
-        {/* Animated Background Elements */}
         <div style={{
           position: 'absolute',
           top: '10%',
@@ -86,7 +85,6 @@ export default function Home() {
         }}/>
 
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '900px', margin: '0 auto' }}>
-          {/* Badge */}
           <div style={{
             display: 'inline-block',
             background: 'rgba(102, 126, 234, 0.2)',
@@ -100,7 +98,6 @@ export default function Home() {
             🚀 Trusted by professionals transitioning into AI careers
           </div>
 
-          {/* Main Headline */}
           <h1 style={{ 
             fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
             marginBottom: '25px', 
@@ -119,7 +116,6 @@ export default function Home() {
             </span>
           </h1>
 
-          {/* Subheadline */}
           <p style={{ 
             fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', 
             marginBottom: '40px', 
@@ -132,7 +128,6 @@ export default function Home() {
             and AI tools from a working professional who made the transition himself.
           </p>
 
-          {/* CTA Buttons */}
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '50px' }}>
             <a href="/courses" style={{
               display: 'inline-block',
@@ -183,7 +178,6 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Hero Stats Bar */}
           <div style={{
             display: 'flex',
             justifyContent: 'center',
@@ -253,7 +247,6 @@ export default function Home() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
             gap: '30px'
           }}>
-            {/* Without AI Skills */}
             <div style={{
               background: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)',
               borderRadius: '16px',
@@ -300,7 +293,6 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* With AI Skills */}
             <div style={{
               background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
               borderRadius: '16px',
@@ -371,7 +363,6 @@ export default function Home() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '30px'
           }}>
-            {/* Stat 1 */}
             <div 
               style={{
                 background: 'rgba(255,255,255,0.05)',
@@ -394,37 +385,17 @@ export default function Home() {
               }}
             >
               <div style={{ fontSize: '3rem', marginBottom: '15px' }}>🌍</div>
-              <div style={{ fontSize: '3.5rem', fontWeight: '800', marginBottom: '5px', color: '#a78bfa' }}>
-                170M
-              </div>
+              <div style={{ fontSize: '3.5rem', fontWeight: '800', marginBottom: '5px', color: '#a78bfa' }}>170M</div>
               <h3 style={{ fontSize: '1.3rem', marginBottom: '15px', fontWeight: '600' }}>New AI Jobs by 2030</h3>
-              
-              {/* Progress Bar */}
-              <div style={{ 
-                background: 'rgba(255,255,255,0.1)', 
-                borderRadius: '10px', 
-                height: '8px', 
-                marginBottom: '15px',
-                overflow: 'hidden'
-              }}>
-                <div style={{ 
-                  background: 'linear-gradient(90deg, #667eea, #a78bfa)', 
-                  height: '100%', 
-                  width: '85%',
-                  borderRadius: '10px',
-                  transition: 'width 1s ease'
-                }}/>
+              <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '10px', height: '8px', marginBottom: '15px', overflow: 'hidden' }}>
+                <div style={{ background: 'linear-gradient(90deg, #667eea, #a78bfa)', height: '100%', width: '85%', borderRadius: '10px' }}/>
               </div>
-
               <p style={{ fontSize: '0.95rem', opacity: 0.8, lineHeight: '1.6' }}>
                 "New technologies will create 170 million new jobs, equivalent to 14% of today's total employment."
               </p>
-              <p style={{ fontSize: '0.85rem', marginTop: '15px', opacity: 0.6, fontStyle: 'italic' }}>
-                — World Economic Forum
-              </p>
+              <p style={{ fontSize: '0.85rem', marginTop: '15px', opacity: 0.6, fontStyle: 'italic' }}>— World Economic Forum</p>
             </div>
 
-            {/* Stat 2 */}
             <div 
               style={{
                 background: 'rgba(255,255,255,0.05)',
@@ -447,37 +418,17 @@ export default function Home() {
               }}
             >
               <div style={{ fontSize: '3rem', marginBottom: '15px' }}>💰</div>
-              <div style={{ fontSize: '3.5rem', fontWeight: '800', marginBottom: '5px', color: '#34d399' }}>
-                +56%
-              </div>
+              <div style={{ fontSize: '3.5rem', fontWeight: '800', marginBottom: '5px', color: '#34d399' }}>+56%</div>
               <h3 style={{ fontSize: '1.3rem', marginBottom: '15px', fontWeight: '600' }}>Salary Premium</h3>
-              
-              {/* Progress Bar */}
-              <div style={{ 
-                background: 'rgba(255,255,255,0.1)', 
-                borderRadius: '10px', 
-                height: '8px', 
-                marginBottom: '15px',
-                overflow: 'hidden'
-              }}>
-                <div style={{ 
-                  background: 'linear-gradient(90deg, #10a37f, #34d399)', 
-                  height: '100%', 
-                  width: '56%',
-                  borderRadius: '10px',
-                  transition: 'width 1s ease'
-                }}/>
+              <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '10px', height: '8px', marginBottom: '15px', overflow: 'hidden' }}>
+                <div style={{ background: 'linear-gradient(90deg, #10a37f, #34d399)', height: '100%', width: '56%', borderRadius: '10px' }}/>
               </div>
-
               <p style={{ fontSize: '0.95rem', opacity: 0.8, lineHeight: '1.6' }}>
                 "Workers with AI skills command a 56% wage premium, up from 25% last year."
               </p>
-              <p style={{ fontSize: '0.85rem', marginTop: '15px', opacity: 0.6, fontStyle: 'italic' }}>
-                — PWC 2025 Global AI Jobs Barometer
-              </p>
+              <p style={{ fontSize: '0.85rem', marginTop: '15px', opacity: 0.6, fontStyle: 'italic' }}>— PWC 2025 Global AI Jobs Barometer</p>
             </div>
 
-            {/* Stat 3 */}
             <div 
               style={{
                 background: 'rgba(255,255,255,0.05)',
@@ -504,30 +455,13 @@ export default function Home() {
                 Skills Beat<br/>Degrees
               </div>
               <h3 style={{ fontSize: '1.3rem', marginBottom: '15px', fontWeight: '600' }}>The New Path Forward</h3>
-              
-              {/* Progress Bar */}
-              <div style={{ 
-                background: 'rgba(255,255,255,0.1)', 
-                borderRadius: '10px', 
-                height: '8px', 
-                marginBottom: '15px',
-                overflow: 'hidden'
-              }}>
-                <div style={{ 
-                  background: 'linear-gradient(90deg, #f093fb, #f5576c)', 
-                  height: '100%', 
-                  width: '92%',
-                  borderRadius: '10px',
-                  transition: 'width 1s ease'
-                }}/>
+              <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '10px', height: '8px', marginBottom: '15px', overflow: 'hidden' }}>
+                <div style={{ background: 'linear-gradient(90deg, #f093fb, #f5576c)', height: '100%', width: '92%', borderRadius: '10px' }}/>
               </div>
-
               <p style={{ fontSize: '0.95rem', opacity: 0.8, lineHeight: '1.6' }}>
                 "AI proficiency is now more valuable than traditional internships for leapfrogging into a profession."
               </p>
-              <p style={{ fontSize: '0.85rem', marginTop: '15px', opacity: 0.6, fontStyle: 'italic' }}>
-                — Demis Hassabis, CEO of Google DeepMind
-              </p>
+              <p style={{ fontSize: '0.85rem', marginTop: '15px', opacity: 0.6, fontStyle: 'italic' }}>— Demis Hassabis, CEO of Google DeepMind</p>
             </div>
           </div>
         </div>
@@ -620,7 +554,6 @@ export default function Home() {
                 onMouseEnter={() => setHoveredPath(index)}
                 onMouseLeave={() => setHoveredPath(null)}
               >
-                {/* Card Header */}
                 <div style={{
                   background: path.gradient,
                   padding: '30px',
@@ -645,7 +578,6 @@ export default function Home() {
                   <h3 style={{ fontSize: '1.8rem', fontWeight: '700' }}>{path.title}</h3>
                 </div>
 
-                {/* Card Body */}
                 <div style={{ padding: '30px' }}>
                   <p style={{ color: '#4a5568', lineHeight: '1.6', marginBottom: '20px' }}>
                     {path.description}
@@ -734,30 +666,10 @@ export default function Home() {
             gap: '25px'
           }}>
             {[
-              {
-                icon: '🔄',
-                title: 'Career Switchers',
-                description: 'Ready to transition into AI but not sure where to start. No technical background needed.',
-                color: '#667eea'
-              },
-              {
-                icon: '💼',
-                title: 'Working Professionals',
-                description: 'Want to add AI skills to your current role. Marketers, analysts, researchers, managers.',
-                color: '#10a37f'
-              },
-              {
-                icon: '⚡',
-                title: 'Automation Enthusiasts',
-                description: 'Love efficiency and want to automate everything. Build AI-powered workflows and systems.',
-                color: '#f5576c'
-              },
-              {
-                icon: '🌱',
-                title: 'AI-Curious Beginners',
-                description: 'Fascinated by AI but overwhelmed by the noise. Want clear, structured guidance.',
-                color: '#fbbf24'
-              }
+              { icon: '🔄', title: 'Career Switchers', description: 'Ready to transition into AI but not sure where to start. No technical background needed.', color: '#667eea' },
+              { icon: '💼', title: 'Working Professionals', description: 'Want to add AI skills to your current role. Marketers, analysts, researchers, managers.', color: '#10a37f' },
+              { icon: '⚡', title: 'Automation Enthusiasts', description: 'Love efficiency and want to automate everything. Build AI-powered workflows and systems.', color: '#f5576c' },
+              { icon: '🌱', title: 'AI-Curious Beginners', description: 'Fascinated by AI but overwhelmed by the noise. Want clear, structured guidance.', color: '#fbbf24' }
             ].map((persona, index) => (
               <div 
                 key={index}
@@ -823,15 +735,12 @@ export default function Home() {
             border: '1px solid #e2e8f0'
           }}>
             <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-              <h3 style={{ fontSize: '1.8rem', color: '#1a202c', marginBottom: '10px' }}>
-                Goodlet Owusu Ansah
-              </h3>
+              <h3 style={{ fontSize: '1.8rem', color: '#1a202c', marginBottom: '10px' }}>Goodlet Owusu Ansah</h3>
               <p style={{ color: '#667eea', fontWeight: 'bold', fontSize: '1.1rem' }}>
                 AI Prompt Engineer & Orchestrator at Waldo Fyi
               </p>
             </div>
 
-            {/* Credentials Grid */}
             <div style={{ 
               display: 'grid', 
               gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
@@ -845,15 +754,12 @@ export default function Home() {
                 { stat: 'Non-Tech', label: 'Background' }
               ].map((item, i) => (
                 <div key={i} style={{ textAlign: 'center', padding: '15px' }}>
-                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#667eea', marginBottom: '5px' }}>
-                    {item.stat}
-                  </div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#667eea', marginBottom: '5px' }}>{item.stat}</div>
                   <div style={{ fontSize: '0.85rem', color: '#718096' }}>{item.label}</div>
                 </div>
               ))}
             </div>
 
-            {/* Quote */}
             <div style={{
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               color: 'white',
@@ -896,12 +802,7 @@ export default function Home() {
             Hands-on training with the AI tools that power today's most innovative companies.
           </p>
 
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            gap: '30px', 
-            flexWrap: 'wrap' 
-          }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', flexWrap: 'wrap' }}>
             {[
               { name: 'OpenAI GPT', models: 'GPT-4, GPT-4o, o1', color: '#10a37f', icon: '🤖' },
               { name: 'Anthropic Claude', models: 'Claude 3.5 Sonnet, Opus, Haiku', color: '#d97757', icon: '🧠' },
@@ -932,9 +833,7 @@ export default function Home() {
                 }}
               >
                 <div style={{ fontSize: '2rem', marginBottom: '10px' }}>{tool.icon}</div>
-                <div style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '5px', fontSize: '1rem' }}>
-                  {tool.name}
-                </div>
+                <div style={{ fontWeight: 'bold', color: '#1a202c', marginBottom: '5px', fontSize: '1rem' }}>{tool.name}</div>
                 <div style={{ color: '#718096', fontSize: '0.8rem' }}>{tool.models}</div>
               </div>
             ))}
@@ -951,7 +850,6 @@ export default function Home() {
         position: 'relative',
         overflow: 'hidden'
       }}>
-        {/* Background glow */}
         <div style={{
           position: 'absolute',
           top: '50%',
@@ -973,7 +871,6 @@ export default function Home() {
             Get early access to courses, job alerts, and exclusive resources.
           </p>
 
-          {/* Email Form */}
           <div style={{
             background: 'rgba(255,255,255,0.08)',
             padding: '40px',
@@ -1027,17 +924,10 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Quick Links */}
           <div style={{ display: 'flex', gap: '30px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="/courses" style={{ color: '#a78bfa', textDecoration: 'none', fontSize: '0.95rem' }}>
-              📚 Browse Courses
-            </a>
-            <a href="/jobs" style={{ color: '#34d399', textDecoration: 'none', fontSize: '0.95rem' }}>
-              💼 View AI Jobs
-            </a>
-            <a href="/about" style={{ color: '#f9a8d4', textDecoration: 'none', fontSize: '0.95rem' }}>
-              📖 Our Story
-            </a>
+            <a href="/courses" style={{ color: '#a78bfa', textDecoration: 'none', fontSize: '0.95rem' }}>📚 Browse Courses</a>
+            <a href="/jobs" style={{ color: '#34d399', textDecoration: 'none', fontSize: '0.95rem' }}>💼 View AI Jobs</a>
+            <a href="/about" style={{ color: '#f9a8d4', textDecoration: 'none', fontSize: '0.95rem' }}>📖 Our Story</a>
           </div>
         </div>
       </section>
@@ -1055,7 +945,6 @@ export default function Home() {
             gap: '40px',
             marginBottom: '50px'
           }}>
-            {/* Brand */}
             <div>
               <img 
                 src="/goodlet-ai-logo.png" 
@@ -1069,11 +958,8 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Quick Links */}
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '20px', fontWeight: '600', color: '#e2e8f0' }}>
-                Quick Links
-              </h4>
+              <h4 style={{ fontSize: '1rem', marginBottom: '20px', fontWeight: '600', color: '#e2e8f0' }}>Quick Links</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {[
                   { name: 'Home', href: '/' },
@@ -1083,8 +969,8 @@ export default function Home() {
                 ].map((link, i) => (
                   <li key={i} style={{ marginBottom: '12px' }}>
                     <a href={link.href} style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s' }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = '#667eea'}
-                      onMouseLeave={(e) => e.currentTarget.style.color = '#a0aec0'}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = '#667eea' }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = '#a0aec0' }}
                     >
                       {link.name}
                     </a>
@@ -1093,11 +979,8 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* Learning */}
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '20px', fontWeight: '600', color: '#e2e8f0' }}>
-                Learning Paths
-              </h4>
+              <h4 style={{ fontSize: '1rem', marginBottom: '20px', fontWeight: '600', color: '#e2e8f0' }}>Learning Paths</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 {[
                   'AI Foundations',
@@ -1108,8 +991,8 @@ export default function Home() {
                 ].map((item, i) => (
                   <li key={i} style={{ marginBottom: '12px' }}>
                     <a href="/courses" style={{ color: '#a0aec0', textDecoration: 'none', fontSize: '0.95rem', transition: 'color 0.2s' }}
-                      onMouseEnter={(e) => e.currentTarget.style.color = '#667eea'}
-                      onMouseLeave={(e) => e.currentTarget.style.color = '#a0aec0'}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = '#667eea' }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = '#a0aec0' }}
                     >
                       {item}
                     </a>
@@ -1118,23 +1001,15 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* Contact */}
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '20px', fontWeight: '600', color: '#e2e8f0' }}>
-                Contact
-              </h4>
+              <h4 style={{ fontSize: '1rem', marginBottom: '20px', fontWeight: '600', color: '#e2e8f0' }}>Contact</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li style={{ marginBottom: '12px', color: '#a0aec0', fontSize: '0.95rem' }}>
-                  📧 info@goodletaiacademy.com
-                </li>
-                <li style={{ marginBottom: '12px', color: '#a0aec0', fontSize: '0.95rem' }}>
-                  🌐 www.goodletaiacademy.com
-                </li>
+                <li style={{ marginBottom: '12px', color: '#a0aec0', fontSize: '0.95rem' }}>📧 info@goodletaiacademy.com</li>
+                <li style={{ marginBottom: '12px', color: '#a0aec0', fontSize: '0.95rem' }}>🌐 www.goodletaiacademy.com</li>
               </ul>
             </div>
           </div>
 
-          {/* Bottom Bar */}
           <div style={{ 
             borderTop: '1px solid #1a1a2e',
             paddingTop: '25px',
@@ -1144,9 +1019,7 @@ export default function Home() {
             flexWrap: 'wrap',
             gap: '15px'
           }}>
-            <p style={{ color: '#4a5568', fontSize: '0.85rem' }}>
-              © 2025 Goodlet AI Academy. All rights reserved.
-            </p>
+            <p style={{ color: '#4a5568', fontSize: '0.85rem' }}>© 2024 Goodlet AI Academy. All rights reserved.</p>
             <div style={{ display: 'flex', gap: '20px' }}>
               <a href="#" style={{ color: '#4a5568', textDecoration: 'none', fontSize: '0.85rem' }}>Privacy Policy</a>
               <a href="#" style={{ color: '#4a5568', textDecoration: 'none', fontSize: '0.85rem' }}>Terms of Service</a>
