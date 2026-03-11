@@ -490,7 +490,7 @@ export default function Courses() {
           Clarity over confusion. Skills over hype. Access over gatekeeping.
         </p>
         <p style={{ color: '#718096', marginTop: '30px' }}>
-          © 2024 Goodlet AI Academy. All rights reserved.
+          © 2025 Goodlet AI Academy. All rights reserved.
         </p>
       </footer>
     </div>
