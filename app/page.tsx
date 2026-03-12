@@ -918,7 +918,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
             flexWrap: 'wrap' 
           }}>
             {[
-              { name: 'OpenAI GPT', models: 'GPT Pro, GPT Mini, GPT Nano, color: '#10a37f', icon: '🤖' },
+              { name: 'OpenAI GPT', models: 'GPT Pro, GPT Mini, GPT Nano', color: '#10a37f', icon: '🤖' },
               { name: 'Anthropic Claude', models: 'Claude Sonnet, Opus, Haiku', color: '#d97757', icon: '🧠' },
               { name: 'Google Gemini', models: 'Gemini Pro, Ultra, Flash', color: '#4285f4', icon: '💎' },
               { name: 'Automation Tools', models: 'Zapier, Make, n8n, Custom APIs', color: '#ff6d00', icon: '⚡' },
