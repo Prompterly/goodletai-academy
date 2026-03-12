@@ -253,7 +253,7 @@ export default function About() {
                   OpenAI GPT
                 </div>
                 <div style={{ color: '#718096', fontSize: '0.9rem' }}>
-                  GPT-3.5, GPT-4, GPT-4 Turbo
+                  GPT Pro, GPT Mini, GPT Nano
                 </div>
               </div>
               <div style={{
@@ -267,7 +267,7 @@ export default function About() {
                   Anthropic Claude
                 </div>
                 <div style={{ color: '#718096', fontSize: '0.9rem' }}>
-                  Claude 2, Claude 3 (Opus, Sonnet)
+                  Claude Haiku, Claude Opus, and Claude Sonnet
                 </div>
               </div>
               <div style={{
