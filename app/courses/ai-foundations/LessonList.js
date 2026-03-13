@@ -48,7 +48,7 @@ function LessonItem({ lesson, isLast }) {
             {lesson.title}
           </h4>
           <span style={{ color: '#718096', fontSize: '0.85rem' }}>
-            ⏱️ {lesson.duration} min read
+            ⏱️ {lesson.totalDuration} min · {lesson.stepCount || 0} steps
           </span>
         </div>
         <span style={{ color: '#667eea', fontSize: '1.3rem' }}>→</span>
