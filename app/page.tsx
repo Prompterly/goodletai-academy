@@ -699,18 +699,38 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                     <span style={{ fontSize: '1.4rem', fontWeight: 'bold', color: path.color }}>
                       {path.price}
                     </span>
-                    <button style={{
-                      background: path.price === "Free" ? path.gradient : '#edf2f7',
-                      color: path.price === "Free" ? 'white' : '#a0aec0',
-                      padding: '12px 25px',
-                      border: 'none',
-                      borderRadius: '10px',
-                      cursor: path.price === "Free" ? 'pointer' : 'not-allowed',
-                      fontWeight: 'bold',
-                      fontSize: '0.95rem'
-                    }}>
-                      {path.price === "Free" ? "Start Free →" : "Coming Soon"}
-                    </button>
+                    {path.price === "Free" ? (
+  <a
+    href="/courses/ai-foundations"
+    style={{
+      display: 'inline-block',
+      background: path.gradient,
+      color: 'white',
+      padding: '12px 25px',
+      borderRadius: '10px',
+      cursor: 'pointer',
+      fontWeight: 'bold',
+      fontSize: '0.95rem',
+      textDecoration: 'none',
+      boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+    }}
+  >
+    Start Free →
+  </a>
+) : (
+  <button style={{
+    background: '#edf2f7',
+    color: '#a0aec0',
+    padding: '12px 25px',
+    border: 'none',
+    borderRadius: '10px',
+    cursor: 'not-allowed',
+    fontWeight: 'bold',
+    fontSize: '0.95rem'
+  }}>
+    Coming Soon
+  </button>
+)}
                   </div>
                 </div>
               </div>
