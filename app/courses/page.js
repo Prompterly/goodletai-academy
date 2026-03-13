@@ -346,18 +346,35 @@ export default function Courses() {
                   }}>
                     {path.price}
                   </span>
-                  <button style={{
-                    background: path.price === "Free" ? '#667eea' : '#cbd5e0',
-                    color: 'white',
-                    padding: '12px 25px',
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: path.price === "Free" ? 'pointer' : 'not-allowed',
-                    fontWeight: 'bold',
-                    fontSize: '1rem'
-                  }}>
-                    {path.price === "Free" ? "Start Learning →" : "Coming Soon"}
-                  </button>
+                  {path.price === "Free" ? (
+  <a href="/courses/ai-foundations" style={{
+    display: 'inline-block',
+    background: '#667eea',
+    color: 'white',
+    padding: '12px 25px',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    fontSize: '1rem',
+    textDecoration: 'none'
+  }}>
+    Start Learning →
+  </a>
+) : (
+  <button style={{
+    background: '#cbd5e0',
+    color: 'white',
+    padding: '12px 25px',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'not-allowed',
+    fontWeight: 'bold',
+    fontSize: '1rem'
+  }}>
+    Coming Soon
+  </button>
+)}
                 </div>
               </div>
             </div>
@@ -459,7 +476,7 @@ export default function Courses() {
           No credit card required. Just curiosity and commitment.
         </p>
         <a 
-          href="#"
+          href="/courses/ai-foundations"
           style={{
             display: 'inline-block',
             background: 'white',
