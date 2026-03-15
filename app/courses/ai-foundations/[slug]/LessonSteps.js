@@ -15,7 +15,7 @@ const stepTypeStyles = {
 
 function MilestoneScreen({ milestone, onContinue }) {
   return (
-    <div style={{
+    <div className="milestone-screen" style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
       display: 'flex',
@@ -24,8 +24,8 @@ function MilestoneScreen({ milestone, onContinue }) {
       padding: '40px 20px',
       fontFamily: 'Arial, sans-serif'
     }}>
-      <div style={{ maxWidth: '600px', textAlign: 'center', color: 'white' }}>
-        <div className="milestone-emoji milestone-glow" style={{
+      <div style={{ maxWidth: '600px', textAlign: 'center', color: 'white', width: '100%' }}>
+        <div className="milestone-emoji milestone-glow milestone-emoji-circle" style={{
           width: '120px',
           height: '120px',
           borderRadius: '50%',
@@ -60,7 +60,7 @@ function MilestoneScreen({ milestone, onContinue }) {
         }}>
           🏅 Badge Earned: {milestone.badgeName}
         </div>
-        <div className="milestone-content" style={{
+        <div className="milestone-content milestone-content-box" style={{
           background: 'rgba(255,255,255,0.08)',
           borderRadius: '16px',
           padding: '30px',
@@ -93,7 +93,9 @@ function MilestoneScreen({ milestone, onContinue }) {
           cursor: 'pointer',
           fontWeight: 'bold',
           fontSize: '1.1rem',
-          boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)'
+          boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)',
+          width: '100%',
+          maxWidth: '300px'
         }}>
           Continue Learning →
         </button>
@@ -102,92 +104,162 @@ function MilestoneScreen({ milestone, onContinue }) {
   )
 }
 
-function Sidebar({ steps, currentStep, onStepClick, sidebarOpen }) {
+function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
   return (
-    <div style={{
-      width: '280px',
-      background: 'white',
-      borderRight: '1px solid #e2e8f0',
-      padding: '20px 0',
-      overflowY: 'auto',
-      height: 'calc(100vh - 130px)',
-      position: 'sticky',
-      top: '130px',
-      flexShrink: 0,
-      display: sidebarOpen ? 'block' : 'none',
-      transition: 'all 0.3s ease'
-    }}>
-      <div style={{
-        padding: '0 20px 15px',
-        borderBottom: '1px solid #edf2f7',
-        marginBottom: '10px'
-      }}>
-        <h3 style={{
-          margin: 0,
-          fontSize: '0.85rem',
-          textTransform: 'uppercase',
-          letterSpacing: '1px',
-          color: '#a0aec0',
-          fontWeight: '600'
+    <>
+      {/* Overlay for mobile */}
+      <div
+        className={`sidebar-overlay ${isOpen ? 'active' : ''}`}
+        onClick={onClose}
+      />
+
+      {/* Sidebar */}
+      <div
+        className={`desktop-sidebar sidebar-drawer ${isOpen ? 'open' : 'closed'}`}
+        style={{
+          width: '280px',
+          background: 'white',
+          borderRight: '1px solid #e2e8f0',
+          padding: '0',
+          overflowY: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 250,
+          flexShrink: 0
+        }}
+      >
+        {/* Sidebar Header */}
+        <div style={{
+          padding: '20px',
+          borderBottom: '1px solid #edf2f7',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white'
         }}>
-          Lesson Steps
-        </h3>
-      </div>
-      {steps.map((step, index) => {
-        const isCompleted = index < currentStep
-        const isCurrent = index === currentStep
-        const sStyle = stepTypeStyles[step.stepType] || stepTypeStyles.explanation
-        return (
-          <div
-            key={index}
-            className="sidebar-item"
-            onClick={() => onStepClick(index)}
+          <h3 style={{
+            margin: 0,
+            fontSize: '0.95rem',
+            fontWeight: '700'
+          }}>
+            📚 Lesson Steps
+          </h3>
+          <button
+            onClick={onClose}
             style={{
-              padding: '12px 20px',
+              background: 'rgba(255,255,255,0.2)',
+              border: 'none',
+              color: 'white',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '1.1rem',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              cursor: 'pointer',
-              background: isCurrent ? '#eef2ff' : 'transparent',
-              borderLeft: isCurrent ? '3px solid #667eea' : '3px solid transparent'
+              justifyContent: 'center'
             }}
           >
-            <div style={{
-              width: '28px',
-              height: '28px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '0.75rem',
-              fontWeight: 'bold',
-              flexShrink: 0,
-              background: isCompleted ? '#10a37f' : isCurrent ? '#667eea' : '#edf2f7',
-              color: isCompleted || isCurrent ? 'white' : '#a0aec0',
-              transition: 'all 0.3s ease'
-            }}>
-              {isCompleted ? '✓' : index + 1}
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <p style={{
-                margin: 0,
-                fontSize: '0.85rem',
-                fontWeight: isCurrent ? '600' : '400',
-                color: isCompleted ? '#10a37f' : isCurrent ? '#1a202c' : '#718096',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis'
-              }}>
-                {step.stepTitle}
-              </p>
-              <span style={{ fontSize: '0.7rem', color: sStyle.accent, opacity: 0.7 }}>
-                {sStyle.icon} {sStyle.label}
-              </span>
-            </div>
+            ✕
+          </button>
+        </div>
+
+        {/* Progress in sidebar */}
+        <div style={{
+          padding: '15px 20px',
+          borderBottom: '1px solid #edf2f7',
+          background: '#f8fafc'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '8px',
+            fontSize: '0.8rem',
+            color: '#718096'
+          }}>
+            <span>Progress</span>
+            <span>{currentStep + 1} / {steps.length}</span>
           </div>
-        )
-      })}
-    </div>
+          <div style={{
+            background: '#edf2f7',
+            borderRadius: '10px',
+            height: '6px',
+            overflow: 'hidden'
+          }}>
+            <div className="progress-bar" style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              height: '100%',
+              width: `${((currentStep + 1) / steps.length) * 100}%`,
+              borderRadius: '10px'
+            }} />
+          </div>
+        </div>
+
+        {/* Step List */}
+        <div style={{ padding: '10px 0' }}>
+          {steps.map((step, index) => {
+            const isCompleted = index < currentStep
+            const isCurrent = index === currentStep
+            const sStyle = stepTypeStyles[step.stepType] || stepTypeStyles.explanation
+            return (
+              <div
+                key={index}
+                className="sidebar-item"
+                onClick={() => {
+                  onStepClick(index)
+                  onClose()
+                }}
+                style={{
+                  padding: '14px 20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  cursor: 'pointer',
+                  background: isCurrent ? '#eef2ff' : 'transparent',
+                  borderLeft: isCurrent ? '3px solid #667eea' : '3px solid transparent'
+                }}
+              >
+                <div style={{
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
+                  background: isCompleted ? '#10a37f' : isCurrent ? '#667eea' : '#edf2f7',
+                  color: isCompleted || isCurrent ? 'white' : '#a0aec0',
+                  transition: 'all 0.3s ease'
+                }}>
+                  {isCompleted ? '✓' : index + 1}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{
+                    margin: 0,
+                    fontSize: '0.85rem',
+                    fontWeight: isCurrent ? '600' : '400',
+                    color: isCompleted ? '#10a37f' : isCurrent ? '#1a202c' : '#718096',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}>
+                    {step.stepTitle}
+                  </p>
+                  <span style={{ fontSize: '0.7rem', color: sStyle.accent, opacity: 0.7 }}>
+                    {sStyle.icon} {sStyle.label}
+                  </span>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -195,9 +267,22 @@ export default function LessonSteps({ lesson }) {
   const [currentStep, setCurrentStep] = useState(0)
   const [showMilestone, setShowMilestone] = useState(false)
   const [lessonCompleted, setLessonCompleted] = useState(false)
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [animDirection, setAnimDirection] = useState('enter')
   const [animKey, setAnimKey] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 1024
+      setIsMobile(mobile)
+      if (!mobile) setSidebarOpen(true)
+      else setSidebarOpen(false)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const steps = lesson.steps || []
   const totalSteps = steps.length
@@ -281,16 +366,13 @@ export default function LessonSteps({ lesson }) {
         padding: '40px 20px',
         fontFamily: 'Arial, sans-serif'
       }}>
-        <div style={{ maxWidth: '500px', textAlign: 'center', color: 'white' }}>
+        <div style={{ maxWidth: '500px', textAlign: 'center', color: 'white', width: '100%' }}>
           <div className="milestone-emoji" style={{ fontSize: '4rem', marginBottom: '20px' }}>✅</div>
           <h1 className="milestone-title" style={{ fontSize: '2rem', marginBottom: '15px' }}>
             Lesson Complete!
           </h1>
           <p className="milestone-content" style={{
-            fontSize: '1.1rem',
-            opacity: 0.8,
-            marginBottom: '40px',
-            lineHeight: '1.7'
+            fontSize: '1.1rem', opacity: 0.8, marginBottom: '40px', lineHeight: '1.7'
           }}>
             Great work! You've completed "{lesson.title}". Keep the momentum going.
           </p>
@@ -325,7 +407,7 @@ export default function LessonSteps({ lesson }) {
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif', background: '#f8fafc' }}>
 
       {/* Top Nav */}
-      <nav style={{
+      <nav className="nav-top-bar" style={{
         background: 'white',
         padding: '15px 20px',
         boxShadow: '0 2px 4px rgba(0,0,0,0.08)',
@@ -340,21 +422,26 @@ export default function LessonSteps({ lesson }) {
             alignItems: 'center',
             marginBottom: '12px'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              {/* Hamburger / Sidebar Toggle */}
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="btn-prev"
+                className="hamburger-btn"
                 style={{
                   background: 'none',
                   border: '1px solid #e2e8f0',
                   borderRadius: '8px',
-                  padding: '6px 10px',
+                  padding: '8px 10px',
                   cursor: 'pointer',
-                  fontSize: '1.1rem',
-                  color: '#667eea'
+                  fontSize: '1.2rem',
+                  color: '#667eea',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  lineHeight: 1
                 }}
               >
-                {sidebarOpen ? '◀' : '▶'}
+                ☰
               </button>
               <a href="/courses/ai-foundations" style={{
                 color: '#667eea',
@@ -386,7 +473,7 @@ export default function LessonSteps({ lesson }) {
       </nav>
 
       {/* Title Bar */}
-      <div style={{
+      <div className="lesson-title-bar" style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         color: 'white',
         padding: '20px',
@@ -400,136 +487,210 @@ export default function LessonSteps({ lesson }) {
         </h1>
       </div>
 
-      {/* Main Layout */}
-      <div style={{
-        display: 'flex',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        minHeight: 'calc(100vh - 200px)'
-      }}>
-        <Sidebar
-          steps={steps}
-          currentStep={currentStep}
-          onStepClick={jumpToStep}
-          sidebarOpen={sidebarOpen}
-        />
+      {/* Sidebar */}
+      <Sidebar
+        steps={steps}
+        currentStep={currentStep}
+        onStepClick={jumpToStep}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
-        <main style={{
-          flex: 1,
-          padding: '40px 20px',
-          maxWidth: sidebarOpen ? '800px' : '900px',
+      {/* Content Area */}
+      <main
+        className="content-area content-main"
+        style={{
+          padding: '40px 20px 100px',
+          maxWidth: '850px',
           margin: '0 auto'
-        }}>
-          {/* Animated Step Content */}
-          <div key={animKey} className={getAnimClass()}>
+        }}
+      >
+        {/* Animated Step Content */}
+        <div key={animKey} className={getAnimClass()}>
 
-            {/* Badge */}
-            <div className="step-badge" style={{
+          {/* Badge */}
+          <div className="step-badge-container step-badge" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            marginBottom: '25px'
+          }}>
+            <span style={{
+              background: stepStyle.bg,
+              color: stepStyle.accent,
+              padding: '6px 16px',
+              borderRadius: '20px',
+              fontSize: '0.85rem',
+              fontWeight: 'bold',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              marginBottom: '25px'
+              gap: '6px'
             }}>
-              <span style={{
-                background: stepStyle.bg,
-                color: stepStyle.accent,
-                padding: '6px 16px',
-                borderRadius: '20px',
-                fontSize: '0.85rem',
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}>
-                {stepStyle.icon} {stepStyle.label}
-              </span>
-            </div>
-
-            {/* Title */}
-            <h2 className="step-title" style={{
-              fontSize: '2rem',
-              color: '#1a202c',
-              marginBottom: '30px',
-              fontWeight: '700',
-              lineHeight: '1.3'
-            }}>
-              {step.stepTitle}
-            </h2>
-
-            {/* Content */}
-            <div className="step-body" style={{
-              background: 'white',
-              borderRadius: '16px',
-              padding: '40px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-              fontSize: '1.1rem',
-              lineHeight: '1.9',
-              color: '#2d3748',
-              borderTop: `4px solid ${stepStyle.accent}`
-            }}>
-              {step.content && <PortableText value={step.content} />}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginTop: '40px',
-            paddingTop: '25px',
-            borderTop: '1px solid #e2e8f0'
-          }}>
-            {currentStep > 0 ? (
-              <button className="btn-prev" onClick={goPrev} style={{
-                background: 'white',
-                color: '#667eea',
-                padding: '14px 28px',
-                border: '2px solid #667eea',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '1rem'
-              }}>
-                ← Previous
-              </button>
-            ) : <div />}
-
-            <span style={{ color: '#a0aec0', fontSize: '0.9rem' }}>
-              {currentStep + 1} / {totalSteps}
+              {stepStyle.icon} {stepStyle.label}
             </span>
-
-            {currentStep < totalSteps - 1 ? (
-              <button className="btn-next" onClick={goNext} style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                padding: '14px 28px',
-                border: 'none',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '1rem',
-                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
-              }}>
-                Next →
-              </button>
-            ) : (
-              <button className="btn-complete" onClick={completeLesson} style={{
-                background: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
-                color: 'white',
-                padding: '14px 28px',
-                border: 'none',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '1rem',
-                boxShadow: '0 4px 15px rgba(16, 163, 127, 0.3)'
-              }}>
-                Complete Lesson ✓
-              </button>
-            )}
           </div>
-        </main>
+
+          {/* Title */}
+          <h2 className="step-title step-title-text" style={{
+            fontSize: '2rem',
+            color: '#1a202c',
+            marginBottom: '30px',
+            fontWeight: '700',
+            lineHeight: '1.3'
+          }}>
+            {step.stepTitle}
+          </h2>
+
+          {/* Content */}
+          <div className="step-body step-content-box" style={{
+            background: 'white',
+            borderRadius: '16px',
+            padding: '40px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+            fontSize: '1.1rem',
+            lineHeight: '1.9',
+            color: '#2d3748',
+            borderTop: `4px solid ${stepStyle.accent}`
+          }}>
+            {step.content && <PortableText value={step.content} />}
+          </div>
+        </div>
+
+        {/* Desktop Navigation Buttons */}
+        <div className="desktop-nav-buttons" style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: '40px',
+          paddingTop: '25px',
+          borderTop: '1px solid #e2e8f0'
+        }}>
+          {currentStep > 0 ? (
+            <button className="btn-prev" onClick={goPrev} style={{
+              background: 'white',
+              color: '#667eea',
+              padding: '14px 28px',
+              border: '2px solid #667eea',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontSize: '1rem'
+            }}>
+              ← Previous
+            </button>
+          ) : <div />}
+
+          <span style={{ color: '#a0aec0', fontSize: '0.9rem' }}>
+            {currentStep + 1} / {totalSteps}
+          </span>
+
+          {currentStep < totalSteps - 1 ? (
+            <button className="btn-next" onClick={goNext} style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              padding: '14px 28px',
+              border: 'none',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+            }}>
+              Next →
+            </button>
+          ) : (
+            <button className="btn-complete" onClick={completeLesson} style={{
+              background: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
+              color: 'white',
+              padding: '14px 28px',
+              border: 'none',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              boxShadow: '0 4px 15px rgba(16, 163, 127, 0.3)'
+            }}>
+              Complete Lesson ✓
+            </button>
+          )}
+        </div>
+      </main>
+
+      {/* Mobile Bottom Navigation Bar */}
+      <div className="mobile-bottom-nav" style={{
+        display: 'none',
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: 'white',
+        padding: '12px 20px',
+        boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
+        zIndex: 90,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '10px'
+      }}>
+        {/* Previous */}
+        {currentStep > 0 ? (
+          <button onClick={goPrev} style={{
+            background: 'white',
+            color: '#667eea',
+            padding: '12px 20px',
+            border: '2px solid #667eea',
+            borderRadius: '10px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            fontSize: '0.9rem',
+            flex: 1
+          }}>
+            ←
+          </button>
+        ) : <div style={{ flex: 1 }} />}
+
+        {/* Step Counter */}
+        <div style={{
+          textAlign: 'center',
+          color: '#718096',
+          fontSize: '0.85rem',
+          fontWeight: '600',
+          minWidth: '60px'
+        }}>
+          {currentStep + 1} / {totalSteps}
+        </div>
+
+        {/* Next / Complete */}
+        {currentStep < totalSteps - 1 ? (
+          <button onClick={goNext} style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+            padding: '12px 20px',
+            border: 'none',
+            borderRadius: '10px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            fontSize: '0.9rem',
+            flex: 1,
+            boxShadow: '0 2px 10px rgba(102, 126, 234, 0.3)'
+          }}>
+            Next →
+          </button>
+        ) : (
+          <button onClick={completeLesson} style={{
+            background: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
+            color: 'white',
+            padding: '12px 20px',
+            border: 'none',
+            borderRadius: '10px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            fontSize: '0.9rem',
+            flex: 1,
+            boxShadow: '0 2px 10px rgba(16, 163, 127, 0.3)'
+          }}>
+            Complete ✓
+          </button>
+        )}
       </div>
     </div>
   )
