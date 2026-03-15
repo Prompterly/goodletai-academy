@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { PortableText } from '../../../../lib/sanity'
+import './animations.css'
 
 const stepTypeStyles = {
   hook: { icon: '🪝', label: 'Hook', accent: '#667eea', bg: '#eef2ff' },
@@ -24,7 +25,7 @@ function MilestoneScreen({ milestone, onContinue }) {
       fontFamily: 'Arial, sans-serif'
     }}>
       <div style={{ maxWidth: '600px', textAlign: 'center', color: 'white' }}>
-        <div style={{
+        <div className="milestone-emoji milestone-glow" style={{
           width: '120px',
           height: '120px',
           borderRadius: '50%',
@@ -34,15 +35,19 @@ function MilestoneScreen({ milestone, onContinue }) {
           justifyContent: 'center',
           fontSize: '3.5rem',
           margin: '0 auto 30px',
-          boxShadow: '0 0 40px rgba(102, 126, 234, 0.4)',
           border: '4px solid rgba(255,255,255,0.2)'
         }}>
           {milestone.badgeEmoji || '🏆'}
         </div>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: '800', marginBottom: '15px', lineHeight: '1.3' }}>
+        <h1 className="milestone-title" style={{
+          fontSize: '2.2rem',
+          fontWeight: '800',
+          marginBottom: '15px',
+          lineHeight: '1.3'
+        }}>
           {milestone.milestoneTitle || 'Milestone Achieved!'}
         </h1>
-        <div style={{
+        <div className="milestone-badge" style={{
           display: 'inline-block',
           background: 'rgba(102, 126, 234, 0.3)',
           border: '1px solid rgba(102, 126, 234, 0.5)',
@@ -55,7 +60,7 @@ function MilestoneScreen({ milestone, onContinue }) {
         }}>
           🏅 Badge Earned: {milestone.badgeName}
         </div>
-        <div style={{
+        <div className="milestone-content" style={{
           background: 'rgba(255,255,255,0.08)',
           borderRadius: '16px',
           padding: '30px',
@@ -67,7 +72,7 @@ function MilestoneScreen({ milestone, onContinue }) {
         }}>
           {milestone.milestoneContent && <PortableText value={milestone.milestoneContent} />}
         </div>
-        <div style={{
+        <div className="milestone-content" style={{
           background: 'rgba(255,255,255,0.05)',
           borderRadius: '12px',
           padding: '20px',
@@ -79,7 +84,7 @@ function MilestoneScreen({ milestone, onContinue }) {
             {milestone.badgeDescription}
           </p>
         </div>
-        <button onClick={onContinue} style={{
+        <button className="milestone-button btn-next" onClick={onContinue} style={{
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
           padding: '18px 50px',
@@ -109,9 +114,9 @@ function Sidebar({ steps, currentStep, onStepClick, sidebarOpen }) {
       position: 'sticky',
       top: '130px',
       flexShrink: 0,
-      display: sidebarOpen ? 'block' : 'none'
+      display: sidebarOpen ? 'block' : 'none',
+      transition: 'all 0.3s ease'
     }}>
-      {/* Sidebar Header */}
       <div style={{
         padding: '0 20px 15px',
         borderBottom: '1px solid #edf2f7',
@@ -128,16 +133,14 @@ function Sidebar({ steps, currentStep, onStepClick, sidebarOpen }) {
           Lesson Steps
         </h3>
       </div>
-
-      {/* Step List */}
       {steps.map((step, index) => {
         const isCompleted = index < currentStep
         const isCurrent = index === currentStep
-        const stepStyle = stepTypeStyles[step.stepType] || stepTypeStyles.explanation
-
+        const sStyle = stepTypeStyles[step.stepType] || stepTypeStyles.explanation
         return (
           <div
             key={index}
+            className="sidebar-item"
             onClick={() => onStepClick(index)}
             style={{
               padding: '12px 20px',
@@ -146,17 +149,9 @@ function Sidebar({ steps, currentStep, onStepClick, sidebarOpen }) {
               gap: '12px',
               cursor: 'pointer',
               background: isCurrent ? '#eef2ff' : 'transparent',
-              borderLeft: isCurrent ? '3px solid #667eea' : '3px solid transparent',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              if (!isCurrent) e.currentTarget.style.background = '#f7fafc'
-            }}
-            onMouseLeave={(e) => {
-              if (!isCurrent) e.currentTarget.style.background = 'transparent'
+              borderLeft: isCurrent ? '3px solid #667eea' : '3px solid transparent'
             }}
           >
-            {/* Step Status Icon */}
             <div style={{
               width: '28px',
               height: '28px',
@@ -168,12 +163,11 @@ function Sidebar({ steps, currentStep, onStepClick, sidebarOpen }) {
               fontWeight: 'bold',
               flexShrink: 0,
               background: isCompleted ? '#10a37f' : isCurrent ? '#667eea' : '#edf2f7',
-              color: isCompleted || isCurrent ? 'white' : '#a0aec0'
+              color: isCompleted || isCurrent ? 'white' : '#a0aec0',
+              transition: 'all 0.3s ease'
             }}>
               {isCompleted ? '✓' : index + 1}
             </div>
-
-            {/* Step Info */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <p style={{
                 margin: 0,
@@ -186,12 +180,8 @@ function Sidebar({ steps, currentStep, onStepClick, sidebarOpen }) {
               }}>
                 {step.stepTitle}
               </p>
-              <span style={{
-                fontSize: '0.7rem',
-                color: stepStyle.accent,
-                opacity: 0.7
-              }}>
-                {stepStyle.icon} {stepStyle.label}
+              <span style={{ fontSize: '0.7rem', color: sStyle.accent, opacity: 0.7 }}>
+                {sStyle.icon} {sStyle.label}
               </span>
             </div>
           </div>
@@ -206,6 +196,8 @@ export default function LessonSteps({ lesson }) {
   const [showMilestone, setShowMilestone] = useState(false)
   const [lessonCompleted, setLessonCompleted] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [animDirection, setAnimDirection] = useState('enter')
+  const [animKey, setAnimKey] = useState(0)
 
   const steps = lesson.steps || []
   const totalSteps = steps.length
@@ -215,6 +207,8 @@ export default function LessonSteps({ lesson }) {
 
   const goNext = () => {
     if (currentStep < totalSteps - 1) {
+      setAnimDirection('forward')
+      setAnimKey(prev => prev + 1)
       setCurrentStep(currentStep + 1)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
@@ -222,12 +216,16 @@ export default function LessonSteps({ lesson }) {
 
   const goPrev = () => {
     if (currentStep > 0) {
+      setAnimDirection('backward')
+      setAnimKey(prev => prev + 1)
       setCurrentStep(currentStep - 1)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
   const jumpToStep = (index) => {
+    setAnimDirection(index > currentStep ? 'forward' : 'backward')
+    setAnimKey(prev => prev + 1)
     setCurrentStep(index)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -257,6 +255,12 @@ export default function LessonSteps({ lesson }) {
     }
   }
 
+  const getAnimClass = () => {
+    if (animDirection === 'forward') return 'step-content-forward'
+    if (animDirection === 'backward') return 'step-content-backward'
+    return 'step-content-enter'
+  }
+
   if (showMilestone) {
     return (
       <MilestoneScreen
@@ -268,7 +272,7 @@ export default function LessonSteps({ lesson }) {
 
   if (lessonCompleted) {
     return (
-      <div style={{
+      <div className="page-enter" style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
         display: 'flex',
@@ -278,12 +282,19 @@ export default function LessonSteps({ lesson }) {
         fontFamily: 'Arial, sans-serif'
       }}>
         <div style={{ maxWidth: '500px', textAlign: 'center', color: 'white' }}>
-          <div style={{ fontSize: '4rem', marginBottom: '20px' }}>✅</div>
-          <h1 style={{ fontSize: '2rem', marginBottom: '15px' }}>Lesson Complete!</h1>
-          <p style={{ fontSize: '1.1rem', opacity: 0.8, marginBottom: '40px', lineHeight: '1.7' }}>
+          <div className="milestone-emoji" style={{ fontSize: '4rem', marginBottom: '20px' }}>✅</div>
+          <h1 className="milestone-title" style={{ fontSize: '2rem', marginBottom: '15px' }}>
+            Lesson Complete!
+          </h1>
+          <p className="milestone-content" style={{
+            fontSize: '1.1rem',
+            opacity: 0.8,
+            marginBottom: '40px',
+            lineHeight: '1.7'
+          }}>
             Great work! You've completed "{lesson.title}". Keep the momentum going.
           </p>
-          <a href="/courses/ai-foundations" style={{
+          <a className="milestone-button btn-next" href="/courses/ai-foundations" style={{
             display: 'inline-block',
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             color: 'white',
@@ -305,7 +316,7 @@ export default function LessonSteps({ lesson }) {
     return (
       <div style={{ textAlign: 'center', padding: '100px 20px' }}>
         <h2>No steps found for this lesson</h2>
-        <a href="/courses/ai-foundations" style={{ color: '#667eea' }}>← Back to AI Foundations</a>
+        <a href="/courses/ai-foundations" style={{ color: '#667eea' }}>← Back</a>
       </div>
     )
   }
@@ -313,7 +324,7 @@ export default function LessonSteps({ lesson }) {
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif', background: '#f8fafc' }}>
 
-      {/* Top Navigation Bar */}
+      {/* Top Nav */}
       <nav style={{
         background: 'white',
         padding: '15px 20px',
@@ -330,9 +341,9 @@ export default function LessonSteps({ lesson }) {
             marginBottom: '12px'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              {/* Sidebar Toggle */}
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="btn-prev"
                 style={{
                   background: 'none',
                   border: '1px solid #e2e8f0',
@@ -340,11 +351,8 @@ export default function LessonSteps({ lesson }) {
                   padding: '6px 10px',
                   cursor: 'pointer',
                   fontSize: '1.1rem',
-                  color: '#667eea',
-                  display: 'flex',
-                  alignItems: 'center'
+                  color: '#667eea'
                 }}
-                title={sidebarOpen ? 'Hide sidebar' : 'Show sidebar'}
               >
                 {sidebarOpen ? '◀' : '▶'}
               </button>
@@ -367,18 +375,17 @@ export default function LessonSteps({ lesson }) {
             height: '8px',
             overflow: 'hidden'
           }}>
-            <div style={{
+            <div className="progress-bar" style={{
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               height: '100%',
               width: `${progress}%`,
-              borderRadius: '10px',
-              transition: 'width 0.4s ease'
+              borderRadius: '10px'
             }} />
           </div>
         </div>
       </nav>
 
-      {/* Lesson Title Bar */}
+      {/* Title Bar */}
       <div style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         color: 'white',
@@ -393,15 +400,13 @@ export default function LessonSteps({ lesson }) {
         </h1>
       </div>
 
-      {/* Main Layout: Sidebar + Content */}
+      {/* Main Layout */}
       <div style={{
         display: 'flex',
         maxWidth: '1200px',
         margin: '0 auto',
         minHeight: 'calc(100vh - 200px)'
       }}>
-
-        {/* Sidebar */}
         <Sidebar
           steps={steps}
           currentStep={currentStep}
@@ -409,57 +414,64 @@ export default function LessonSteps({ lesson }) {
           sidebarOpen={sidebarOpen}
         />
 
-        {/* Content Area */}
         <main style={{
           flex: 1,
           padding: '40px 20px',
           maxWidth: sidebarOpen ? '800px' : '900px',
           margin: '0 auto'
         }}>
+          {/* Animated Step Content */}
+          <div key={animKey} className={getAnimClass()}>
 
-          {/* Step Type Badge */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '25px' }}>
-            <span style={{
-              background: stepStyle.bg,
-              color: stepStyle.accent,
-              padding: '6px 16px',
-              borderRadius: '20px',
-              fontSize: '0.85rem',
-              fontWeight: 'bold',
+            {/* Badge */}
+            <div className="step-badge" style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '6px'
+              gap: '10px',
+              marginBottom: '25px'
             }}>
-              {stepStyle.icon} {stepStyle.label}
-            </span>
+              <span style={{
+                background: stepStyle.bg,
+                color: stepStyle.accent,
+                padding: '6px 16px',
+                borderRadius: '20px',
+                fontSize: '0.85rem',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}>
+                {stepStyle.icon} {stepStyle.label}
+              </span>
+            </div>
+
+            {/* Title */}
+            <h2 className="step-title" style={{
+              fontSize: '2rem',
+              color: '#1a202c',
+              marginBottom: '30px',
+              fontWeight: '700',
+              lineHeight: '1.3'
+            }}>
+              {step.stepTitle}
+            </h2>
+
+            {/* Content */}
+            <div className="step-body" style={{
+              background: 'white',
+              borderRadius: '16px',
+              padding: '40px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              fontSize: '1.1rem',
+              lineHeight: '1.9',
+              color: '#2d3748',
+              borderTop: `4px solid ${stepStyle.accent}`
+            }}>
+              {step.content && <PortableText value={step.content} />}
+            </div>
           </div>
 
-          {/* Step Title */}
-          <h2 style={{
-            fontSize: '2rem',
-            color: '#1a202c',
-            marginBottom: '30px',
-            fontWeight: '700',
-            lineHeight: '1.3'
-          }}>
-            {step.stepTitle}
-          </h2>
-
-          {/* Step Content */}
-          <div style={{
-            background: 'white',
-            borderRadius: '16px',
-            padding: '40px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-            fontSize: '1.1rem',
-            lineHeight: '1.9',
-            color: '#2d3748',
-            borderTop: `4px solid ${stepStyle.accent}`
-          }}>
-            {step.content && <PortableText value={step.content} />}
-          </div>
-
-          {/* Navigation Buttons */}
+          {/* Navigation */}
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -469,7 +481,7 @@ export default function LessonSteps({ lesson }) {
             borderTop: '1px solid #e2e8f0'
           }}>
             {currentStep > 0 ? (
-              <button onClick={goPrev} style={{
+              <button className="btn-prev" onClick={goPrev} style={{
                 background: 'white',
                 color: '#667eea',
                 padding: '14px 28px',
@@ -488,7 +500,7 @@ export default function LessonSteps({ lesson }) {
             </span>
 
             {currentStep < totalSteps - 1 ? (
-              <button onClick={goNext} style={{
+              <button className="btn-next" onClick={goNext} style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 color: 'white',
                 padding: '14px 28px',
@@ -502,7 +514,7 @@ export default function LessonSteps({ lesson }) {
                 Next →
               </button>
             ) : (
-              <button onClick={completeLesson} style={{
+              <button className="btn-complete" onClick={completeLesson} style={{
                 background: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
                 color: 'white',
                 padding: '14px 28px',
