@@ -23,12 +23,7 @@ function MilestoneScreen({ milestone, onContinue }) {
       padding: '40px 20px',
       fontFamily: 'Arial, sans-serif'
     }}>
-      <div style={{
-        maxWidth: '600px',
-        textAlign: 'center',
-        color: 'white'
-      }}>
-        {/* Badge */}
+      <div style={{ maxWidth: '600px', textAlign: 'center', color: 'white' }}>
         <div style={{
           width: '120px',
           height: '120px',
@@ -44,18 +39,9 @@ function MilestoneScreen({ milestone, onContinue }) {
         }}>
           {milestone.badgeEmoji || '🏆'}
         </div>
-
-        {/* Milestone Title */}
-        <h1 style={{
-          fontSize: '2.2rem',
-          fontWeight: '800',
-          marginBottom: '15px',
-          lineHeight: '1.3'
-        }}>
+        <h1 style={{ fontSize: '2.2rem', fontWeight: '800', marginBottom: '15px', lineHeight: '1.3' }}>
           {milestone.milestoneTitle || 'Milestone Achieved!'}
         </h1>
-
-        {/* Badge Name */}
         <div style={{
           display: 'inline-block',
           background: 'rgba(102, 126, 234, 0.3)',
@@ -69,8 +55,6 @@ function MilestoneScreen({ milestone, onContinue }) {
         }}>
           🏅 Badge Earned: {milestone.badgeName}
         </div>
-
-        {/* Milestone Content */}
         <div style={{
           background: 'rgba(255,255,255,0.08)',
           borderRadius: '16px',
@@ -81,12 +65,8 @@ function MilestoneScreen({ milestone, onContinue }) {
           lineHeight: '1.8',
           border: '1px solid rgba(255,255,255,0.1)'
         }}>
-          {milestone.milestoneContent && (
-            <PortableText value={milestone.milestoneContent} />
-          )}
+          {milestone.milestoneContent && <PortableText value={milestone.milestoneContent} />}
         </div>
-
-        {/* Badge Description */}
         <div style={{
           background: 'rgba(255,255,255,0.05)',
           borderRadius: '12px',
@@ -94,33 +74,129 @@ function MilestoneScreen({ milestone, onContinue }) {
           marginBottom: '40px',
           border: '1px solid rgba(255,255,255,0.08)'
         }}>
-          <p style={{ fontSize: '0.9rem', opacity: 0.7, margin: '0 0 8px 0' }}>
-            BADGE DESCRIPTION
-          </p>
+          <p style={{ fontSize: '0.9rem', opacity: 0.7, margin: '0 0 8px 0' }}>BADGE DESCRIPTION</p>
           <p style={{ fontSize: '1rem', opacity: 0.9, margin: 0, lineHeight: '1.6' }}>
             {milestone.badgeDescription}
           </p>
         </div>
-
-        {/* Continue Button */}
-        <button
-          onClick={onContinue}
-          style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
-            padding: '18px 50px',
-            border: 'none',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            fontWeight: 'bold',
-            fontSize: '1.1rem',
-            boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)',
-            transition: 'all 0.3s ease'
-          }}
-        >
+        <button onClick={onContinue} style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          padding: '18px 50px',
+          border: 'none',
+          borderRadius: '12px',
+          cursor: 'pointer',
+          fontWeight: 'bold',
+          fontSize: '1.1rem',
+          boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)'
+        }}>
           Continue Learning →
         </button>
       </div>
+    </div>
+  )
+}
+
+function Sidebar({ steps, currentStep, onStepClick, sidebarOpen }) {
+  return (
+    <div style={{
+      width: '280px',
+      background: 'white',
+      borderRight: '1px solid #e2e8f0',
+      padding: '20px 0',
+      overflowY: 'auto',
+      height: 'calc(100vh - 130px)',
+      position: 'sticky',
+      top: '130px',
+      flexShrink: 0,
+      display: sidebarOpen ? 'block' : 'none'
+    }}>
+      {/* Sidebar Header */}
+      <div style={{
+        padding: '0 20px 15px',
+        borderBottom: '1px solid #edf2f7',
+        marginBottom: '10px'
+      }}>
+        <h3 style={{
+          margin: 0,
+          fontSize: '0.85rem',
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          color: '#a0aec0',
+          fontWeight: '600'
+        }}>
+          Lesson Steps
+        </h3>
+      </div>
+
+      {/* Step List */}
+      {steps.map((step, index) => {
+        const isCompleted = index < currentStep
+        const isCurrent = index === currentStep
+        const stepStyle = stepTypeStyles[step.stepType] || stepTypeStyles.explanation
+
+        return (
+          <div
+            key={index}
+            onClick={() => onStepClick(index)}
+            style={{
+              padding: '12px 20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              cursor: 'pointer',
+              background: isCurrent ? '#eef2ff' : 'transparent',
+              borderLeft: isCurrent ? '3px solid #667eea' : '3px solid transparent',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              if (!isCurrent) e.currentTarget.style.background = '#f7fafc'
+            }}
+            onMouseLeave={(e) => {
+              if (!isCurrent) e.currentTarget.style.background = 'transparent'
+            }}
+          >
+            {/* Step Status Icon */}
+            <div style={{
+              width: '28px',
+              height: '28px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '0.75rem',
+              fontWeight: 'bold',
+              flexShrink: 0,
+              background: isCompleted ? '#10a37f' : isCurrent ? '#667eea' : '#edf2f7',
+              color: isCompleted || isCurrent ? 'white' : '#a0aec0'
+            }}>
+              {isCompleted ? '✓' : index + 1}
+            </div>
+
+            {/* Step Info */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p style={{
+                margin: 0,
+                fontSize: '0.85rem',
+                fontWeight: isCurrent ? '600' : '400',
+                color: isCompleted ? '#10a37f' : isCurrent ? '#1a202c' : '#718096',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}>
+                {step.stepTitle}
+              </p>
+              <span style={{
+                fontSize: '0.7rem',
+                color: stepStyle.accent,
+                opacity: 0.7
+              }}>
+                {stepStyle.icon} {stepStyle.label}
+              </span>
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }
@@ -129,6 +205,7 @@ export default function LessonSteps({ lesson }) {
   const [currentStep, setCurrentStep] = useState(0)
   const [showMilestone, setShowMilestone] = useState(false)
   const [lessonCompleted, setLessonCompleted] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
   const steps = lesson.steps || []
   const totalSteps = steps.length
@@ -150,15 +227,17 @@ export default function LessonSteps({ lesson }) {
     }
   }
 
+  const jumpToStep = (index) => {
+    setCurrentStep(index)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const completeLesson = () => {
-    // Save completion to local storage
     const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '[]')
     if (!completedLessons.includes(lesson.lessonNumber)) {
       completedLessons.push(lesson.lessonNumber)
       localStorage.setItem('completedLessons', JSON.stringify(completedLessons))
     }
-
-    // Save badge if milestone exists
     if (lesson.hasMilestone && lesson.milestone?.badgeName) {
       const badges = JSON.parse(localStorage.getItem('earnedBadges') || '[]')
       if (!badges.find(b => b.name === lesson.milestone.badgeName)) {
@@ -171,7 +250,6 @@ export default function LessonSteps({ lesson }) {
         localStorage.setItem('earnedBadges', JSON.stringify(badges))
       }
     }
-
     if (lesson.hasMilestone && lesson.milestone) {
       setShowMilestone(true)
     } else {
@@ -179,7 +257,6 @@ export default function LessonSteps({ lesson }) {
     }
   }
 
-  // Show milestone screen
   if (showMilestone) {
     return (
       <MilestoneScreen
@@ -189,7 +266,6 @@ export default function LessonSteps({ lesson }) {
     )
   }
 
-  // Show simple completion screen (for lessons without milestones)
   if (lessonCompleted) {
     return (
       <div style={{
@@ -207,20 +283,17 @@ export default function LessonSteps({ lesson }) {
           <p style={{ fontSize: '1.1rem', opacity: 0.8, marginBottom: '40px', lineHeight: '1.7' }}>
             Great work! You've completed "{lesson.title}". Keep the momentum going.
           </p>
-          <a
-            href="/courses/ai-foundations"
-            style={{
-              display: 'inline-block',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-              padding: '16px 40px',
-              borderRadius: '12px',
-              fontWeight: 'bold',
-              fontSize: '1.1rem',
-              textDecoration: 'none',
-              boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)'
-            }}
-          >
+          <a href="/courses/ai-foundations" style={{
+            display: 'inline-block',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+            padding: '16px 40px',
+            borderRadius: '12px',
+            fontWeight: 'bold',
+            fontSize: '1.1rem',
+            textDecoration: 'none',
+            boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)'
+          }}>
             Next Lesson →
           </a>
         </div>
@@ -232,9 +305,7 @@ export default function LessonSteps({ lesson }) {
     return (
       <div style={{ textAlign: 'center', padding: '100px 20px' }}>
         <h2>No steps found for this lesson</h2>
-        <a href="/courses/ai-foundations" style={{ color: '#667eea' }}>
-          ← Back to AI Foundations
-        </a>
+        <a href="/courses/ai-foundations" style={{ color: '#667eea' }}>← Back to AI Foundations</a>
       </div>
     )
   }
@@ -251,21 +322,41 @@ export default function LessonSteps({ lesson }) {
         top: 0,
         zIndex: 100
       }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             marginBottom: '12px'
           }}>
-            <a href="/courses/ai-foundations" style={{
-              color: '#667eea',
-              textDecoration: 'none',
-              fontWeight: 'bold',
-              fontSize: '0.9rem'
-            }}>
-              ← AI Foundations
-            </a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              {/* Sidebar Toggle */}
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                style={{
+                  background: 'none',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  padding: '6px 10px',
+                  cursor: 'pointer',
+                  fontSize: '1.1rem',
+                  color: '#667eea',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+                title={sidebarOpen ? 'Hide sidebar' : 'Show sidebar'}
+              >
+                {sidebarOpen ? '◀' : '▶'}
+              </button>
+              <a href="/courses/ai-foundations" style={{
+                color: '#667eea',
+                textDecoration: 'none',
+                fontWeight: 'bold',
+                fontSize: '0.9rem'
+              }}>
+                ← AI Foundations
+              </a>
+            </div>
             <span style={{ color: '#718096', fontSize: '0.85rem' }}>
               Step {currentStep + 1} of {totalSteps}
             </span>
@@ -291,121 +382,143 @@ export default function LessonSteps({ lesson }) {
       <div style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         color: 'white',
-        padding: '25px 20px',
+        padding: '20px',
         textAlign: 'center'
       }}>
-        <p style={{ opacity: 0.8, fontSize: '0.85rem', margin: '0 0 8px 0' }}>
+        <p style={{ opacity: 0.8, fontSize: '0.85rem', margin: '0 0 6px 0' }}>
           Week {lesson.weekNumber} · Lesson {lesson.lessonNumber}
         </p>
-        <h1 style={{ fontSize: '1.6rem', margin: 0, fontWeight: 'bold' }}>
+        <h1 style={{ fontSize: '1.4rem', margin: 0, fontWeight: 'bold' }}>
           {lesson.title}
         </h1>
       </div>
 
-      {/* Step Content */}
-      <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
+      {/* Main Layout: Sidebar + Content */}
+      <div style={{
+        display: 'flex',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        minHeight: 'calc(100vh - 200px)'
+      }}>
 
-        {/* Step Type Badge */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '25px' }}>
-          <span style={{
-            background: stepStyle.bg,
-            color: stepStyle.accent,
-            padding: '6px 16px',
-            borderRadius: '20px',
-            fontSize: '0.85rem',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px'
+        {/* Sidebar */}
+        <Sidebar
+          steps={steps}
+          currentStep={currentStep}
+          onStepClick={jumpToStep}
+          sidebarOpen={sidebarOpen}
+        />
+
+        {/* Content Area */}
+        <main style={{
+          flex: 1,
+          padding: '40px 20px',
+          maxWidth: sidebarOpen ? '800px' : '900px',
+          margin: '0 auto'
+        }}>
+
+          {/* Step Type Badge */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '25px' }}>
+            <span style={{
+              background: stepStyle.bg,
+              color: stepStyle.accent,
+              padding: '6px 16px',
+              borderRadius: '20px',
+              fontSize: '0.85rem',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              {stepStyle.icon} {stepStyle.label}
+            </span>
+          </div>
+
+          {/* Step Title */}
+          <h2 style={{
+            fontSize: '2rem',
+            color: '#1a202c',
+            marginBottom: '30px',
+            fontWeight: '700',
+            lineHeight: '1.3'
           }}>
-            {stepStyle.icon} {stepStyle.label}
-          </span>
-        </div>
+            {step.stepTitle}
+          </h2>
 
-        {/* Step Title */}
-        <h2 style={{
-          fontSize: '2rem',
-          color: '#1a202c',
-          marginBottom: '30px',
-          fontWeight: '700',
-          lineHeight: '1.3'
-        }}>
-          {step.stepTitle}
-        </h2>
+          {/* Step Content */}
+          <div style={{
+            background: 'white',
+            borderRadius: '16px',
+            padding: '40px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+            fontSize: '1.1rem',
+            lineHeight: '1.9',
+            color: '#2d3748',
+            borderTop: `4px solid ${stepStyle.accent}`
+          }}>
+            {step.content && <PortableText value={step.content} />}
+          </div>
 
-        {/* Step Content */}
-        <div style={{
-          background: 'white',
-          borderRadius: '16px',
-          padding: '40px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-          fontSize: '1.1rem',
-          lineHeight: '1.9',
-          color: '#2d3748',
-          borderTop: `4px solid ${stepStyle.accent}`
-        }}>
-          {step.content && <PortableText value={step.content} />}
-        </div>
+          {/* Navigation Buttons */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginTop: '40px',
+            paddingTop: '25px',
+            borderTop: '1px solid #e2e8f0'
+          }}>
+            {currentStep > 0 ? (
+              <button onClick={goPrev} style={{
+                background: 'white',
+                color: '#667eea',
+                padding: '14px 28px',
+                border: '2px solid #667eea',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '1rem'
+              }}>
+                ← Previous
+              </button>
+            ) : <div />}
 
-        {/* Navigation Buttons */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: '40px',
-          paddingTop: '25px',
-          borderTop: '1px solid #e2e8f0'
-        }}>
-          {currentStep > 0 ? (
-            <button onClick={goPrev} style={{
-              background: 'white',
-              color: '#667eea',
-              padding: '14px 28px',
-              border: '2px solid #667eea',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              fontSize: '1rem'
-            }}>
-              ← Previous
-            </button>
-          ) : <div />}
+            <span style={{ color: '#a0aec0', fontSize: '0.9rem' }}>
+              {currentStep + 1} / {totalSteps}
+            </span>
 
-          <span style={{ color: '#a0aec0', fontSize: '0.9rem' }}>
-            {currentStep + 1} / {totalSteps}
-          </span>
-
-          {currentStep < totalSteps - 1 ? (
-            <button onClick={goNext} style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-              padding: '14px 28px',
-              border: 'none',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
-            }}>
-              Next →
-            </button>
-          ) : (
-            <button onClick={completeLesson} style={{
-              background: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
-              color: 'white',
-              padding: '14px 28px',
-              border: 'none',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              boxShadow: '0 4px 15px rgba(16, 163, 127, 0.3)'
-            }}>
-              Complete Lesson ✓
-            </button>
-          )}
-        </div>
-      </main>
+            {currentStep < totalSteps - 1 ? (
+              <button onClick={goNext} style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                padding: '14px 28px',
+                border: 'none',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+              }}>
+                Next →
+              </button>
+            ) : (
+              <button onClick={completeLesson} style={{
+                background: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
+                color: 'white',
+                padding: '14px 28px',
+                border: 'none',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                boxShadow: '0 4px 15px rgba(16, 163, 127, 0.3)'
+              }}>
+                Complete Lesson ✓
+              </button>
+            )}
+          </div>
+        </main>
+      </div>
     </div>
   )
 }
