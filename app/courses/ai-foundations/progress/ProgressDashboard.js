@@ -1,5 +1,6 @@
  'use client'
 
+import EmailCapture from '../../../components/EmailCapture'
 import { useState, useEffect } from 'react'
 
 const allBadges = [
@@ -430,7 +431,21 @@ export default function ProgressDashboard({ lessons }) {
             </div>
           ))}
         </div>
-
+{/* Email Capture */}
+<div style={{
+  background: 'white',
+  borderRadius: '16px',
+  padding: '40px',
+  marginBottom: '40px',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
+}}>
+  <EmailCapture
+    source="progress-dashboard"
+    title="🎯 Stay on Track!"
+    subtitle="Get weekly reminders and be the first to know when new courses launch."
+    buttonText="Keep Me Updated →"
+  />
+</div>
       </main>
 
       {/* Footer */}

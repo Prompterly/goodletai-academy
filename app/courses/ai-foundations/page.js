@@ -1,5 +1,5 @@
+import CourseEmailCapture from './CourseEmailCapture'
 import { getLessons } from '../../../lib/sanity'
-import Link from 'next/link'
 import LessonList from './LessonList'
 
 export default async function AIFoundationsPage() {
@@ -80,42 +80,46 @@ export default async function AIFoundationsPage() {
         </div>
       </header>
 
-      {/* Lessons - handled by client component */}
+      {/* Email Capture */}
+      <CourseEmailCapture />
+
       {/* Progress Link */}
-<div style={{
-  maxWidth: '900px',
-  margin: '0 auto',
-  padding: '30px 20px 0'
-}}>
-  <a
-    href="/courses/ai-foundations/progress"
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      background: 'white',
-      padding: '20px 25px',
-      borderRadius: '12px',
-      textDecoration: 'none',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-      border: '1px solid #e2e8f0',
-      transition: 'all 0.2s'
-    }}
-  >
-    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-      <span style={{ fontSize: '1.5rem' }}>📊</span>
-      <div>
-        <p style={{ margin: 0, fontWeight: 'bold', color: '#1a202c', fontSize: '1rem' }}>
-          Your Progress Dashboard
-        </p>
-        <p style={{ margin: 0, color: '#718096', fontSize: '0.85rem' }}>
-          Track completed lessons and earned badges
-        </p>
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: '20px 20px 0'
+      }}>
+        <a
+          href="/courses/ai-foundations/progress"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: 'white',
+            padding: '20px 25px',
+            borderRadius: '12px',
+            textDecoration: 'none',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+            border: '1px solid #e2e8f0',
+            transition: 'all 0.2s'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <span style={{ fontSize: '1.5rem' }}>📊</span>
+            <div>
+              <p style={{ margin: 0, fontWeight: 'bold', color: '#1a202c', fontSize: '1rem' }}>
+                Your Progress Dashboard
+              </p>
+              <p style={{ margin: 0, color: '#718096', fontSize: '0.85rem' }}>
+                Track completed lessons and earned badges
+              </p>
+            </div>
+          </div>
+          <span style={{ color: '#667eea', fontWeight: 'bold', fontSize: '1.2rem' }}>→</span>
+        </a>
       </div>
-    </div>
-    <span style={{ color: '#667eea', fontWeight: 'bold', fontSize: '1.2rem' }}>→</span>
-  </a>
-</div>
+
+      {/* Lessons by Week */}
       <section style={{ maxWidth: '900px', margin: '0 auto', padding: '80px 20px' }}>
         {Object.keys(weeks).length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px', color: '#718096' }}>

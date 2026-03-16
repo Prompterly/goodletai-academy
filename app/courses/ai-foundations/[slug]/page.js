@@ -1,5 +1,6 @@
 import { getLesson, getLessons } from '../../../../lib/sanity'
 import LessonSteps from './LessonSteps'
+import AccessGate from '../../../components/AccessGate'
 
 export async function generateStaticParams() {
   const lessons = await getLessons('ai-foundations')
@@ -24,5 +25,9 @@ export default async function LessonPage({ params }) {
     )
   }
 
-  return <LessonSteps lesson={lesson} />
+  return (
+    <AccessGate lesson={lesson}>
+      <LessonSteps lesson={lesson} />
+    </AccessGate>
+  )
 }

@@ -107,13 +107,10 @@ function MilestoneScreen({ milestone, onContinue }) {
 function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
   return (
     <>
-      {/* Overlay for mobile */}
       <div
         className={`sidebar-overlay ${isOpen ? 'active' : ''}`}
         onClick={onClose}
       />
-
-      {/* Sidebar */}
       <div
         className={`desktop-sidebar sidebar-drawer ${isOpen ? 'open' : 'closed'}`}
         style={{
@@ -130,7 +127,6 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
           flexShrink: 0
         }}
       >
-        {/* Sidebar Header */}
         <div style={{
           padding: '20px',
           borderBottom: '1px solid #edf2f7',
@@ -140,34 +136,25 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white'
         }}>
-          <h3 style={{
-            margin: 0,
-            fontSize: '0.95rem',
-            fontWeight: '700'
-          }}>
+          <h3 style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700' }}>
             📚 Lesson Steps
           </h3>
-          <button
-            onClick={onClose}
-            style={{
-              background: 'rgba(255,255,255,0.2)',
-              border: 'none',
-              color: 'white',
-              width: '32px',
-              height: '32px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '1.1rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
+          <button onClick={onClose} style={{
+            background: 'rgba(255,255,255,0.2)',
+            border: 'none',
+            color: 'white',
+            width: '32px',
+            height: '32px',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontSize: '1.1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
             ✕
           </button>
         </div>
-
-        {/* Progress in sidebar */}
         <div style={{
           padding: '15px 20px',
           borderBottom: '1px solid #edf2f7',
@@ -197,8 +184,6 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
             }} />
           </div>
         </div>
-
-        {/* Step List */}
         <div style={{ padding: '10px 0' }}>
           {steps.map((step, index) => {
             const isCompleted = index < currentStep
@@ -208,10 +193,7 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
               <div
                 key={index}
                 className="sidebar-item"
-                onClick={() => {
-                  onStepClick(index)
-                  onClose()
-                }}
+                onClick={() => { onStepClick(index); onClose() }}
                 style={{
                   padding: '14px 20px',
                   display: 'flex',
@@ -270,12 +252,10 @@ export default function LessonSteps({ lesson }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [animDirection, setAnimDirection] = useState('enter')
   const [animKey, setAnimKey] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 1024
-      setIsMobile(mobile)
       if (!mobile) setSidebarOpen(true)
       else setSidebarOpen(false)
     }
@@ -406,7 +386,6 @@ export default function LessonSteps({ lesson }) {
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif', background: '#f8fafc' }}>
 
-      {/* Top Nav */}
       <nav className="nav-top-bar" style={{
         background: 'white',
         padding: '15px 20px',
@@ -423,7 +402,6 @@ export default function LessonSteps({ lesson }) {
             marginBottom: '12px'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              {/* Hamburger / Sidebar Toggle */}
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="hamburger-btn"
@@ -472,7 +450,6 @@ export default function LessonSteps({ lesson }) {
         </div>
       </nav>
 
-      {/* Title Bar */}
       <div className="lesson-title-bar" style={{
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         color: 'white',
@@ -487,7 +464,6 @@ export default function LessonSteps({ lesson }) {
         </h1>
       </div>
 
-      {/* Sidebar */}
       <Sidebar
         steps={steps}
         currentStep={currentStep}
@@ -496,19 +472,12 @@ export default function LessonSteps({ lesson }) {
         onClose={() => setSidebarOpen(false)}
       />
 
-      {/* Content Area */}
-      <main
-        className="content-area content-main"
-        style={{
-          padding: '40px 20px 100px',
-          maxWidth: '850px',
-          margin: '0 auto'
-        }}
-      >
-        {/* Animated Step Content */}
+      <main className="content-area content-main" style={{
+        padding: '40px 20px 100px',
+        maxWidth: '850px',
+        margin: '0 auto'
+      }}>
         <div key={animKey} className={getAnimClass()}>
-
-          {/* Badge */}
           <div className="step-badge-container step-badge" style={{
             display: 'flex',
             alignItems: 'center',
@@ -530,7 +499,6 @@ export default function LessonSteps({ lesson }) {
             </span>
           </div>
 
-          {/* Title */}
           <h2 className="step-title step-title-text" style={{
             fontSize: '2rem',
             color: '#1a202c',
@@ -541,7 +509,6 @@ export default function LessonSteps({ lesson }) {
             {step.stepTitle}
           </h2>
 
-          {/* Content */}
           <div className="step-body step-content-box" style={{
             background: 'white',
             borderRadius: '16px',
@@ -556,7 +523,6 @@ export default function LessonSteps({ lesson }) {
           </div>
         </div>
 
-        {/* Desktop Navigation Buttons */}
         <div className="desktop-nav-buttons" style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -616,7 +582,6 @@ export default function LessonSteps({ lesson }) {
         </div>
       </main>
 
-      {/* Mobile Bottom Navigation Bar */}
       <div className="mobile-bottom-nav" style={{
         display: 'none',
         position: 'fixed',
@@ -631,7 +596,6 @@ export default function LessonSteps({ lesson }) {
         justifyContent: 'space-between',
         gap: '10px'
       }}>
-        {/* Previous */}
         {currentStep > 0 ? (
           <button onClick={goPrev} style={{
             background: 'white',
@@ -648,7 +612,6 @@ export default function LessonSteps({ lesson }) {
           </button>
         ) : <div style={{ flex: 1 }} />}
 
-        {/* Step Counter */}
         <div style={{
           textAlign: 'center',
           color: '#718096',
@@ -659,7 +622,6 @@ export default function LessonSteps({ lesson }) {
           {currentStep + 1} / {totalSteps}
         </div>
 
-        {/* Next / Complete */}
         {currentStep < totalSteps - 1 ? (
           <button onClick={goNext} style={{
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
