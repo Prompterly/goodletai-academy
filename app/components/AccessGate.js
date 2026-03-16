@@ -1,4 +1,4 @@
- 'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import EmailCapture from './EmailCapture'
@@ -6,8 +6,26 @@ import EmailCapture from './EmailCapture'
 export default function AccessGate({ lesson, children }) {
   const [hasAccess, setHasAccess] = useState(false)
   const [checking, setChecking] = useState(true)
+  const [paymentLoading, setPaymentLoading] = useState(false)
+  const [paystackLoaded, setPaystackLoaded] = useState(false)
 
   const lessonNum = lesson.lessonNumber
+
+  // Load Paystack script
+  useEffect(() => {
+    if (lessonNum >= 8) {
+      const script = document.createElement('script')
+      script.src = 'https://js.paystack.co/v1/inline.js'
+      script.async = true
+      script.onload = () => setPaystackLoaded(true)
+      document.body.appendChild(script)
+      return () => {
+        if (document.body.contains(script)) {
+          document.body.removeChild(script)
+        }
+      }
+    }
+  }, [lessonNum])
 
   useEffect(() => {
     // Lessons 1-4: Free for everyone
@@ -40,6 +58,56 @@ export default function AccessGate({ lesson, children }) {
     setChecking(false)
   }, [lessonNum])
 
+  const handlePayment = () => {
+    const email = localStorage.getItem('subscribedEmail')
+
+    if (!email) {
+      alert('Please enter your email first to continue.')
+      return
+    }
+
+    if (!paystackLoaded || !window.PaystackPop) {
+      alert('Payment system is loading. Please try again in a moment.')
+      return
+    }
+
+    setPaymentLoading(true)
+
+    const handler = window.PaystackPop.setup({
+      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+      email: email,
+      amount: 19990, // GHS 199.90
+      currency: 'GHS',
+      ref: 'GAA_' + Math.floor(Math.random() * 1000000000 + 1),
+      metadata: {
+        custom_fields: [
+          {
+            display_name: 'Course',
+            variable_name: 'course',
+            value: 'AI Foundations - Premium'
+          },
+          {
+            display_name: 'Lessons',
+            variable_name: 'lessons',
+            value: 'Lessons 8-10'
+          }
+        ]
+      },
+      callback: function (response) {
+        // Payment successful
+        localStorage.setItem('premiumAccess', 'true')
+        localStorage.setItem('paymentRef', response.reference)
+        setHasAccess(true)
+        setPaymentLoading(false)
+      },
+      onClose: function () {
+        setPaymentLoading(false)
+      }
+    })
+
+    handler.openIframe()
+  }
+
   if (checking) {
     return (
       <div style={{
@@ -71,7 +139,6 @@ export default function AccessGate({ lesson, children }) {
         fontFamily: 'Arial, sans-serif'
       }}>
         <div style={{ maxWidth: '500px', width: '100%', textAlign: 'center' }}>
-          {/* Icon */}
           <div style={{
             width: '80px',
             height: '80px',
@@ -97,7 +164,6 @@ export default function AccessGate({ lesson, children }) {
             Week {lesson.weekNumber} · Lesson {lesson.lessonNumber}
           </p>
 
-          {/* What you get */}
           <div style={{
             background: 'rgba(255,255,255,0.05)',
             borderRadius: '12px',
@@ -117,7 +183,6 @@ export default function AccessGate({ lesson, children }) {
             ))}
           </div>
 
-          {/* Email Capture */}
           <EmailCapture
             source="email-gate"
             lesson={lesson.title}
@@ -129,7 +194,6 @@ export default function AccessGate({ lesson, children }) {
             onSuccess={() => setHasAccess(true)}
           />
 
-          {/* Back link */}
           <a href="/courses/ai-foundations" style={{
             display: 'inline-block',
             color: 'rgba(255,255,255,0.5)',
@@ -146,6 +210,8 @@ export default function AccessGate({ lesson, children }) {
 
   // Payment Gate (Lessons 8-10)
   if (lessonNum >= 8) {
+    const hasEmail = typeof window !== 'undefined' && localStorage.getItem('subscribedEmail')
+
     return (
       <div style={{
         minHeight: '100vh',
@@ -157,7 +223,6 @@ export default function AccessGate({ lesson, children }) {
         fontFamily: 'Arial, sans-serif'
       }}>
         <div style={{ maxWidth: '500px', width: '100%', textAlign: 'center' }}>
-          {/* Icon */}
           <div style={{
             width: '80px',
             height: '80px',
@@ -200,13 +265,12 @@ export default function AccessGate({ lesson, children }) {
               color: 'white',
               marginBottom: '5px'
             }}>
-              $9.99
+             GHS 199.9
             </div>
             <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', margin: '0 0 20px 0' }}>
               Lifetime access to all premium lessons
             </p>
 
-            {/* What's included */}
             <div style={{ textAlign: 'left' }}>
               {[
                 'Lessons 8-10 (Premium content)',
@@ -225,32 +289,52 @@ export default function AccessGate({ lesson, children }) {
             </div>
           </div>
 
-          {/* Payment Button (placeholder — we'll add real payment next session) */}
-          <button
-            onClick={() => {
-              alert('Payment integration coming soon! For now, enjoy free access.')
-              localStorage.setItem('premiumAccess', 'true')
-              setHasAccess(true)
-            }}
-            style={{
-              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-              color: 'white',
-              padding: '18px 50px',
-              border: 'none',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              fontSize: '1.1rem',
-              boxShadow: '0 8px 30px rgba(245, 158, 11, 0.4)',
-              width: '100%',
-              maxWidth: '350px',
-              transition: 'all 0.25s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-          >
-            Unlock Full Course — $9.99 →
-          </button>
+          {/* Email capture if not subscribed yet */}
+          {!hasEmail && (
+            <div style={{ marginBottom: '20px' }}>
+              <EmailCapture
+                source="payment-gate"
+                lesson={lesson.title}
+                title=""
+                subtitle="Enter your email first to continue with payment."
+                buttonText="Continue →"
+                compact={true}
+                dark={true}
+              />
+            </div>
+          )}
+
+          {/* Payment Button */}
+          {hasEmail && (
+            <button
+              onClick={handlePayment}
+              disabled={paymentLoading}
+              style={{
+                background: paymentLoading
+                  ? '#a0aec0'
+                  : 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                color: 'white',
+                padding: '18px 50px',
+                border: 'none',
+                borderRadius: '12px',
+                cursor: paymentLoading ? 'wait' : 'pointer',
+                fontWeight: 'bold',
+                fontSize: '1.1rem',
+                boxShadow: '0 8px 30px rgba(245, 158, 11, 0.4)',
+                width: '100%',
+                maxWidth: '350px',
+                transition: 'all 0.25s ease'
+              }}
+              onMouseEnter={(e) => {
+                if (!paymentLoading) e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
+            >
+              {paymentLoading ? '⏳ Processing...' : 'Unlock Full Course — GHS 199.90 →'}
+            </button>
+          )}
 
           {/* Trust badges */}
           <div style={{
@@ -260,14 +344,23 @@ export default function AccessGate({ lesson, children }) {
             marginTop: '20px',
             flexWrap: 'wrap'
           }}>
-            {['🔒 Secure', '💰 Money-back guarantee', '♾️ Lifetime access'].map((item, i) => (
+            {['🔒 Secure Payment', '💰 Money-back guarantee', '♾️ Lifetime access'].map((item, i) => (
               <span key={i} style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem' }}>
                 {item}
               </span>
             ))}
           </div>
 
-          {/* What's free */}
+          {/* Powered by Paystack */}
+          <p style={{
+            color: 'rgba(255,255,255,0.3)',
+            fontSize: '0.75rem',
+            marginTop: '15px'
+          }}>
+            Powered by Paystack · Cards & Mobile Money accepted
+          </p>
+
+          {/* Progress so far */}
           <div style={{
             marginTop: '30px',
             padding: '20px',
@@ -291,7 +384,6 @@ export default function AccessGate({ lesson, children }) {
             </div>
           </div>
 
-          {/* Back link */}
           <a href="/courses/ai-foundations" style={{
             display: 'inline-block',
             color: 'rgba(255,255,255,0.5)',
