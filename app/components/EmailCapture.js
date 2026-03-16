@@ -1,8 +1,118 @@
- 'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 
-export default function EmailCapture({ 
+// Common email typo corrections
+const typoFixes = {
+  'gmal.com': 'gmail.com',
+  'gmial.com': 'gmail.com',
+  'gmai.com': 'gmail.com',
+  'gmil.com': 'gmail.com',
+  'gmail.co': 'gmail.com',
+  'gmail.cm': 'gmail.com',
+  'gmaill.com': 'gmail.com',
+  'gamil.com': 'gmail.com',
+  'gnail.com': 'gmail.com',
+  'yaho.com': 'yahoo.com',
+  'yahooo.com': 'yahoo.com',
+  'yahoo.co': 'yahoo.com',
+  'yahoo.cm': 'yahoo.com',
+  'yhaoo.com': 'yahoo.com',
+  'hotmal.com': 'hotmail.com',
+  'hotmai.com': 'hotmail.com',
+  'hotmial.com': 'hotmail.com',
+  'hotmail.co': 'hotmail.com',
+  'outlok.com': 'outlook.com',
+  'outloo.com': 'outlook.com',
+  'outlook.co': 'outlook.com',
+  'outllook.com': 'outlook.com',
+  'iclod.com': 'icloud.com',
+  'icloud.co': 'icloud.com',
+  'protonmal.com': 'protonmail.com',
+  'protonmail.co': 'protonmail.com'
+}
+
+// Disposable/temporary email domains to block
+const disposableDomains = [
+  'tempmail.com', 'throwaway.email', 'guerrillamail.com',
+  'mailinator.com', 'yopmail.com', 'sharklasers.com',
+  'guerrillamailblock.com', 'grr.la', 'dispostable.com',
+  'tempail.com', 'fakeinbox.com', 'mailnesia.com',
+  'maildrop.cc', 'discard.email', 'trashmail.com',
+  'temp-mail.org', '10minutemail.com', 'minutemail.com'
+]
+
+function validateEmail(email) {
+  const trimmed = email.trim().toLowerCase()
+  const errors = []
+  let suggestion = null
+
+  // Empty check
+  if (!trimmed) {
+    return { valid: false, errors: ['Please enter your email address'], suggestion: null, cleaned: trimmed }
+  }
+
+  // Space check
+  if (trimmed.includes(' ')) {
+    return { valid: false, errors: ['Email cannot contain spaces'], suggestion: null, cleaned: trimmed.replace(/\s/g, '') }
+  }
+
+  // @ symbol check
+  if (!trimmed.includes('@')) {
+    return { valid: false, errors: ['Missing @ symbol'], suggestion: null, cleaned: trimmed }
+  }
+
+  // Split into parts
+  const parts = trimmed.split('@')
+
+  // Multiple @ check
+  if (parts.length !== 2) {
+    return { valid: false, errors: ['Email should have exactly one @ symbol'], suggestion: null, cleaned: trimmed }
+  }
+
+  const [localPart, domain] = parts
+
+  // Local part check
+  if (!localPart || localPart.length < 1) {
+    return { valid: false, errors: ['Missing name before @'], suggestion: null, cleaned: trimmed }
+  }
+
+  // Domain check
+  if (!domain || !domain.includes('.')) {
+    return { valid: false, errors: ['Invalid domain. Did you forget .com?'], suggestion: null, cleaned: trimmed }
+  }
+
+  // Domain too short
+  const domainParts = domain.split('.')
+  if (domainParts[domainParts.length - 1].length < 2) {
+    return { valid: false, errors: ['Invalid domain ending'], suggestion: null, cleaned: trimmed }
+  }
+
+  // Too short overall
+  if (trimmed.length < 6) {
+    return { valid: false, errors: ['Email is too short'], suggestion: null, cleaned: trimmed }
+  }
+
+  // Check for typos
+  if (typoFixes[domain]) {
+    suggestion = `${localPart}@${typoFixes[domain]}`
+  }
+
+  // Check for disposable emails
+  if (disposableDomains.includes(domain)) {
+    return { valid: false, errors: ['Please use a real email address, not a temporary one'], suggestion: null, cleaned: trimmed }
+  }
+
+  // Basic format regex
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(trimmed)) {
+    return { valid: false, errors: ['Invalid email format'], suggestion: null, cleaned: trimmed }
+  }
+
+  return { valid: true, errors: [], suggestion, cleaned: trimmed }
+}
+
+export default function EmailCapture({
   source = 'unknown',
   lesson = '',
   title = '🚀 Start Your AI Journey',
@@ -14,6 +124,8 @@ export default function EmailCapture({
 }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle')
+  const [errorMsg, setErrorMsg] = useState('')
+  const [suggestion, setSuggestion] = useState(null)
   const [alreadySubscribed, setAlreadySubscribed] = useState(false)
 
   useEffect(() => {
@@ -26,41 +138,68 @@ export default function EmailCapture({
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    if (!email || !email.includes('@')) {
+
+    // Validate
+    const result = validateEmail(email)
+
+    if (!result.valid) {
       setStatus('invalid')
+      setErrorMsg(result.errors[0])
+      if (result.cleaned !== email.trim().toLowerCase()) {
+        setEmail(result.cleaned)
+      }
+      return
+    }
+
+    // Show typo suggestion
+    if (result.suggestion && !suggestion) {
+      setSuggestion(result.suggestion)
+      setStatus('suggestion')
       return
     }
 
     setStatus('loading')
+    setSuggestion(null)
+
+    const cleanEmail = result.cleaned
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL, {
+      await fetch(process.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: email,
+          email: cleanEmail,
           source: source,
           lesson: lesson
         })
       })
 
-      localStorage.setItem('subscribedEmail', email)
+      localStorage.setItem('subscribedEmail', cleanEmail)
       setStatus('success')
       setAlreadySubscribed(true)
-
-      if (onSuccess) onSuccess(email)
+      if (onSuccess) onSuccess(cleanEmail)
 
     } catch (error) {
-      localStorage.setItem('subscribedEmail', email)
+      localStorage.setItem('subscribedEmail', cleanEmail)
       setStatus('success')
       setAlreadySubscribed(true)
-      if (onSuccess) onSuccess(email)
+      if (onSuccess) onSuccess(cleanEmail)
     }
   }
 
-  // Already subscribed — show minimal confirmation
+  const acceptSuggestion = () => {
+    setEmail(suggestion)
+    setSuggestion(null)
+    setStatus('idle')
+  }
+
+  const rejectSuggestion = () => {
+    setSuggestion(null)
+    setStatus('idle')
+  }
+
+  // Already subscribed
   if (alreadySubscribed && status !== 'success') {
     if (compact) return null
     return (
@@ -75,16 +214,16 @@ export default function EmailCapture({
       }}>
         <span style={{ fontSize: '1.3rem' }}>✅</span>
         <div>
-          <p style={{ 
-            margin: 0, 
-            fontWeight: 'bold', 
+          <p style={{
+            margin: 0,
+            fontWeight: 'bold',
             color: dark ? 'white' : '#166534',
             fontSize: '0.95rem'
           }}>
             You're subscribed!
           </p>
-          <p style={{ 
-            margin: 0, 
+          <p style={{
+            margin: 0,
             color: dark ? 'rgba(255,255,255,0.7)' : '#4ade80',
             fontSize: '0.85rem'
           }}>
@@ -95,30 +234,30 @@ export default function EmailCapture({
     )
   }
 
-  // Success state — just submitted
+  // Success state
   if (status === 'success') {
     return (
       <div style={{
-        background: dark 
-          ? 'rgba(16, 163, 127, 0.2)' 
+        background: dark
+          ? 'rgba(16, 163, 127, 0.2)'
           : 'linear-gradient(135deg, #ecfdf5, #d1fae5)',
         borderRadius: '16px',
         padding: compact ? '25px' : '35px',
         textAlign: 'center',
-        border: dark 
-          ? '1px solid rgba(16, 163, 127, 0.3)' 
+        border: dark
+          ? '1px solid rgba(16, 163, 127, 0.3)'
           : '1px solid #a7f3d0',
         animation: 'scaleIn 0.4s ease-out forwards'
       }}>
         <div style={{ fontSize: '2.5rem', marginBottom: '15px' }}>🎉</div>
-        <h3 style={{ 
-          color: dark ? 'white' : '#065f46', 
+        <h3 style={{
+          color: dark ? 'white' : '#065f46',
           marginBottom: '8px',
           fontSize: '1.3rem'
         }}>
           You're in!
         </h3>
-        <p style={{ 
+        <p style={{
           color: dark ? 'rgba(255,255,255,0.8)' : '#047857',
           fontSize: '0.95rem',
           margin: 0
@@ -132,25 +271,18 @@ export default function EmailCapture({
   // Main form
   return (
     <div style={{
-      background: dark 
-        ? 'rgba(255,255,255,0.08)' 
-        : 'white',
+      background: dark ? 'rgba(255,255,255,0.08)' : 'white',
       borderRadius: '16px',
       padding: compact ? '25px' : '35px',
-      border: dark 
-        ? '1px solid rgba(255,255,255,0.1)' 
-        : '1px solid #e2e8f0',
-      boxShadow: dark 
-        ? 'none' 
-        : '0 2px 8px rgba(0,0,0,0.06)'
+      border: dark ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e2e8f0',
+      boxShadow: dark ? 'none' : '0 2px 8px rgba(0,0,0,0.06)'
     }}>
       {/* Title */}
-      {!compact && (
+      {!compact && title && (
         <h3 style={{
           fontSize: '1.3rem',
           fontWeight: '700',
           color: dark ? 'white' : '#1a202c',
-          marginBottom: '8px',
           margin: '0 0 8px 0'
         }}>
           {title}
@@ -161,12 +293,66 @@ export default function EmailCapture({
       <p style={{
         color: dark ? 'rgba(255,255,255,0.7)' : '#718096',
         fontSize: compact ? '0.9rem' : '0.95rem',
-        marginBottom: '20px',
         lineHeight: '1.6',
         margin: '0 0 20px 0'
       }}>
         {subtitle}
       </p>
+
+      {/* Typo Suggestion Banner */}
+      {status === 'suggestion' && suggestion && (
+        <div style={{
+          background: dark ? 'rgba(245, 158, 11, 0.2)' : '#fffbeb',
+          border: dark ? '1px solid rgba(245, 158, 11, 0.3)' : '1px solid #fbbf24',
+          borderRadius: '10px',
+          padding: '15px',
+          marginBottom: '15px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px'
+        }}>
+          <p style={{
+            margin: 0,
+            color: dark ? '#fbbf24' : '#92400e',
+            fontSize: '0.9rem',
+            fontWeight: '500'
+          }}>
+            ⚠️ Did you mean <strong>{suggestion}</strong>?
+          </p>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button
+              onClick={acceptSuggestion}
+              style={{
+                background: dark ? 'rgba(16,163,127,0.3)' : '#10a37f',
+                color: 'white',
+                padding: '8px 16px',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '0.85rem'
+              }}
+            >
+              Yes, fix it ✓
+            </button>
+            <button
+              onClick={rejectSuggestion}
+              style={{
+                background: 'transparent',
+                color: dark ? 'rgba(255,255,255,0.6)' : '#718096',
+                padding: '8px 16px',
+                border: dark ? '1px solid rgba(255,255,255,0.2)' : '1px solid #e2e8f0',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '0.85rem'
+              }}
+            >
+              No, it's correct
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} style={{
@@ -180,7 +366,14 @@ export default function EmailCapture({
           value={email}
           onChange={(e) => {
             setEmail(e.target.value)
-            if (status === 'invalid') setStatus('idle')
+            if (status === 'invalid') {
+              setStatus('idle')
+              setErrorMsg('')
+            }
+            if (status === 'suggestion') {
+              setSuggestion(null)
+              setStatus('idle')
+            }
           }}
           style={{
             flex: 1,
@@ -189,8 +382,8 @@ export default function EmailCapture({
             borderRadius: '10px',
             border: status === 'invalid'
               ? '2px solid #ef4444'
-              : dark 
-                ? '1px solid rgba(255,255,255,0.2)' 
+              : dark
+                ? '1px solid rgba(255,255,255,0.2)'
                 : '1px solid #e2e8f0',
             background: dark ? 'rgba(255,255,255,0.1)' : 'white',
             color: dark ? 'white' : '#1a202c',
@@ -203,8 +396,8 @@ export default function EmailCapture({
           }}
           onBlur={(e) => {
             if (status !== 'invalid') {
-              e.target.style.borderColor = dark 
-                ? 'rgba(255,255,255,0.2)' 
+              e.target.style.borderColor = dark
+                ? 'rgba(255,255,255,0.2)'
                 : '#e2e8f0'
             }
           }}
@@ -239,9 +432,16 @@ export default function EmailCapture({
       </form>
 
       {/* Error message */}
-      {status === 'invalid' && (
-        <p style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '8px', margin: '8px 0 0 0' }}>
-          Please enter a valid email address
+      {status === 'invalid' && errorMsg && (
+        <p style={{
+          color: '#ef4444',
+          fontSize: '0.85rem',
+          margin: '10px 0 0 0',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px'
+        }}>
+          ⚠️ {errorMsg}
         </p>
       )}
 
@@ -249,7 +449,6 @@ export default function EmailCapture({
       <p style={{
         color: dark ? 'rgba(255,255,255,0.4)' : '#a0aec0',
         fontSize: '0.8rem',
-        marginTop: '12px',
         margin: '12px 0 0 0'
       }}>
         🔒 No spam. Unsubscribe anytime. We respect your inbox.
