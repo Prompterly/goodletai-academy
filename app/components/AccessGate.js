@@ -8,6 +8,7 @@ export default function AccessGate({ lesson, children }) {
   const [checking, setChecking] = useState(true)
   const [paymentLoading, setPaymentLoading] = useState(false)
   const [paystackLoaded, setPaystackLoaded] = useState(false)
+  const [hasEmail, setHasEmail] = useState(false)
 
   const lessonNum = lesson.lessonNumber
 
@@ -51,6 +52,10 @@ export default function AccessGate({ lesson, children }) {
       if (paid === 'true') {
         setHasAccess(true)
       }
+      const email = localStorage.getItem('subscribedEmail')
+      if (email) {
+        setHasEmail(true)
+      }
       setChecking(false)
       return
     }
@@ -76,7 +81,7 @@ export default function AccessGate({ lesson, children }) {
     const handler = window.PaystackPop.setup({
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
       email: email,
-      amount: 19990, // GHS 199.90
+      amount: 19990,
       currency: 'GHS',
       ref: 'GAA_' + Math.floor(Math.random() * 1000000000 + 1),
       metadata: {
@@ -94,7 +99,6 @@ export default function AccessGate({ lesson, children }) {
         ]
       },
       callback: function (response) {
-        // Payment successful
         localStorage.setItem('premiumAccess', 'true')
         localStorage.setItem('paymentRef', response.reference)
         setHasAccess(true)
@@ -210,8 +214,6 @@ export default function AccessGate({ lesson, children }) {
 
   // Payment Gate (Lessons 8-10)
   if (lessonNum >= 8) {
-    const hasEmail = typeof window !== 'undefined' && localStorage.getItem('subscribedEmail')
-
     return (
       <div style={{
         minHeight: '100vh',
@@ -265,7 +267,7 @@ export default function AccessGate({ lesson, children }) {
               color: 'white',
               marginBottom: '5px'
             }}>
-             GHS 199.9
+              GHS 199.90
             </div>
             <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', margin: '0 0 20px 0' }}>
               Lifetime access to all premium lessons
@@ -300,6 +302,7 @@ export default function AccessGate({ lesson, children }) {
                 buttonText="Continue →"
                 compact={true}
                 dark={true}
+                onSuccess={() => setHasEmail(true)}
               />
             </div>
           )}
