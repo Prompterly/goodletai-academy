@@ -601,7 +601,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                 duration: '6 weeks',
                 color: '#10a37f',
                 gradient: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
-                price: 'Coming Soon',
+                price: 'GHS 499',
                 url: '/courses/ai-automation-specialist',
                 tag: 'HIGH DEMAND'
               },
@@ -615,7 +615,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                 duration: '4 weeks',
                 color: '#f5576c',
                 gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                price: 'Coming Soon',
+                price: 'GHS 399',
                 url: '/courses/ai-career-builder',
                 tag: 'CAREER TRACK'
               }
