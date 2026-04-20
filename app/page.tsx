@@ -1185,6 +1185,9 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                 <li style={{ marginBottom: '12px', color: '#a0aec0', fontSize: '0.95rem' }}>
                   🌐 www.goodletaiacademy.com
                 </li>
+                <li style={{ marginBottom: '12px', color: '#a0aec0', fontSize: '0.95rem' }}>
+                  💬 WhatsApp: +447379219268
+                </li>
               </ul>
             </div>
           </div>
