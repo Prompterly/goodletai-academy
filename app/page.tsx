@@ -4,7 +4,37 @@ import { useState } from 'react'
 
 export default function Home() {
   const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 const [hoveredPath, setHoveredPath] = useState<number | null>(null)
+
+  const handleSubscribe = async () => {
+    if (!email || !email.includes('@')) {
+      setSubmitError('Please enter a valid email address.')
+      return
+    }
+    setSubmitting(true)
+    setSubmitError('')
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSubmitted(true)
+        setEmail('')
+      } else {
+        setSubmitError(data.error || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      setSubmitError('Something went wrong. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div style={{ minHeight: '100vh', fontFamily: "'Segoe UI', Arial, sans-serif", overflowX: 'hidden' }}>
@@ -1224,50 +1254,62 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
             border: '1px solid rgba(255,255,255,0.1)',
             marginBottom: '30px'
           }}>
-            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <input 
-                type="email" 
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  padding: '16px 24px',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  background: 'rgba(255,255,255,0.1)',
-                  color: 'white',
-                  flex: '1',
-                  maxWidth: '350px',
-                  fontSize: '1rem',
-                  outline: 'none'
-                }}
-              />
-              <button style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                padding: '16px 35px',
-                border: 'none',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                fontSize: '1rem',
-                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
-              }}>
-                Join the Academy →
-              </button>
-            </div>
-            <p style={{ fontSize: '0.85rem', opacity: 0.5, marginTop: '15px' }}>
-              No spam. Unsubscribe anytime. We respect your inbox.
-            </p>
+            {submitted ? (
+              <div style={{ textAlign: 'center', padding: '10px 0' }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🎉</div>
+                <p style={{ fontSize: '1.2rem', fontWeight: 'bold', marginBottom: '8px' }}>You're in!</p>
+                <p style={{ fontSize: '1rem', opacity: 0.8 }}>Check your inbox — your welcome email is on its way.</p>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
+                    style={{
+                      padding: '16px 24px',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      background: 'rgba(255,255,255,0.1)',
+                      color: 'white',
+                      flex: '1',
+                      maxWidth: '350px',
+                      fontSize: '1rem',
+                      outline: 'none'
+                    }}
+                  />
+                  <button
+                    onClick={handleSubscribe}
+                    disabled={submitting}
+                    style={{
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      color: 'white',
+                      padding: '16px 35px',
+                      border: 'none',
+                      borderRadius: '12px',
+                      cursor: submitting ? 'not-allowed' : 'pointer',
+                      fontWeight: 'bold',
+                      fontSize: '1rem',
+                      opacity: submitting ? 0.7 : 1,
+                      boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+                      transition: 'all 0.3s ease'
+                    }}>
+                    {submitting ? 'Joining...' : 'Join the Academy →'}
+                  </button>
+                </div>
+                {submitError && (
+                  <p style={{ fontSize: '0.85rem', color: '#fc8181', marginTop: '10px', textAlign: 'center' }}>
+                    {submitError}
+                  </p>
+                )}
+                <p style={{ fontSize: '0.85rem', opacity: 0.5, marginTop: '15px' }}>
+                  No spam. Unsubscribe anytime. We respect your inbox.
+                </p>
+              </>
+            )}
           </div>
 
           {/* Quick Links */}
