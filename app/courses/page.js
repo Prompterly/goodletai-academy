@@ -36,6 +36,7 @@ export default function Courses() {
       duration: "6 weeks",
       lessons: 30,
       price: "Coming Soon",
+      url: "/courses/ai-automation-specialist",
       color: "linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)",
       shadow: "rgba(16, 163, 127, 0.3)",
       featured: false
@@ -55,6 +56,7 @@ export default function Courses() {
       duration: "4 weeks",
       lessons: 16,
       price: "Coming Soon",
+      url: "/courses/ai-career-builder",
       color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
       shadow: "rgba(245, 87, 108, 0.3)",
       featured: false
@@ -70,7 +72,8 @@ export default function Courses() {
       level: "All Levels",
       duration: "3 weeks",
       lessons: 12,
-      price: "Coming Soon"
+      price: "Coming Soon",
+      url: "/courses/ai-marketers-strategists"
     },
     {
       id: 5,
@@ -361,6 +364,21 @@ export default function Courses() {
   }}>
     Start Learning →
   </a>
+) : path.url ? (
+  <a href={path.url} style={{
+    display: 'inline-block',
+    background: path.color,
+    color: 'white',
+    padding: '12px 25px',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    fontSize: '1rem',
+    textDecoration: 'none'
+  }}>
+    Start Learning →
+  </a>
 ) : (
   <button style={{
     background: '#cbd5e0',
@@ -447,12 +465,27 @@ export default function Courses() {
                       <span>📚 {course.lessons} lessons</span>
                       <span>⏱️ {course.duration}</span>
                     </div>
-                    <span style={{ 
-                      fontWeight: 'bold', 
-                      color: course.price === "Free" ? '#10a37f' : '#667eea'
-                    }}>
-                      {course.price}
-                    </span>
+                    {course.url ? (
+                      <a href={course.url} style={{
+                        display: 'inline-block',
+                        background: '#667eea',
+                        color: 'white',
+                        padding: '8px 18px',
+                        borderRadius: '8px',
+                        fontWeight: 'bold',
+                        fontSize: '0.9rem',
+                        textDecoration: 'none'
+                      }}>
+                        Start →
+                      </a>
+                    ) : (
+                      <span style={{
+                        fontWeight: 'bold',
+                        color: course.price === "Free" ? '#10a37f' : '#667eea'
+                      }}>
+                        {course.price}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

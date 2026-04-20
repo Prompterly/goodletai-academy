@@ -602,6 +602,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                 color: '#10a37f',
                 gradient: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
                 price: 'Coming Soon',
+                url: '/courses/ai-automation-specialist',
                 tag: 'HIGH DEMAND'
               },
               {
@@ -615,6 +616,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                 color: '#f5576c',
                 gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 price: 'Coming Soon',
+                url: '/courses/ai-career-builder',
                 tag: 'CAREER TRACK'
               }
             ].map((path, index) => (
@@ -716,6 +718,24 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
     }}
   >
     Start Free →
+  </a>
+) : path.url ? (
+  <a
+    href={path.url}
+    style={{
+      display: 'inline-block',
+      background: path.gradient,
+      color: 'white',
+      padding: '12px 25px',
+      borderRadius: '10px',
+      cursor: 'pointer',
+      fontWeight: 'bold',
+      fontSize: '0.95rem',
+      textDecoration: 'none',
+      boxShadow: `0 4px 15px rgba(0,0,0,0.2)`,
+    }}
+  >
+    Start Learning →
   </a>
 ) : (
   <button style={{
