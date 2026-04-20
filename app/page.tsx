@@ -698,9 +698,14 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                   </div>
 
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: '1.4rem', fontWeight: 'bold', color: path.color }}>
-                      {path.price}
-                    </span>
+                    <div>
+                      <span style={{ fontSize: '1.4rem', fontWeight: 'bold', color: path.color }}>
+                        {path.price}
+                      </span>
+                      <p style={{ margin: '3px 0 0', fontSize: '0.72rem', color: '#a0aec0' }}>
+                        {path.price === 'Free' ? 'Always free · No credit card' : 'One-time · Lifetime access'}
+                      </p>
+                    </div>
                     {path.price === "Free" ? (
   <a
     href="/courses/ai-foundations"
@@ -753,6 +758,63 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
 )}
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== WHY NOT YOUTUBE ==================== */}
+      <section style={{ padding: '100px 20px', background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)', color: 'white' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <span style={{
+              display: 'inline-block',
+              background: 'rgba(102,126,234,0.2)',
+              border: '1px solid rgba(102,126,234,0.4)',
+              padding: '8px 20px',
+              borderRadius: '30px',
+              fontSize: '0.9rem',
+              color: '#a5b4fc',
+              marginBottom: '20px'
+            }}>
+              THE HONEST ANSWER
+            </span>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '700', marginBottom: '15px' }}>
+              Why not just search YouTube?
+            </h2>
+            <p style={{ fontSize: '1.1rem', opacity: 0.75, maxWidth: '600px', margin: '0 auto' }}>
+              Great question. YouTube is free and full of AI content. Here's the real difference.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+            {[
+              {
+                icon: '🎯',
+                title: 'A Clear Path, Not a Rabbit Hole',
+                body: "YouTube gives you videos. We give you a curriculum. You always know exactly where you are, what's next, and when you're done. No more watching for 3 hours and feeling like you learned nothing actionable."
+              },
+              {
+                icon: '🏅',
+                title: 'Proof You Can Show Employers',
+                body: "Badges and a completion record signal real commitment — the kind you can put on a CV or LinkedIn profile. A YouTube watch history doesn't get you hired or land you clients."
+              },
+              {
+                icon: '🧠',
+                title: 'Built by Someone in the Industry',
+                body: "This isn't theory from an academic. Every lesson is built from real, production AI work — the exact skills that earned the instructor a front-row seat at one of the most advanced AI companies in the world."
+              }
+            ].map((item, i) => (
+              <div key={i} style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '16px',
+                padding: '40px 30px',
+                transition: 'all 0.3s ease'
+              }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: '20px' }}>{item.icon}</div>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: '600', marginBottom: '15px' }}>{item.title}</h3>
+                <p style={{ opacity: 0.75, lineHeight: '1.8', fontSize: '0.95rem', margin: 0 }}>{item.body}</p>
               </div>
             ))}
           </div>
@@ -991,6 +1053,117 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                   {tool.name}
                 </div>
                 <div style={{ color: '#718096', fontSize: '0.8rem' }}>{tool.models}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== TESTIMONIALS ==================== */}
+      <section style={{ padding: '100px 20px', background: 'white' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <span style={{
+              display: 'inline-block',
+              background: '#ecfdf5',
+              color: '#10a37f',
+              padding: '8px 20px',
+              borderRadius: '30px',
+              fontSize: '0.9rem',
+              fontWeight: 'bold',
+              marginBottom: '20px'
+            }}>
+              REAL RESULTS
+            </span>
+            <h2 style={{ fontSize: '2.5rem', color: '#1a202c', fontWeight: '700', marginBottom: '15px' }}>
+              What Our Students Are Saying
+            </h2>
+            <p style={{ fontSize: '1.1rem', color: '#4a5568', maxWidth: '600px', margin: '0 auto' }}>
+              These are real people who made the leap — and have the results to show for it.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '30px' }}>
+            {[
+              {
+                quote: "I built my first AI-powered portfolio project in just a few weeks — something I now confidently show in interviews. Two months after finishing, I landed interviews I wouldn't have even applied for before.",
+                outcome: '🎯 Landed interviews within 2 months',
+                name: 'Joana',
+                role: 'Marketing Coordinator → AI-Driven Growth',
+                color: '#667eea'
+              },
+              {
+                quote: "Within a month, I landed my first paying client purely from what I learned here. No fluff, no theory overload — just clear steps you can apply immediately.",
+                outcome: '💰 First paying client within 1 month',
+                name: 'Benji',
+                role: 'Freelance Designer → AI Services',
+                color: '#10a37f'
+              }
+            ].map((t, i) => (
+              <div key={i} style={{
+                background: '#f8fafc',
+                borderRadius: '20px',
+                padding: '40px',
+                border: '1px solid #e2e8f0',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <div style={{ fontSize: '1.1rem', color: '#f59e0b', marginBottom: '20px', letterSpacing: '2px' }}>
+                  ⭐⭐⭐⭐⭐
+                </div>
+                <p style={{
+                  fontSize: '1.05rem',
+                  color: '#2d3748',
+                  lineHeight: '1.85',
+                  marginBottom: '25px',
+                  fontStyle: 'italic',
+                  flex: 1
+                }}>
+                  "{t.quote}"
+                </p>
+                <div style={{
+                  display: 'inline-block',
+                  background: `${t.color}15`,
+                  color: t.color,
+                  padding: '6px 16px',
+                  borderRadius: '20px',
+                  fontSize: '0.85rem',
+                  fontWeight: 'bold',
+                  marginBottom: '25px',
+                  border: `1px solid ${t.color}30`,
+                  alignSelf: 'flex-start'
+                }}>
+                  {t.outcome}
+                </div>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  paddingTop: '20px',
+                  borderTop: '1px solid #edf2f7'
+                }}>
+                  <div style={{
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '50%',
+                    background: `linear-gradient(135deg, ${t.color}, ${t.color}88)`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: '1.1rem',
+                    flexShrink: 0
+                  }}>
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <p style={{ margin: 0, fontWeight: '700', color: '#1a202c', fontSize: '0.95rem' }}>{t.name}</p>
+                    <p style={{ margin: 0, color: '#718096', fontSize: '0.82rem' }}>{t.role}</p>
+                  </div>
+                  <div style={{ marginLeft: 'auto', fontSize: '0.75rem', color: '#a0aec0' }}>
+                    ✓ Verified Student
+                  </div>
+                </div>
               </div>
             ))}
           </div>

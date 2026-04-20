@@ -352,10 +352,53 @@ export default function LessonSteps({ lesson }) {
             Lesson Complete!
           </h1>
           <p className="milestone-content" style={{
-            fontSize: '1.1rem', opacity: 0.8, marginBottom: '40px', lineHeight: '1.7'
+            fontSize: '1.1rem', opacity: 0.8, marginBottom: '30px', lineHeight: '1.7'
           }}>
             Great work! You've completed "{lesson.title}". Keep the momentum going.
           </p>
+
+          {lesson.lessonNumber >= 3 && (
+            <div className="milestone-content" style={{
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.12)',
+              borderRadius: '14px',
+              padding: '24px',
+              marginBottom: '30px',
+              textAlign: 'left'
+            }}>
+              <p style={{ margin: '0 0 6px 0', fontSize: '0.8rem', color: '#a5b4fc', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold' }}>
+                ⚡ Ready to go deeper?
+              </p>
+              <p style={{ margin: '0 0 18px 0', fontSize: '0.95rem', opacity: 0.85, lineHeight: '1.7' }}>
+                The <strong>AI Automation Specialist</strong> course builds on exactly what you just learned — 30 lessons, real workflows, and a career-ready portfolio.
+              </p>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <a href="/courses/ai-automation-specialist" style={{
+                  background: 'linear-gradient(135deg, #10a37f, #0d8a6a)',
+                  color: 'white',
+                  padding: '10px 20px',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  fontSize: '0.88rem',
+                  textDecoration: 'none'
+                }}>
+                  Explore AI Automation →
+                </a>
+                <a href="/courses" style={{
+                  color: 'rgba(255,255,255,0.6)',
+                  padding: '10px 20px',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  fontSize: '0.88rem',
+                  textDecoration: 'none',
+                  border: '1px solid rgba(255,255,255,0.2)'
+                }}>
+                  See all courses
+                </a>
+              </div>
+            </div>
+          )}
+
           <a className="milestone-button btn-next" href="/courses/ai-foundations" style={{
             display: 'inline-block',
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',

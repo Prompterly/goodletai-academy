@@ -1,6 +1,9 @@
 'use client'
 
+import { useState } from 'react'
+
 export default function Courses() {
+  const [openFaq, setOpenFaq] = useState(null)
   const learningPaths = [
     {
       id: 1,
@@ -337,18 +340,23 @@ export default function Courses() {
                 </div>
 
                 {/* CTA */}
-                <div style={{ 
-                  display: 'flex', 
+                <div style={{
+                  display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center'
                 }}>
-                  <span style={{ 
-                    fontSize: '1.5rem', 
-                    fontWeight: 'bold',
-                    color: '#667eea'
-                  }}>
-                    {path.price}
-                  </span>
+                  <div>
+                    <span style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      color: '#667eea'
+                    }}>
+                      {path.price}
+                    </span>
+                    <p style={{ margin: '3px 0 0', fontSize: '0.72rem', color: '#a0aec0' }}>
+                      {path.price === 'Free' ? 'Always free · No credit card' : 'One-time · Lifetime access'}
+                    </p>
+                  </div>
                   {path.price === "Free" ? (
   <a href="/courses/ai-foundations" style={{
     display: 'inline-block',
@@ -397,6 +405,80 @@ export default function Courses() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Testimonials */}
+        <div style={{ marginBottom: '80px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '2rem', color: '#1a202c', marginBottom: '10px', fontWeight: '700' }}>
+              🗣️ What Students Are Saying
+            </h2>
+            <p style={{ color: '#4a5568', fontSize: '1rem' }}>
+              Real people. Real outcomes.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '25px' }}>
+            {[
+              {
+                quote: "I built my first AI-powered portfolio project in just a few weeks — something I now confidently show in interviews. Two months after finishing, I landed interviews I wouldn't have even applied for before.",
+                outcome: '🎯 Landed interviews within 2 months',
+                name: 'Joana',
+                role: 'Marketing Coordinator → AI-Driven Growth',
+                color: '#667eea'
+              },
+              {
+                quote: "Within a month, I landed my first paying client purely from what I learned here. No fluff, no theory overload — just clear steps you can apply immediately.",
+                outcome: '💰 First paying client within 1 month',
+                name: 'Benji',
+                role: 'Freelance Designer → AI Services',
+                color: '#10a37f'
+              }
+            ].map((t, i) => (
+              <div key={i} style={{
+                background: 'white',
+                borderRadius: '16px',
+                padding: '35px',
+                border: '1px solid #e2e8f0',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <div style={{ color: '#f59e0b', marginBottom: '15px', letterSpacing: '2px' }}>⭐⭐⭐⭐⭐</div>
+                <p style={{ fontSize: '1rem', color: '#2d3748', lineHeight: '1.85', marginBottom: '20px', fontStyle: 'italic', flex: 1 }}>
+                  "{t.quote}"
+                </p>
+                <div style={{
+                  display: 'inline-block',
+                  background: `${t.color}12`,
+                  color: t.color,
+                  padding: '5px 14px',
+                  borderRadius: '20px',
+                  fontSize: '0.82rem',
+                  fontWeight: 'bold',
+                  marginBottom: '20px',
+                  border: `1px solid ${t.color}25`,
+                  alignSelf: 'flex-start'
+                }}>
+                  {t.outcome}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingTop: '15px', borderTop: '1px solid #edf2f7' }}>
+                  <div style={{
+                    width: '40px', height: '40px', borderRadius: '50%',
+                    background: `linear-gradient(135deg, ${t.color}, ${t.color}88)`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: 'white', fontWeight: 'bold', fontSize: '1rem', flexShrink: 0
+                  }}>
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <p style={{ margin: 0, fontWeight: '700', color: '#1a202c', fontSize: '0.9rem' }}>{t.name}</p>
+                    <p style={{ margin: 0, color: '#718096', fontSize: '0.8rem' }}>{t.role}</p>
+                  </div>
+                  <div style={{ marginLeft: 'auto', fontSize: '0.72rem', color: '#a0aec0' }}>✓ Verified Student</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Individual Courses */}
@@ -492,6 +574,79 @@ export default function Courses() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section style={{ maxWidth: '800px', margin: '0 auto', padding: '0 20px 80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <h2 style={{ fontSize: '2.2rem', color: '#1a202c', marginBottom: '12px', fontWeight: '700' }}>
+            Frequently Asked Questions
+          </h2>
+          <p style={{ color: '#4a5568', fontSize: '1rem' }}>
+            Everything you need to know before you enrol.
+          </p>
+        </div>
+        {[
+          {
+            q: 'Do I need any coding experience?',
+            a: 'None at all. Every course is built for non-technical professionals. If you can use Google Docs and browse the internet, you have everything you need to get started.'
+          },
+          {
+            q: 'How long do I have access?',
+            a: 'Lifetime. You pay once and access your course forever — including all future content updates and additions we make to the curriculum.'
+          },
+          {
+            q: 'Is there a refund policy?',
+            a: 'Yes. If you complete less than 30% of the course and feel it is not right for you, contact us within 7 days of purchase for a full refund. No complicated forms — just send an email to info@goodletaiacademy.com.'
+          },
+          {
+            q: 'What if I fall behind or get busy?',
+            a: 'There are no deadlines, no cohort schedules, and no expiry dates. Your access is permanent. Pick it back up whenever life allows — your progress is always saved.'
+          },
+          {
+            q: 'Can I try the platform before buying?',
+            a: 'Absolutely. AI Foundations is completely free — no credit card required. Start there, get a full feel for how lessons work, and upgrade to a paid course when you are ready.'
+          }
+        ].map((item, i) => (
+          <div key={i} style={{
+            borderBottom: '1px solid #e2e8f0',
+            overflow: 'hidden'
+          }}>
+            <button
+              onClick={() => setOpenFaq(openFaq === i ? null : i)}
+              style={{
+                width: '100%',
+                background: 'none',
+                border: 'none',
+                padding: '22px 0',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                cursor: 'pointer',
+                textAlign: 'left',
+                gap: '15px'
+              }}
+            >
+              <span style={{ fontSize: '1.05rem', fontWeight: '600', color: '#1a202c' }}>{item.q}</span>
+              <span style={{
+                fontSize: '1.2rem',
+                color: '#667eea',
+                transform: openFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.25s ease',
+                flexShrink: 0
+              }}>
+                ▾
+              </span>
+            </button>
+            {openFaq === i && (
+              <div style={{ paddingBottom: '22px' }}>
+                <p style={{ margin: 0, color: '#4a5568', lineHeight: '1.8', fontSize: '0.97rem' }}>
+                  {item.a}
+                </p>
+              </div>
+            )}
+          </div>
+        ))}
       </section>
 
       {/* CTA Section */}
