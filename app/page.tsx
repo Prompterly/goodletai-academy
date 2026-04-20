@@ -940,6 +940,21 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
             border: '1px solid #e2e8f0'
           }}>
             <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+              <img
+                src="/instructor.jpg"
+                alt="Goodlet Owusu Ansah"
+                style={{
+                  width: '140px',
+                  height: '140px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '4px solid #667eea',
+                  marginBottom: '20px',
+                  boxShadow: '0 8px 30px rgba(102,126,234,0.3)',
+                  display: 'block',
+                  margin: '0 auto 20px'
+                }}
+              />
               <h3 style={{ fontSize: '1.8rem', color: '#1a202c', marginBottom: '10px' }}>
                 Goodlet Owusu Ansah
               </h3>
