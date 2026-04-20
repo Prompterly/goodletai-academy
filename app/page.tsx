@@ -1082,7 +1082,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
               These are real people who made the leap — and have the results to show for it.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '30px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
             {[
               {
                 quote: "I built my first AI-powered portfolio project in just a few weeks — something I now confidently show in interviews. Two months after finishing, I landed interviews I wouldn't have even applied for before.",

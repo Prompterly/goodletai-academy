@@ -2,6 +2,17 @@ import CourseEmailCapture from './CourseEmailCapture'
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 
+export const metadata = {
+  title: 'AI Foundations — Free Course | Goodlet AI Academy',
+  description: 'Build your AI fundamentals from scratch. Free course covering LLMs, prompt engineering, AI tools, and your first AI workflow. No coding experience required.',
+  openGraph: {
+    title: 'AI Foundations — Free Course | Goodlet AI Academy',
+    description: 'Free 4-week course. Learn prompt engineering, AI tools, and build your first AI workflow. No coding required.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-foundations',
+    type: 'website',
+  },
+}
+
 export default async function AIFoundationsPage() {
   const lessons = await getLessons('ai-foundations')
 

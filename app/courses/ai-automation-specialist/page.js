@@ -1,6 +1,17 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 
+export const metadata = {
+  title: 'AI Automation Specialist | Goodlet AI Academy',
+  description: 'Master AI-powered automation. Build no-code workflows, Custom GPTs, and AI agents. 30 lessons over 6 weeks. One-time payment, lifetime access. GHS 499.',
+  openGraph: {
+    title: 'AI Automation Specialist | Goodlet AI Academy',
+    description: 'Master AI automation in 6 weeks. No-code workflows, Custom GPTs, and real AI agents. GHS 499 — one-time, lifetime access.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-automation-specialist',
+    type: 'website',
+  },
+}
+
 export default async function AIAutomationPage() {
   const lessons = await getLessons('ai-automation-specialist')
 

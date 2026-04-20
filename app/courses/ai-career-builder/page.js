@@ -1,6 +1,17 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 
+export const metadata = {
+  title: 'AI Career Builder | Goodlet AI Academy',
+  description: 'Turn your AI skills into a career. Build a portfolio, ace interviews, and land your dream AI role. 16 lessons over 4 weeks. GHS 399 — one-time, lifetime access.',
+  openGraph: {
+    title: 'AI Career Builder | Goodlet AI Academy',
+    description: 'Land AI roles with a structured 4-week course. Portfolio building, interview prep, and job market navigation. GHS 399.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-career-builder',
+    type: 'website',
+  },
+}
+
 export default async function AICareerPage() {
   const lessons = await getLessons('ai-career-builder')
 

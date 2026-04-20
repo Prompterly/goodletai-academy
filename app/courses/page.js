@@ -417,7 +417,7 @@ export default function Courses() {
               Real people. Real outcomes.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))', gap: '25px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px' }}>
             {[
               {
                 quote: "I built my first AI-powered portfolio project in just a few weeks — something I now confidently show in interviews. Two months after finishing, I landed interviews I wouldn't have even applied for before.",

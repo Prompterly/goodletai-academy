@@ -1,6 +1,17 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 
+export const metadata = {
+  title: 'AI for Marketers & Strategists | Goodlet AI Academy',
+  description: 'Supercharge your marketing with AI. Market intelligence, content creation, and campaign optimisation. 12 lessons over 3 weeks. GHS 349 — one-time, lifetime access.',
+  openGraph: {
+    title: 'AI for Marketers & Strategists | Goodlet AI Academy',
+    description: 'Use AI to dominate market research, content, and campaigns. 12 practical lessons. GHS 349.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-marketers-strategists',
+    type: 'website',
+  },
+}
+
 export default async function AIMarketersPage() {
   const lessons = await getLessons('ai-for-marketers-and-strategists')
 
