@@ -84,6 +84,42 @@ function MilestoneScreen({ milestone, onContinue }) {
             {milestone.badgeDescription}
           </p>
         </div>
+        {/* WhatsApp Community */}
+        <div className="milestone-content" style={{
+          background: 'rgba(37, 211, 102, 0.1)',
+          border: '1px solid rgba(37, 211, 102, 0.25)',
+          borderRadius: '14px',
+          padding: '20px 24px',
+          marginBottom: '30px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          textAlign: 'left'
+        }}>
+          <span style={{ fontSize: '2rem', flexShrink: 0 }}>💬</span>
+          <div style={{ flex: 1 }}>
+            <p style={{ margin: '0 0 4px 0', fontWeight: '700', fontSize: '0.95rem', color: 'white' }}>
+              Join the student community
+            </p>
+            <p style={{ margin: '0 0 12px 0', opacity: 0.7, fontSize: '0.85rem', lineHeight: '1.5', color: 'white' }}>
+              Ask questions, share your wins, and learn alongside other students.
+            </p>
+            <a href="https://chat.whatsapp.com/IXumRpvFQYuK458qMwYDZO?mode=gi_t"
+              target="_blank" rel="noopener noreferrer"
+              style={{
+                background: '#25D366',
+                color: 'white',
+                padding: '8px 18px',
+                borderRadius: '8px',
+                fontWeight: 'bold',
+                fontSize: '0.85rem',
+                textDecoration: 'none',
+                display: 'inline-block'
+              }}>
+              Join WhatsApp Group →
+            </a>
+          </div>
+        </div>
         <button className="milestone-button btn-next" onClick={onContinue} style={{
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
@@ -356,6 +392,42 @@ export default function LessonSteps({ lesson }) {
           }}>
             Great work! You've completed "{lesson.title}". Keep the momentum going.
           </p>
+          {/* WhatsApp Community */}
+          <div className="milestone-content" style={{
+            background: 'rgba(37, 211, 102, 0.1)',
+            border: '1px solid rgba(37, 211, 102, 0.25)',
+            borderRadius: '14px',
+            padding: '20px 24px',
+            marginBottom: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
+            textAlign: 'left'
+          }}>
+            <span style={{ fontSize: '2rem', flexShrink: 0 }}>💬</span>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: '0 0 4px 0', fontWeight: '700', fontSize: '0.95rem', color: 'white' }}>
+                Join the student community
+              </p>
+              <p style={{ margin: '0 0 12px 0', opacity: 0.7, fontSize: '0.85rem', lineHeight: '1.5', color: 'white' }}>
+                Ask questions, share your wins, and learn alongside other students.
+              </p>
+              <a href="https://chat.whatsapp.com/IXumRpvFQYuK458qMwYDZO?mode=gi_t"
+                target="_blank" rel="noopener noreferrer"
+                style={{
+                  background: '#25D366',
+                  color: 'white',
+                  padding: '8px 18px',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  fontSize: '0.85rem',
+                  textDecoration: 'none',
+                  display: 'inline-block'
+                }}>
+                Join WhatsApp Group →
+              </a>
+            </div>
+          </div>
           <a className="milestone-button btn-next" href="/courses/ai-marketers-strategists" style={{
             display: 'inline-block',
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',

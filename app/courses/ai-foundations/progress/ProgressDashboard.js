@@ -431,6 +431,44 @@ export default function ProgressDashboard({ lessons }) {
             </div>
           ))}
         </div>
+{/* WhatsApp Community */}
+<div style={{
+  background: 'white',
+  borderRadius: '16px',
+  padding: '30px 40px',
+  marginBottom: '40px',
+  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+  flexWrap: 'wrap'
+}}>
+  <span style={{ fontSize: '2.5rem', flexShrink: 0 }}>💬</span>
+  <div style={{ flex: 1, minWidth: '200px' }}>
+    <h3 style={{ margin: '0 0 6px 0', fontSize: '1.1rem', color: '#1a202c', fontWeight: '700' }}>
+      Join the Student Community
+    </h3>
+    <p style={{ margin: '0 0 16px 0', color: '#718096', fontSize: '0.9rem', lineHeight: '1.6' }}>
+      Connect with fellow learners, ask questions, and share your progress in our WhatsApp group.
+    </p>
+    <a href="https://chat.whatsapp.com/IXumRpvFQYuK458qMwYDZO?mode=gi_t"
+      target="_blank" rel="noopener noreferrer"
+      style={{
+        background: '#25D366',
+        color: 'white',
+        padding: '11px 24px',
+        borderRadius: '9px',
+        fontWeight: 'bold',
+        fontSize: '0.9rem',
+        textDecoration: 'none',
+        display: 'inline-block',
+        boxShadow: '0 4px 12px rgba(37, 211, 102, 0.3)'
+      }}>
+      Join WhatsApp Group →
+    </a>
+  </div>
+</div>
+
 {/* Email Capture */}
 <div style={{
   background: 'white',
