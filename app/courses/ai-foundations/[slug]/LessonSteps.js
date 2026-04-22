@@ -2,7 +2,21 @@
 
 import { useState, useEffect } from 'react'
 import { PortableText } from '../../../../lib/sanity'
+import EmailCapture from '../../../components/EmailCapture'
 import './animations.css'
+
+// Thin wrapper so EmailCapture can call setHasAccess on success
+function EmailGate({ onUnlock }) {
+  return (
+    <EmailCapture
+      source="lesson-gate"
+      title=""
+      subtitle=""
+      buttonText="Unlock Free Lessons →"
+      onSuccess={() => onUnlock()}
+    />
+  )
+}
 
 const stepTypeStyles = {
   hook:        { icon: '🪝', label: 'Hook',           accent: '#f59e0b', pillBg: '#f59e0b', contentBg: '#fffbeb', calloutBg: '#fffdf0' },
@@ -267,6 +281,8 @@ export default function LessonSteps({ lesson }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [animDirection, setAnimDirection] = useState('enter')
   const [animKey, setAnimKey] = useState(0)
+  const [accessChecked, setAccessChecked] = useState(false)
+  const [hasAccess, setHasAccess] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -277,6 +293,12 @@ export default function LessonSteps({ lesson }) {
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    const saved = localStorage.getItem('subscribedEmail')
+    setHasAccess(!!saved)
+    setAccessChecked(true)
   }, [])
 
   const steps = lesson.steps || []
@@ -340,6 +362,50 @@ export default function LessonSteps({ lesson }) {
     if (animDirection === 'backward') return 'step-content-backward'
     return 'step-content-enter'
   }
+
+  // ── ACCESS GATE ─────────────────────────────────────────────────────────
+  if (!accessChecked) return null // avoid flash while localStorage is read
+
+  if (!hasAccess) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '40px 20px',
+        fontFamily: 'Arial, sans-serif'
+      }}>
+        <div style={{ maxWidth: '480px', width: '100%', textAlign: 'center', color: 'white' }}>
+          <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>🔒</div>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: '800', marginBottom: '10px', lineHeight: '1.3' }}>
+            Sign up to access lessons
+          </h1>
+          <p style={{ opacity: 0.75, fontSize: '1rem', lineHeight: '1.7', marginBottom: '32px' }}>
+            AI Foundations is completely free. Just drop your email to unlock all lessons instantly.
+          </p>
+          <div style={{
+            background: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(255,255,255,0.12)',
+            borderRadius: '16px',
+            padding: '28px',
+            marginBottom: '20px'
+          }}>
+            <EmailGate onUnlock={() => setHasAccess(true)} />
+          </div>
+          <a href="/courses/ai-foundations" style={{
+            color: 'rgba(255,255,255,0.5)',
+            fontSize: '0.85rem',
+            textDecoration: 'none'
+          }}>
+            ← Back to course page
+          </a>
+        </div>
+      </div>
+    )
+  }
+  // ────────────────────────────────────────────────────────────────────────
 
   if (showMilestone) {
     return (

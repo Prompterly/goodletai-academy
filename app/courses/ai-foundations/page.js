@@ -1,4 +1,3 @@
-import CourseEmailCapture from './CourseEmailCapture'
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 
@@ -90,9 +89,6 @@ export default async function AIFoundationsPage() {
           ))}
         </div>
       </header>
-
-      {/* Email Capture */}
-      <CourseEmailCapture />
 
       {/* Progress Link */}
       <div style={{
