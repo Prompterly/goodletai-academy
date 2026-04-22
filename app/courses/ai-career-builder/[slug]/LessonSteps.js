@@ -5,12 +5,12 @@ import { PortableText } from '../../../../lib/sanity'
 import './animations.css'
 
 const stepTypeStyles = {
-  hook: { icon: '🪝', label: 'Hook', accent: '#667eea', bg: '#eef2ff' },
-  explanation: { icon: '📖', label: 'Concept', accent: '#667eea', bg: '#eef2ff' },
-  example: { icon: '💡', label: 'Example', accent: '#10a37f', bg: '#ecfdf5' },
-  motivation: { icon: '🔥', label: 'Why It Matters', accent: '#f59e0b', bg: '#fffbeb' },
-  exercise: { icon: '🖊️', label: 'Exercise', accent: '#d97706', bg: '#fffbeb' },
-  summary: { icon: '📌', label: 'Summary', accent: '#8b5cf6', bg: '#f5f3ff' }
+  hook:        { icon: '🪝', label: 'Hook',           accent: '#f59e0b', pillBg: '#f59e0b', contentBg: '#fffbeb', calloutBg: '#fffdf0' },
+  explanation: { icon: '📘', label: 'Concept',        accent: '#764ba2', pillBg: '#764ba2', contentBg: '#f5f3ff', calloutBg: '#f3f0ff' },
+  example:     { icon: '💡', label: 'Example',        accent: '#38b2ac', pillBg: '#38b2ac', contentBg: '#e6fffa', calloutBg: '#f0fffe' },
+  motivation:  { icon: '🔥', label: 'Why It Matters', accent: '#f59e0b', pillBg: '#f59e0b', contentBg: '#fffbeb', calloutBg: '#fffdf0' },
+  exercise:    { icon: '🖊️', label: 'Exercise',       accent: '#ed8936', pillBg: '#ed8936', contentBg: '#fffaf0', calloutBg: '#fff8f0' },
+  summary:     { icon: '📌', label: 'Summary',        accent: '#48bb78', pillBg: '#48bb78', contentBg: '#f0fff4', calloutBg: '#f0fff4' }
 }
 
 function MilestoneScreen({ milestone, onContinue }) {
@@ -115,8 +115,8 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
         className={`desktop-sidebar sidebar-drawer ${isOpen ? 'open' : 'closed'}`}
         style={{
           width: '280px',
-          background: 'white',
-          borderRight: '1px solid #e2e8f0',
+          background: '#1a1a2e',
+          borderRight: '1px solid #2d2a4e',
           padding: '0',
           overflowY: 'auto',
           height: '100vh',
@@ -128,26 +128,24 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
         }}
       >
         <div style={{
-          padding: '20px',
-          borderBottom: '1px solid #edf2f7',
+          padding: '18px 20px',
+          borderBottom: '1px solid #2d2a4e',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white'
+          alignItems: 'center'
         }}>
-          <h3 style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700' }}>
-            📚 Lesson Steps
+          <h3 style={{ margin: 0, fontSize: '0.95rem', fontWeight: '700', color: 'white' }}>
+            Lesson Steps
           </h3>
           <button onClick={onClose} style={{
-            background: 'rgba(255,255,255,0.2)',
+            background: 'rgba(255,255,255,0.1)',
             border: 'none',
-            color: 'white',
-            width: '32px',
-            height: '32px',
-            borderRadius: '8px',
+            color: '#a0aec0',
+            width: '28px',
+            height: '28px',
+            borderRadius: '6px',
             cursor: 'pointer',
-            fontSize: '1.1rem',
+            fontSize: '1rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -155,36 +153,27 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
             ✕
           </button>
         </div>
-        <div style={{
-          padding: '15px 20px',
-          borderBottom: '1px solid #edf2f7',
-          background: '#f8fafc'
-        }}>
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #2d2a4e' }}>
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
             marginBottom: '8px',
-            fontSize: '0.8rem',
-            color: '#718096'
+            fontSize: '0.75rem'
           }}>
-            <span>Progress</span>
-            <span>{currentStep + 1} / {steps.length}</span>
+            <span style={{ color: '#a0aec0' }}>Progress</span>
+            <span style={{ color: '#a0aec0', fontWeight: '600' }}>{currentStep + 1} / {steps.length}</span>
           </div>
-          <div style={{
-            background: '#edf2f7',
-            borderRadius: '10px',
-            height: '6px',
-            overflow: 'hidden'
-          }}>
+          <div style={{ background: '#2d3748', borderRadius: '10px', height: '10px', overflow: 'hidden' }}>
             <div className="progress-bar" style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
               height: '100%',
               width: `${((currentStep + 1) / steps.length) * 100}%`,
-              borderRadius: '10px'
+              borderRadius: '10px',
+              transition: 'width 0.4s ease'
             }} />
           </div>
         </div>
-        <div style={{ padding: '10px 0' }}>
+        <div style={{ padding: '8px 0' }}>
           {steps.map((step, index) => {
             const isCompleted = index < currentStep
             const isCurrent = index === currentStep
@@ -195,18 +184,19 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
                 className="sidebar-item"
                 onClick={() => { onStepClick(index); onClose() }}
                 style={{
-                  padding: '14px 20px',
+                  padding: '12px 20px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '12px',
                   cursor: 'pointer',
-                  background: isCurrent ? '#eef2ff' : 'transparent',
-                  borderLeft: isCurrent ? '3px solid #667eea' : '3px solid transparent'
+                  background: isCurrent ? '#2d2a5e' : 'transparent',
+                  borderLeft: isCurrent ? '3px solid #667eea' : '3px solid transparent',
+                  transition: 'all 0.2s ease'
                 }}
               >
                 <div style={{
-                  width: '30px',
-                  height: '30px',
+                  width: '28px',
+                  height: '28px',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
@@ -214,25 +204,35 @@ function Sidebar({ steps, currentStep, onStepClick, isOpen, onClose }) {
                   fontSize: '0.75rem',
                   fontWeight: 'bold',
                   flexShrink: 0,
-                  background: isCompleted ? '#10a37f' : isCurrent ? '#667eea' : '#edf2f7',
-                  color: isCompleted || isCurrent ? 'white' : '#a0aec0',
+                  background: isCompleted ? '#48bb78' : isCurrent ? '#667eea' : '#2d3748',
+                  color: isCompleted || isCurrent ? 'white' : '#718096',
                   transition: 'all 0.3s ease'
                 }}>
                   {isCompleted ? '✓' : index + 1}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <p style={{
-                    margin: 0,
-                    fontSize: '0.85rem',
-                    fontWeight: isCurrent ? '600' : '400',
-                    color: isCompleted ? '#10a37f' : isCurrent ? '#1a202c' : '#718096',
+                    margin: '0 0 4px 0',
+                    fontSize: '0.83rem',
+                    fontWeight: isCurrent ? '700' : '400',
+                    color: isCompleted ? '#718096' : isCurrent ? 'white' : '#a0aec0',
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
-                    textOverflow: 'ellipsis'
+                    textOverflow: 'ellipsis',
+                    textDecoration: isCompleted ? 'line-through' : 'none'
                   }}>
                     {step.stepTitle}
                   </p>
-                  <span style={{ fontSize: '0.7rem', color: sStyle.accent, opacity: 0.7 }}>
+                  <span style={{
+                    display: 'inline-block',
+                    background: sStyle.pillBg,
+                    color: 'white',
+                    padding: '2px 8px',
+                    borderRadius: '10px',
+                    fontSize: '0.65rem',
+                    fontWeight: '600',
+                    opacity: isCompleted ? 0.5 : 1
+                  }}>
                     {sStyle.icon} {sStyle.label}
                   </span>
                 </div>
@@ -387,32 +387,26 @@ export default function LessonSteps({ lesson }) {
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif', background: '#f8fafc' }}>
 
       <nav className="nav-top-bar" style={{
-        background: 'white',
-        padding: '15px 20px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.08)',
+        background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 100%)',
+        padding: '0 20px',
         position: 'sticky',
         top: 0,
         zIndex: 100
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '12px'
-          }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '54px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="hamburger-btn"
                 style={{
-                  background: 'none',
-                  border: '1px solid #e2e8f0',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: 'none',
                   borderRadius: '8px',
                   padding: '8px 10px',
                   cursor: 'pointer',
-                  fontSize: '1.2rem',
-                  color: '#667eea',
+                  fontSize: '1.1rem',
+                  color: 'white',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -422,44 +416,39 @@ export default function LessonSteps({ lesson }) {
                 ☰
               </button>
               <a href="/courses/ai-career-builder" style={{
-                color: '#667eea',
+                color: 'rgba(255,255,255,0.85)',
                 textDecoration: 'none',
-                fontWeight: 'bold',
+                fontWeight: '600',
                 fontSize: '0.9rem'
               }}>
                 ← AI Career Builder
               </a>
             </div>
-            <span style={{ color: '#718096', fontSize: '0.85rem' }}>
+            <span style={{ color: '#a78bfa', fontSize: '0.85rem', fontWeight: '600' }}>
               Step {currentStep + 1} of {totalSteps}
             </span>
           </div>
-          <div style={{
-            background: '#edf2f7',
-            borderRadius: '10px',
-            height: '8px',
-            overflow: 'hidden'
-          }}>
+          <div style={{ background: 'rgba(0,0,0,0.3)', height: '8px', overflow: 'hidden' }}>
             <div className="progress-bar" style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'linear-gradient(90deg, #667eea 0%, #764ba2 100%)',
               height: '100%',
               width: `${progress}%`,
-              borderRadius: '10px'
+              transition: 'width 0.4s ease'
             }} />
           </div>
         </div>
       </nav>
 
       <div className="lesson-title-bar" style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 100%)',
         color: 'white',
-        padding: '20px',
+        padding: '20px 20px 24px',
         textAlign: 'center'
       }}>
-        <p style={{ opacity: 0.8, fontSize: '0.85rem', margin: '0 0 6px 0' }}>
+        <p style={{ opacity: 0.6, fontSize: '0.75rem', margin: '0 0 6px 0', letterSpacing: '2px', textTransform: 'uppercase' }}>
           Week {lesson.weekNumber} · Lesson {lesson.lessonNumber}
         </p>
-        <h1 style={{ fontSize: '1.4rem', margin: 0, fontWeight: 'bold' }}>
+        <h1 style={{ fontSize: '1.5rem', margin: 0, fontWeight: '800' }}>
           {lesson.title}
         </h1>
       </div>
@@ -478,22 +467,18 @@ export default function LessonSteps({ lesson }) {
         margin: '0 auto'
       }}>
         <div key={animKey} className={getAnimClass()}>
-          <div className="step-badge-container step-badge" style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            marginBottom: '25px'
-          }}>
+          <div className="step-badge-container step-badge" style={{ marginBottom: '20px' }}>
             <span style={{
-              background: stepStyle.bg,
-              color: stepStyle.accent,
-              padding: '6px 16px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              background: stepStyle.pillBg,
+              color: 'white',
+              padding: '6px 18px',
               borderRadius: '20px',
               fontSize: '0.85rem',
-              fontWeight: 'bold',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px'
+              fontWeight: '700',
+              boxShadow: `0 2px 8px ${stepStyle.pillBg}55`
             }}>
               {stepStyle.icon} {stepStyle.label}
             </span>
@@ -513,11 +498,11 @@ export default function LessonSteps({ lesson }) {
             background: 'white',
             borderRadius: '16px',
             padding: '40px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-            fontSize: '1.1rem',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.07)',
+            fontSize: '1.05rem',
             lineHeight: '1.9',
             color: '#2d3748',
-            borderTop: `4px solid ${stepStyle.accent}`
+            borderLeft: `4px solid ${stepStyle.accent}`
           }}>
             {step.content && <PortableText value={step.content} />}
           </div>
@@ -546,24 +531,34 @@ export default function LessonSteps({ lesson }) {
             </button>
           ) : <div />}
 
-          <span style={{ color: '#a0aec0', fontSize: '0.9rem' }}>
-            {currentStep + 1} / {totalSteps}
-          </span>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ margin: 0, color: '#a0aec0', fontSize: '0.8rem' }}>
+              Step {currentStep + 1} of {totalSteps} · You're {Math.round(progress)}% through this lesson
+            </p>
+          </div>
 
           {currentStep < totalSteps - 1 ? (
-            <button className="btn-next" onClick={goNext} style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-              padding: '14px 28px',
-              border: 'none',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              fontSize: '1rem',
-              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
-            }}>
-              Next →
-            </button>
+            <div style={{ textAlign: 'right' }}>
+              <button className="btn-next" onClick={goNext} style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                color: 'white',
+                padding: '12px 28px',
+                border: 'none',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                fontSize: '1rem',
+                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
+                display: 'block'
+              }}>
+                Next →
+              </button>
+              {steps[currentStep + 1] && (
+                <p style={{ margin: '6px 0 0', fontSize: '0.75rem', color: '#a0aec0' }}>
+                  Up next: {steps[currentStep + 1].stepTitle}
+                </p>
+              )}
+            </div>
           ) : (
             <button className="btn-complete" onClick={completeLesson} style={{
               background: 'linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)',
