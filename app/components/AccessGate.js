@@ -17,7 +17,7 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
     'ai-marketers': { name: 'AI for Marketers & Strategists', ghs: 349, usd: 34.90 },
     'ai-writers': { name: 'AI for Writers & Content Creators', ghs: 349, usd: 34.90 },
     'ai-researchers': { name: 'AI for Researchers & Analysts', ghs: 349, usd: 34.90 },
-    'ai-agents': { name: 'Building AI Agents & Assistants', ghs: 599, usd: 59.90 }
+    'ai-agents': { name: 'Building AI Agents & Assistants', ghs: 499, usd: 49.90 }
   }
 
   const bundlePrice = { ghs: 1499, usd: 149.90, save_ghs: 1046, save_usd: 104.60 }

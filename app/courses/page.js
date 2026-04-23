@@ -86,7 +86,8 @@ export default function Courses() {
       level: "All Levels",
       duration: "3 weeks",
       lessons: 12,
-      price: "Coming Soon"
+      price: "GHS 349 (~$35)",
+      url: "/courses/ai-writers-creators"
     },
     {
       id: 6,
@@ -96,7 +97,8 @@ export default function Courses() {
       level: "All Levels",
       duration: "3 weeks",
       lessons: 12,
-      price: "Coming Soon"
+      price: "GHS 349 (~$35)",
+      url: "/courses/ai-researchers-analysts"
     },
     {
       id: 7,
@@ -106,7 +108,8 @@ export default function Courses() {
       level: "Advanced",
       duration: "4 weeks",
       lessons: 16,
-      price: "Coming Soon"
+      price: "GHS 499 (~$50)",
+      url: "/courses/ai-agents-assistants"
     },
     {
       id: 8,
@@ -116,7 +119,8 @@ export default function Courses() {
       level: "All Levels",
       duration: "2 weeks",
       lessons: 8,
-      price: "Free"
+      price: "Free",
+      url: "/courses/ai-ethics-safety"
     }
   ]
 
