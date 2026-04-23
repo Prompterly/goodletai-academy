@@ -12,6 +12,8 @@ export const metadata = {
   },
 }
 
+export const revalidate = 0
+
 export default async function AIResearchersAnalystsPage() {
   const lessons = await getLessons('ai-for-researchers-and-analysts')
 

@@ -1,6 +1,9 @@
 import { getLesson, getLessons } from '../../../../lib/sanity'
 import LessonSteps from './LessonSteps'
 
+export const revalidate = 0
+export const dynamicParams = true
+
 export async function generateStaticParams() {
   const lessons = await getLessons('ai-ethics-safety-and-responsible-use')
   return lessons.map((lesson) => ({ slug: lesson.slug.current }))

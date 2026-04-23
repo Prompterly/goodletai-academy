@@ -12,6 +12,8 @@ export const metadata = {
   },
 }
 
+export const revalidate = 0
+
 export default async function AIEthicsSafetyPage() {
   const lessons = await getLessons('ai-ethics-safety-and-responsible-use')
 

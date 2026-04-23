@@ -12,6 +12,8 @@ export const metadata = {
   },
 }
 
+export const revalidate = 0
+
 export default async function AIAgentsAssistantsPage() {
   const lessons = await getLessons('building-ai-agents-and-assistants')
 

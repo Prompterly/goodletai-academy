@@ -2,6 +2,9 @@ import { getLesson, getLessons } from '../../../../lib/sanity'
 import LessonSteps from './LessonSteps'
 import AccessGate from '../../../components/AccessGate'
 
+export const revalidate = 0
+export const dynamicParams = true
+
 export async function generateStaticParams() {
   const lessons = await getLessons('ai-for-researchers-and-analysts')
   return lessons.map((lesson) => ({ slug: lesson.slug.current }))
