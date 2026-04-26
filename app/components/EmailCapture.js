@@ -164,16 +164,20 @@ export default function EmailCapture({
     const cleanEmail = result.cleaned
 
     try {
-      await fetch(process.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: cleanEmail,
-          source: source,
-          lesson: lesson
+      // Send to Brevo (triggers welcome email sequence) + Google Sheets in parallel
+      await Promise.allSettled([
+        fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: cleanEmail, source, lesson })
+        }),
+        fetch(process.env.NEXT_PUBLIC_GOOGLE_SHEETS_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: cleanEmail, source, lesson })
         })
-      })
+      ])
 
       localStorage.setItem('subscribedEmail', cleanEmail)
       setStatus('success')
