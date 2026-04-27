@@ -72,6 +72,9 @@ export default function About() {
       {/* Main Content */}
       <main style={{ maxWidth: '900px', margin: '0 auto', padding: '60px 20px' }}>
 
+        {/* Conference Gallery — top of page for immediate credibility */}
+        <ConferenceGallery />
+
         {/* Opening with Photo */}
         <div style={{
           display: 'flex',
@@ -302,9 +305,6 @@ export default function About() {
             systems and production workflows. That is exactly what he now teaches.
           </p>
         </section>
-
-        {/* Conference Gallery */}
-        <ConferenceGallery />
 
         {/* The Mission */}
         <section style={{ marginBottom: '60px' }}>
