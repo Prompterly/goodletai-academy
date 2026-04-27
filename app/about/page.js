@@ -1,3 +1,5 @@
+import ConferenceGallery from '../components/ConferenceGallery'
+
 export const metadata = {
   title: 'About | Goodlet AI Academy',
   description: 'The story behind Goodlet AI Academy. A non-technical professional who became an AI Prompt Engineer and built a platform to help others do the same.',
@@ -300,6 +302,9 @@ export default function About() {
             systems and production workflows. That is exactly what he now teaches.
           </p>
         </section>
+
+        {/* Conference Gallery */}
+        <ConferenceGallery />
 
         {/* The Mission */}
         <section style={{ marginBottom: '60px' }}>
