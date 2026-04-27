@@ -1,5 +1,6 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
+import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
   title: 'AI for Marketers & Strategists | Goodlet AI Academy',
@@ -91,6 +92,8 @@ export default async function AIMarketersPage() {
           <LessonList weeks={weeks} weekTitles={weekTitles} />
         )}
       </section>
+
+      <InstructorTeaser />
 
       <footer style={{ background: '#1a202c', color: 'white', padding: '40px 20px', textAlign: 'center' }}>
         <p style={{ color: '#a0aec0' }}>© 2025 Goodlet AI Academy. All rights reserved.</p>

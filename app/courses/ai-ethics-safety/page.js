@@ -1,5 +1,6 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
+import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
   title: 'AI Ethics, Safety & Responsible Use — Free Course | Goodlet AI Academy',
@@ -132,6 +133,8 @@ export default async function AIEthicsSafetyPage() {
           <LessonList weeks={weeks} weekTitles={weekTitles} />
         )}
       </section>
+
+      <InstructorTeaser />
 
       {/* Footer */}
       <footer style={{
