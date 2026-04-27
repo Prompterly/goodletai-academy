@@ -3,13 +3,37 @@ import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
-  title: 'AI for Writers & Content Creators | Goodlet AI Academy',
-  description: 'Master AI-assisted writing, editing, and content production without losing your voice. 12-lesson practical course.',
+  title: 'AI for Writers & Content Creators Course | Goodlet AI Academy',
+  description: 'Master AI writing tools without losing your authentic voice. 12 practical lessons covering AI-assisted writing, content scaling, and brand consistency. No coding required.',
+  keywords: ['AI for writers', 'AI content creation course', 'AI writing tools', 'content creators AI course', 'AI copywriting', 'AI for bloggers', 'Goodlet AI Academy'],
+  alternates: {
+    canonical: 'https://www.goodletaiacademy.com/courses/ai-writers-creators',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: 'AI for Writers & Content Creators | Goodlet AI Academy',
-    description: '3-week course. Master AI writing tools, scale your content, and maintain your authentic voice.',
+    title: 'AI for Writers & Content Creators Course | Goodlet AI Academy',
+    description: 'Scale your content output with AI without losing your voice. 12 practical lessons for writers and creators. No coding required.',
     url: 'https://www.goodletaiacademy.com/courses/ai-writers-creators',
     type: 'website',
+    siteName: 'Goodlet AI Academy',
+    locale: 'en_GB',
+    images: [
+      {
+        url: 'https://www.goodletaiacademy.com/goodlet-ai-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'AI for Writers & Content Creators — Goodlet AI Academy',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI for Writers & Content Creators Course | Goodlet AI Academy',
+    description: 'Scale your content output with AI without losing your voice. 12 practical lessons, no coding required.',
+    images: ['https://www.goodletaiacademy.com/goodlet-ai-logo.png'],
   },
 }
 

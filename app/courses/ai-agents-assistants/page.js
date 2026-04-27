@@ -3,13 +3,37 @@ import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
-  title: 'Building AI Agents & Assistants | Goodlet AI Academy',
-  description: 'Design, build, and deploy custom AI agents that automate complex multi-step tasks. 16-lesson advanced course.',
+  title: 'Build AI Agents & Assistants Course | Goodlet AI Academy',
+  description: 'Design, build, and deploy custom AI agents that automate complex multi-step workflows. 16 advanced lessons covering agent architecture, tool use, and real-world deployment.',
+  keywords: ['build AI agents', 'AI assistants course', 'custom AI agents', 'AI automation course', 'AI agent development', 'LLM agents', 'Goodlet AI Academy'],
+  alternates: {
+    canonical: 'https://www.goodletaiacademy.com/courses/ai-agents-assistants',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: 'Building AI Agents & Assistants | Goodlet AI Academy',
-    description: '4-week course. Learn to build and deploy AI agents for research, writing, and automation.',
+    title: 'Build AI Agents & Assistants Course | Goodlet AI Academy',
+    description: 'Design, build, and deploy custom AI agents that automate complex workflows. 16 advanced lessons covering architecture, tool use, and deployment.',
     url: 'https://www.goodletaiacademy.com/courses/ai-agents-assistants',
     type: 'website',
+    siteName: 'Goodlet AI Academy',
+    locale: 'en_GB',
+    images: [
+      {
+        url: 'https://www.goodletaiacademy.com/goodlet-ai-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Build AI Agents & Assistants — Goodlet AI Academy',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Build AI Agents & Assistants Course | Goodlet AI Academy',
+    description: 'Design, build, and deploy custom AI agents. 16 advanced lessons covering architecture, tool use, and deployment.',
+    images: ['https://www.goodletaiacademy.com/goodlet-ai-logo.png'],
   },
 }
 

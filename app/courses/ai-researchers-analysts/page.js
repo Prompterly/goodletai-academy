@@ -3,13 +3,37 @@ import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
-  title: 'AI for Researchers & Analysts | Goodlet AI Academy',
-  description: 'Transform your research workflow with AI. From data collection to insight generation in minutes. 12-lesson course.',
+  title: 'AI for Researchers & Analysts Course | Goodlet AI Academy',
+  description: 'Automate data collection, synthesise insights faster, and produce sharper reports using AI. 12-lesson course built for researchers and analysts. No coding required.',
+  keywords: ['AI for researchers', 'AI data analysis course', 'AI research tools', 'AI for analysts', 'AI literature review', 'research automation AI', 'Goodlet AI Academy'],
+  alternates: {
+    canonical: 'https://www.goodletaiacademy.com/courses/ai-researchers-analysts',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: 'AI for Researchers & Analysts | Goodlet AI Academy',
-    description: '3-week course. AI-powered research, data analysis, and insight communication.',
+    title: 'AI for Researchers & Analysts Course | Goodlet AI Academy',
+    description: 'Automate data collection and produce sharper insights using AI. 12 lessons for researchers and analysts. No coding required.',
     url: 'https://www.goodletaiacademy.com/courses/ai-researchers-analysts',
     type: 'website',
+    siteName: 'Goodlet AI Academy',
+    locale: 'en_GB',
+    images: [
+      {
+        url: 'https://www.goodletaiacademy.com/goodlet-ai-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'AI for Researchers & Analysts — Goodlet AI Academy',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI for Researchers & Analysts Course | Goodlet AI Academy',
+    description: 'Automate data collection and produce sharper insights using AI. 12 lessons, no coding required.',
+    images: ['https://www.goodletaiacademy.com/goodlet-ai-logo.png'],
   },
 }
 

@@ -3,13 +3,37 @@ import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
-  title: 'AI Ethics, Safety & Responsible Use — Free Course | Goodlet AI Academy',
-  description: 'Understand the ethical implications of AI. Learn to build and use AI responsibly. Free 2-week course.',
+  title: 'AI Ethics & Responsible Use — Free Course | Goodlet AI Academy',
+  description: 'Understand AI bias, privacy risks, and governance frameworks. Learn to build and use AI responsibly. Free 8-lesson course for professionals and beginners alike.',
+  keywords: ['AI ethics course', 'responsible AI', 'AI safety course', 'AI bias training', 'AI governance', 'ethical AI', 'free AI course', 'Goodlet AI Academy'],
+  alternates: {
+    canonical: 'https://www.goodletaiacademy.com/courses/ai-ethics-safety',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: 'AI Ethics, Safety & Responsible Use — Free Course | Goodlet AI Academy',
-    description: 'Free 2-week course. AI bias, privacy, governance, and responsible AI practice. No coding required.',
+    title: 'AI Ethics & Responsible Use — Free Course | Goodlet AI Academy',
+    description: 'Understand AI bias, privacy, and governance. Learn to use AI responsibly. Free 8-lesson course — no coding required.',
     url: 'https://www.goodletaiacademy.com/courses/ai-ethics-safety',
     type: 'website',
+    siteName: 'Goodlet AI Academy',
+    locale: 'en_GB',
+    images: [
+      {
+        url: 'https://www.goodletaiacademy.com/goodlet-ai-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'AI Ethics & Responsible Use — Free Course | Goodlet AI Academy',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Ethics & Responsible Use — Free Course | Goodlet AI Academy',
+    description: 'Understand AI bias, privacy, and governance. Free 8-lesson course, no coding required.',
+    images: ['https://www.goodletaiacademy.com/goodlet-ai-logo.png'],
   },
 }
 
