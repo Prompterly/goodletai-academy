@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import JsonLd from './components/JsonLd'
+import './home-animations.css'
 
 export default function Home() {
   const [email, setEmail] = useState('')
@@ -10,6 +11,22 @@ export default function Home() {
   const [submitError, setSubmitError] = useState('')
   const [hoveredPath, setHoveredPath] = useState<number | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+    document.querySelectorAll('.anim-fade-up').forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
 
   const handleSubscribe = async () => {
     if (!email || !email.includes('@')) {
@@ -162,7 +179,7 @@ export default function Home() {
 
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '900px', margin: '0 auto' }}>
           {/* Badge */}
-          <div style={{
+          <div className="anim-float" style={{
             display: 'inline-block',
             background: 'rgba(102, 126, 234, 0.2)',
             border: '1px solid rgba(102, 126, 234, 0.4)',
@@ -176,21 +193,30 @@ export default function Home() {
           </div>
 
           {/* Main Headline */}
-          <h1 style={{ 
-            fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
-            marginBottom: '25px', 
+          <h1 style={{
+            fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+            marginBottom: '25px',
             fontWeight: '800',
             lineHeight: '1.15',
             letterSpacing: '-1px'
           }}>
-            Master AI Skills &<br/>
+            {['Master', 'AI', 'Skills', '&'].map((word, i) => (
+              <span key={i} className="word-anim" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
+                {word}{' '}
+              </span>
+            ))}
+            <br/>
             <span style={{
               background: 'linear-gradient(135deg, #667eea 0%, #a78bfa 50%, #f093fb 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              Automation for the Future of Work
+              {['Automation', 'for', 'the', 'Future', 'of', 'Work'].map((word, i) => (
+                <span key={i} className="word-anim" style={{ animationDelay: `${0.55 + i * 0.09}s` }}>
+                  {word}{' '}
+                </span>
+              ))}
             </span>
           </h1>
 
@@ -209,7 +235,7 @@ export default function Home() {
 
           {/* CTA Buttons */}
           <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '50px' }}>
-            <a href="/courses" style={{
+            <a href="/courses" className="anim-glow-pulse" style={{
               display: 'inline-block',
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               color: 'white',
@@ -220,16 +246,13 @@ export default function Home() {
               cursor: 'pointer',
               fontWeight: 'bold',
               textDecoration: 'none',
-              boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)',
               transition: 'all 0.3s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-3px)';
-              e.currentTarget.style.boxShadow = '0 12px 40px rgba(102, 126, 234, 0.5)';
+              e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 8px 30px rgba(102, 126, 234, 0.4)';
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
             }}>
               Explore Learning Paths →
             </a>
@@ -302,7 +325,7 @@ export default function Home() {
           <p style={{ color: '#a0aec0', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '20px' }}>
             Insights sourced from global leaders
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '50px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div className="anim-fade-up" style={{ display: 'flex', justifyContent: 'center', gap: '50px', flexWrap: 'wrap', alignItems: 'center' }}>
             <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#a0aec0' }}>McKinsey</span>
             <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#a0aec0' }}>PWC</span>
             <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#a0aec0' }}>World Economic Forum</span>
@@ -314,7 +337,7 @@ export default function Home() {
       {/* ==================== THE PROBLEM ==================== */}
       <section style={{ padding: '100px 20px', background: 'white' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div className="anim-fade-up" style={{ textAlign: 'center', marginBottom: '60px' }}>
             <h2 style={{ fontSize: '2.5rem', color: '#1a202c', marginBottom: '20px', fontWeight: '700' }}>
               The AI Skills Gap Is Real
             </h2>
@@ -325,7 +348,7 @@ export default function Home() {
 
           <div className="resp-grid-2col">
             {/* Without AI Skills */}
-            <div style={{
+            <div className="anim-fade-up anim-delay-1" style={{
               background: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)',
               borderRadius: '16px',
               padding: '40px',
@@ -372,7 +395,7 @@ export default function Home() {
             </div>
 
             {/* With AI Skills */}
-            <div style={{
+            <div className="anim-fade-up anim-delay-2" style={{
               background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
               borderRadius: '16px',
               padding: '40px',
@@ -428,7 +451,7 @@ export default function Home() {
         color: 'white'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div className="anim-fade-up" style={{ textAlign: 'center', marginBottom: '60px' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '15px', fontWeight: '700' }}>
               The AI Skills Revolution: By The Numbers
             </h2>
@@ -443,7 +466,8 @@ export default function Home() {
             gap: '30px'
           }}>
             {/* Stat 1 */}
-            <div 
+            <div
+              className="anim-fade-up anim-delay-1"
               style={{
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.1)',
@@ -496,7 +520,8 @@ export default function Home() {
             </div>
 
             {/* Stat 2 */}
-            <div 
+            <div
+              className="anim-fade-up anim-delay-2"
               style={{
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.1)',
@@ -549,7 +574,8 @@ export default function Home() {
             </div>
 
             {/* Stat 3 */}
-            <div 
+            <div
+              className="anim-fade-up anim-delay-3"
               style={{
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.1)',
@@ -607,7 +633,7 @@ export default function Home() {
       {/* ==================== LEARNING PATHS ==================== */}
       <section style={{ padding: '100px 20px', background: 'white' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div className="anim-fade-up" style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span style={{
               display: 'inline-block',
               background: '#eef2ff',
@@ -672,14 +698,15 @@ export default function Home() {
                 tag: 'CAREER TRACK'
               }
             ].map((path, index) => (
-              <div 
+              <div
                 key={index}
+                className={`anim-fade-up anim-delay-${index + 1}`}
                 style={{
                   background: 'white',
                   borderRadius: '20px',
                   overflow: 'hidden',
-                  boxShadow: hoveredPath === index 
-                    ? '0 20px 60px rgba(0,0,0,0.12)' 
+                  boxShadow: hoveredPath === index
+                    ? '0 20px 60px rgba(0,0,0,0.12)'
                     : '0 4px 6px rgba(0,0,0,0.05)',
                   border: '1px solid #edf2f7',
                   transition: 'all 0.4s ease',
@@ -819,7 +846,7 @@ export default function Home() {
       {/* ==================== WHY NOT YOUTUBE ==================== */}
       <section style={{ padding: '100px 20px', background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)', color: 'white' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div className="anim-fade-up" style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span style={{
               display: 'inline-block',
               background: 'rgba(102,126,234,0.2)',
@@ -857,7 +884,7 @@ export default function Home() {
                 body: "This isn't theory from an academic. Every lesson is built from real, production AI work — the exact skills that earned the instructor a front-row seat at one of the most advanced AI companies in the world."
               }
             ].map((item, i) => (
-              <div key={i} style={{
+              <div key={i} className={`anim-fade-up anim-delay-${i + 1}`} style={{
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: '16px',
@@ -876,7 +903,7 @@ export default function Home() {
       {/* ==================== WHO THIS IS FOR ==================== */}
       <section style={{ padding: '100px 20px', background: '#f8fafc' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div className="anim-fade-up" style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span style={{
               display: 'inline-block',
               background: '#ecfdf5',
@@ -928,8 +955,9 @@ export default function Home() {
                 color: '#fbbf24'
               }
             ].map((persona, index) => (
-              <div 
+              <div
                 key={index}
+                className={`anim-fade-up anim-delay-${index + 1}`}
                 style={{
                   background: 'white',
                   borderRadius: '16px',
@@ -967,7 +995,7 @@ export default function Home() {
       {/* ==================== YOUR INSTRUCTOR ==================== */}
       <section style={{ padding: '100px 20px', background: 'white' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div className="anim-fade-up" style={{ textAlign: 'center', marginBottom: '50px' }}>
             <span style={{
               display: 'inline-block',
               background: '#fef3c7',
@@ -985,7 +1013,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div style={{
+          <div className="anim-fade-up anim-delay-1" style={{
             background: 'linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%)',
             borderRadius: '20px',
             padding: '50px 40px',
@@ -1073,12 +1101,14 @@ export default function Home() {
       {/* ==================== AI TOOLS MASTERED ==================== */}
       <section style={{ padding: '80px 20px', background: '#f8fafc' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
+          <div className="anim-fade-up">
           <h2 style={{ fontSize: '2rem', color: '#1a202c', marginBottom: '15px', fontWeight: '700' }}>
             AI Models & Tools You'll Master
           </h2>
           <p style={{ fontSize: '1.1rem', color: '#4a5568', marginBottom: '40px' }}>
             Hands-on training with the AI tools that power today's most innovative companies.
           </p>
+          </div>
 
           <div style={{ 
             display: 'flex', 
@@ -1129,7 +1159,7 @@ export default function Home() {
       {/* ==================== TESTIMONIALS ==================== */}
       <section style={{ padding: '100px 20px', background: 'white' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div className="anim-fade-up" style={{ textAlign: 'center', marginBottom: '60px' }}>
             <span style={{
               display: 'inline-block',
               background: '#ecfdf5',
@@ -1166,7 +1196,7 @@ export default function Home() {
                 color: '#10a37f'
               }
             ].map((t, i) => (
-              <div key={i} style={{
+              <div key={i} className={`anim-fade-up anim-delay-${i + 1}`} style={{
                 background: '#f8fafc',
                 borderRadius: '20px',
                 padding: '40px',
@@ -1259,7 +1289,7 @@ export default function Home() {
           filter: 'blur(60px)'
         }}/>
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '700px', margin: '0 auto' }}>
+        <div className="anim-fade-up" style={{ position: 'relative', zIndex: 1, maxWidth: '700px', margin: '0 auto' }}>
           <h2 style={{ fontSize: '2.8rem', marginBottom: '20px', fontWeight: '800', lineHeight: '1.2' }}>
             Ready to Future-Proof<br/>Your Career?
           </h2>
