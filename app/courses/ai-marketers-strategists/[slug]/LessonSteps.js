@@ -4,6 +4,7 @@ import SharedLessonSteps from '../../../components/LessonSteps'
 
 const CONFIG = {
   key: '_marketers',
+  courseType: 'ai-marketers',
   courseUrl: '/courses/ai-marketers-strategists',
   backLabel: '← AI Marketers',
   grad: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',

@@ -4,6 +4,7 @@ import SharedLessonSteps from '../../../components/LessonSteps'
 
 const CONFIG = {
   key: '_agents',
+  courseType: 'ai-agents',
   courseUrl: '/courses/ai-agents-assistants',
   backLabel: '← AI Agents',
   grad: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',

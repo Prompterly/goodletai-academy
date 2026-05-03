@@ -112,6 +112,79 @@ function getPortableTextComponents(accent) {
   }
 }
 
+function CertificateModal({ defaultEmail, courseType, onClose }) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState(defaultEmail || '')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!name.trim() || !email.trim()) return
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/certificate/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), courseType }),
+      })
+      const data = await res.json()
+      if (data.certificateId) {
+        window.location.href = `/certificate/${data.certificateId}`
+      } else {
+        setError(data.error || 'Something went wrong. Please try again.')
+        setLoading(false)
+      }
+    } catch {
+      setError('Network error — please try again.')
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+      <div style={{ background: 'white', borderRadius: '20px', padding: '40px 36px', maxWidth: '420px', width: '100%', textAlign: 'center', boxShadow: '0 30px 80px rgba(0,0,0,0.5)' }}>
+        <div style={{ fontSize: '3rem', marginBottom: '12px' }}>🎓</div>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#1a202c', margin: '0 0 8px' }}>Get Your Certificate</h2>
+        <p style={{ color: '#718096', marginBottom: '26px', lineHeight: '1.6', fontSize: '0.95rem' }}>
+          You've completed the course! Enter your name to generate your verified certificate.
+        </p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Your full name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            required
+            autoFocus
+            style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: '10px', fontSize: '1rem', marginBottom: '12px', boxSizing: 'border-box', outline: 'none', fontFamily: 'Arial, sans-serif' }}
+          />
+          <input
+            type="email"
+            placeholder="Your email address"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+            style={{ width: '100%', padding: '12px 16px', border: '2px solid #e2e8f0', borderRadius: '10px', fontSize: '1rem', marginBottom: '20px', boxSizing: 'border-box', outline: 'none', fontFamily: 'Arial, sans-serif' }}
+          />
+          {error && <p style={{ color: '#e53e3e', fontSize: '0.85rem', marginBottom: '12px', margin: '0 0 12px' }}>{error}</p>}
+          <button
+            type="submit"
+            disabled={loading || !name.trim() || !email.trim()}
+            style={{ width: '100%', padding: '14px', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', border: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer', opacity: (loading || !name.trim() || !email.trim()) ? 0.7 : 1, fontFamily: 'Arial, sans-serif' }}
+          >
+            {loading ? 'Generating…' : 'Generate My Certificate →'}
+          </button>
+        </form>
+        <button onClick={onClose} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#a0aec0', cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'Arial, sans-serif' }}>
+          Skip for now
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function MilestoneScreen({ milestone, onContinue, config }) {
   const { grad, light, shadow } = config
   const lightRgba = `${light}4d`
@@ -229,11 +302,15 @@ export default function LessonSteps({ lesson, config }) {
   const [currentStep, setCurrentStep] = useState(0)
   const [showMilestone, setShowMilestone] = useState(false)
   const [lessonCompleted, setLessonCompleted] = useState(false)
+  const [showCertModal, setShowCertModal] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [animDirection, setAnimDirection] = useState('enter')
   const [animKey, setAnimKey] = useState(0)
 
-  const { key, courseUrl, backLabel, grad, light, shadow, accentColor } = config
+  const { key, courseType, courseUrl, backLabel, grad, light, shadow, accentColor } = config
+  const isLastLesson = lesson.maxLessonNumber != null
+    ? lesson.lessonNumber >= lesson.maxLessonNumber
+    : false
 
   useEffect(() => {
     const checkMobile = () => {
@@ -287,7 +364,13 @@ export default function LessonSteps({ lesson, config }) {
         localStorage.setItem(badgesKey, JSON.stringify(badges))
       }
     }
-    if (lesson.hasMilestone && lesson.milestone) { setShowMilestone(true) } else { setLessonCompleted(true) }
+    if (isLastLesson) {
+      setShowCertModal(true)
+    } else if (lesson.hasMilestone && lesson.milestone) {
+      setShowMilestone(true)
+    } else {
+      setLessonCompleted(true)
+    }
   }
 
   const getAnimClass = () => {
@@ -299,6 +382,10 @@ export default function LessonSteps({ lesson, config }) {
   if (showMilestone) {
     return <MilestoneScreen milestone={lesson.milestone} onContinue={() => window.location.href = courseUrl} config={config} />
   }
+
+  const defaultEmail = typeof window !== 'undefined'
+    ? (localStorage.getItem('allCoursesAccess') || '')
+    : ''
 
   if (lessonCompleted) {
     return (
@@ -334,6 +421,13 @@ export default function LessonSteps({ lesson, config }) {
 
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif', background: '#f8fafc' }}>
+      {showCertModal && (
+        <CertificateModal
+          defaultEmail={defaultEmail}
+          courseType={courseType}
+          onClose={() => setShowCertModal(false)}
+        />
+      )}
 
       <nav className="nav-top-bar" style={{ background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 100%)', padding: '0 20px', position: 'sticky', top: 0, zIndex: 100 }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>

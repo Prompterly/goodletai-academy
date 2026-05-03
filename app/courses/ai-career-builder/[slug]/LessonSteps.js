@@ -4,6 +4,7 @@ import SharedLessonSteps from '../../../components/LessonSteps'
 
 const CONFIG = {
   key: '_career',
+  courseType: 'ai-career',
   courseUrl: '/courses/ai-career-builder',
   backLabel: '← AI Career Builder',
   grad: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',

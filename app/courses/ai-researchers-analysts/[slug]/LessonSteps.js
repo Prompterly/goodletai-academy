@@ -4,6 +4,7 @@ import SharedLessonSteps from '../../../components/LessonSteps'
 
 const CONFIG = {
   key: '_researchers',
+  courseType: 'ai-researchers',
   courseUrl: '/courses/ai-researchers-analysts',
   backLabel: '← AI Researchers',
   grad: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',

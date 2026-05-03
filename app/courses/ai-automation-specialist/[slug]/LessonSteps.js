@@ -4,6 +4,7 @@ import SharedLessonSteps from '../../../components/LessonSteps'
 
 const CONFIG = {
   key: '_automation',
+  courseType: 'ai-automation',
   courseUrl: '/courses/ai-automation-specialist',
   backLabel: '← AI Automation',
   grad: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',

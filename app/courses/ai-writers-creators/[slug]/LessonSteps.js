@@ -4,6 +4,7 @@ import SharedLessonSteps from '../../../components/LessonSteps'
 
 const CONFIG = {
   key: '_writers',
+  courseType: 'ai-writers',
   courseUrl: '/courses/ai-writers-creators',
   backLabel: '← AI Writers',
   grad: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
