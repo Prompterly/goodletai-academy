@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from 'next-sanity'
+import { rateLimit } from '@/app/lib/rateLimit'
 
 const COURSE_NAMES = {
   'ai-automation': 'AI Automation Specialist',
@@ -18,6 +19,11 @@ const readClient = createClient({
 })
 
 export async function GET(request) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown'
+  if (!rateLimit(ip, 30, 60_000)) {
+    return NextResponse.json({ hasAccess: false }, { status: 429 })
+  }
+
   const { searchParams } = new URL(request.url)
   const email = searchParams.get('email')?.toLowerCase().trim()
   const courseType = searchParams.get('courseType')

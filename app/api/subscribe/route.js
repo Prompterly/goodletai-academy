@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server'
+import { rateLimit } from '@/app/lib/rateLimit'
 
 const BREVO_LIST_ID = 5 // "Website Signups" list
 
 export async function POST(request) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown'
+  if (!rateLimit(ip, 10, 60_000)) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+  }
+
   try {
     const { email, source, lesson } = await request.json()
 

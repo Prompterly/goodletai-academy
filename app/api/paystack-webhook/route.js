@@ -46,6 +46,8 @@ export async function POST(request) {
       })
     } catch (err) {
       console.error('Sanity write error:', err)
+      // Return 500 so Paystack retries the webhook delivery
+      return NextResponse.json({ error: 'Enrollment storage failed' }, { status: 500 })
     }
 
     try {

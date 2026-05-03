@@ -7,6 +7,7 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
   const [hasAccess, setHasAccess] = useState(false)
   const [checking, setChecking] = useState(true)
   const [paymentLoading, setPaymentLoading] = useState(false)
+  const [confirmingPayment, setConfirmingPayment] = useState(false)
   const [paystackLoaded, setPaystackLoaded] = useState(false)
   const [hasEmail, setHasEmail] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState('bundle')
@@ -63,12 +64,22 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
       return
     }
 
-    // Fast path: localStorage cache
+    // Fast path: localStorage cache — show access immediately, then verify in background
     const fullAccess = localStorage.getItem('allCoursesAccess')
     const courseAccess = localStorage.getItem(`course_${courseType}_access`)
     if (fullAccess === 'true' || courseAccess === 'true') {
       setHasAccess(true)
       setChecking(false)
+      const cachedEmail = localStorage.getItem('subscribedEmail')
+      if (cachedEmail) {
+        checkServerAccess(cachedEmail).then(confirmed => {
+          if (!confirmed) {
+            localStorage.removeItem('allCoursesAccess')
+            localStorage.removeItem(`course_${courseType}_access`)
+            setHasAccess(false)
+          }
+        })
+      }
       return
     }
 
@@ -81,6 +92,15 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
       setChecking(false)
     }
   }, [courseType])
+
+  const pollServerAccess = async (email, attempts = 6, intervalMs = 2500) => {
+    for (let i = 0; i < attempts; i++) {
+      await new Promise(r => setTimeout(r, intervalMs))
+      const confirmed = await checkServerAccess(email)
+      if (confirmed) return true
+    }
+    return false
+  }
 
   const handlePayment = (plan) => {
     const email = localStorage.getItem('subscribedEmail')
@@ -122,14 +142,24 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
         ]
       },
       callback: function (response) {
-        if (isBundle) {
-          localStorage.setItem('allCoursesAccess', 'true')
-        } else {
-          localStorage.setItem(`course_${courseType}_access`, 'true')
-        }
         localStorage.setItem('paymentRef', response.reference)
-        setHasAccess(true)
         setPaymentLoading(false)
+        setConfirmingPayment(true)
+
+        const paidEmail = localStorage.getItem('subscribedEmail')
+        pollServerAccess(paidEmail).then(confirmed => {
+          if (!confirmed) {
+            // Webhook still processing — grant optimistic access via localStorage
+            if (isBundle) {
+              localStorage.setItem('allCoursesAccess', 'true')
+            } else {
+              localStorage.setItem(`course_${courseType}_access`, 'true')
+            }
+          }
+          // checkServerAccess already set localStorage if confirmed
+          setConfirmingPayment(false)
+          setHasAccess(true)
+        })
       },
       onClose: function () {
         setPaymentLoading(false)
@@ -139,7 +169,7 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
     handler.openIframe()
   }
 
-  if (checking) {
+  if (checking || confirmingPayment) {
     return (
       <div style={{
         minHeight: '100vh',
@@ -148,7 +178,9 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
         justifyContent: 'center',
         fontFamily: 'Arial, sans-serif'
       }}>
-        <p style={{ color: '#718096' }}>Loading...</p>
+        <p style={{ color: '#718096' }}>
+          {confirmingPayment ? '⏳ Confirming your payment...' : 'Loading...'}
+        </p>
       </div>
     )
   }
