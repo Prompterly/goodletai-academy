@@ -4,10 +4,10 @@ import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
   title: 'AI for Marketers & Strategists | Goodlet AI Academy',
-  description: 'Supercharge your marketing with AI. Market intelligence, content creation, and campaign optimisation. 12 lessons over 3 weeks. GHS 349 — one-time, lifetime access.',
+  description: 'Supercharge your marketing with AI. Market intelligence, content creation, and campaign optimisation. 12 lessons over 3 weeks. $15 one-time pilot price, lifetime access.',
   openGraph: {
     title: 'AI for Marketers & Strategists | Goodlet AI Academy',
-    description: 'Use AI to dominate market research, content, and campaigns. 12 practical lessons. GHS 349.',
+    description: 'Use AI to dominate market research, content, and campaigns. 12 practical lessons. $15 pilot price.',
     url: 'https://www.goodletaiacademy.com/courses/ai-marketers-strategists',
     type: 'website',
   },
@@ -57,7 +57,7 @@ export default async function AIMarketersPage() {
           Use AI to supercharge market research, content strategy, and campaign optimization.
         </p>
         <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          {['📊 All Levels', '⏱️ 3 Weeks', `📚 ${lessons.length} Lessons`, '📈 Paid Course'].map((badge, i) => (
+          {['📊 All Levels', '⏱️ 3 Weeks', `📚 ${lessons.length} Lessons`, '💰 $15 · Pilot Price'].map((badge, i) => (
             <span key={i} style={{ background: 'rgba(255,255,255,0.2)', padding: '8px 20px', borderRadius: '20px', fontSize: '0.95rem' }}>
               {badge}
             </span>

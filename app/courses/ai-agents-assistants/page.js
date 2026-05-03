@@ -101,7 +101,7 @@ export default async function AIAgentsAssistantsPage() {
             '📊 Advanced',
             '⏱️ 4 Weeks',
             `📚 ${lessons.length} Lessons`,
-            '💰 GHS 499'
+            '💰 $15 · Pilot Price'
           ].map((badge, i) => (
             <span key={i} style={{
               background: 'rgba(255,255,255,0.2)',

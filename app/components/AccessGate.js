@@ -12,15 +12,15 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
   const [selectedPlan, setSelectedPlan] = useState('bundle')
 
   const coursePricing = {
-    'ai-automation': { name: 'AI Automation Specialist', ghs: 499, usd: 49.90 },
-    'ai-career': { name: 'AI Career Builder', ghs: 399, usd: 39.90 },
-    'ai-marketers': { name: 'AI for Marketers & Strategists', ghs: 349, usd: 34.90 },
-    'ai-writers': { name: 'AI for Writers & Content Creators', ghs: 349, usd: 34.90 },
-    'ai-researchers': { name: 'AI for Researchers & Analysts', ghs: 349, usd: 34.90 },
-    'ai-agents': { name: 'Building AI Agents & Assistants', ghs: 499, usd: 49.90 }
+    'ai-automation': { name: 'AI Automation Specialist', ghs: 225, usd: 15 },
+    'ai-career': { name: 'AI Career Builder', ghs: 225, usd: 15 },
+    'ai-marketers': { name: 'AI for Marketers & Strategists', ghs: 225, usd: 15 },
+    'ai-writers': { name: 'AI for Writers & Content Creators', ghs: 225, usd: 15 },
+    'ai-researchers': { name: 'AI for Researchers & Analysts', ghs: 225, usd: 15 },
+    'ai-agents': { name: 'Building AI Agents & Assistants', ghs: 225, usd: 15 }
   }
 
-  const bundlePrice = { ghs: 1499, usd: 149.90, save_ghs: 1046, save_usd: 104.60 }
+  const bundlePrice = { ghs: 435, usd: 29 }
   const coursePrice = coursePricing[courseType] || null
 
   // Load Paystack for paid courses
@@ -93,7 +93,7 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
           {
             display_name: 'Amount',
             variable_name: 'amount',
-            value: isBundle ? `GHS ${bundlePrice.ghs}` : `GHS ${coursePrice.ghs}`
+            value: isBundle ? `$${bundlePrice.usd} / GHS ${bundlePrice.ghs}` : `$${coursePrice.usd} / GHS ${coursePrice.ghs}`
           }
         ]
       },
@@ -159,8 +159,23 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
             ⭐
           </div>
 
+          <div style={{
+            display: 'inline-block',
+            background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+            color: 'white',
+            padding: '5px 16px',
+            borderRadius: '20px',
+            fontSize: '0.75rem',
+            fontWeight: 'bold',
+            letterSpacing: '1px',
+            textTransform: 'uppercase',
+            marginBottom: '16px'
+          }}>
+            🚀 Pilot Pricing — Limited Time
+          </div>
+
           <h1 style={{ color: 'white', fontSize: '1.8rem', marginBottom: '10px', fontWeight: '700' }}>
-            Premium Course
+            Unlock This Course
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '8px', fontSize: '1.1rem' }}>
             {coursePrice.name}
@@ -214,11 +229,11 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
                   <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', margin: '0 0 8px 0' }}>
                     This Course Only
                   </p>
-                  <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'white', marginBottom: '4px' }}>
-                    GHS {coursePrice.ghs}
+                  <div style={{ fontSize: '2rem', fontWeight: '800', color: 'white', marginBottom: '4px' }}>
+                    ${coursePrice.usd}
                   </div>
-                  <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', margin: 0 }}>
-                    ${coursePrice.usd} USD
+                  <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', margin: 0 }}>
+                    GHS {coursePrice.ghs} · one-time
                   </p>
                 </div>
 
@@ -259,14 +274,14 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
                   <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', margin: '0 0 8px 0' }}>
                     All Courses Bundle
                   </p>
-                  <div style={{ fontSize: '1.8rem', fontWeight: '800', color: 'white', marginBottom: '4px' }}>
-                    GHS {bundlePrice.ghs.toLocaleString()}
+                  <div style={{ fontSize: '2rem', fontWeight: '800', color: 'white', marginBottom: '4px' }}>
+                    ${bundlePrice.usd}
                   </div>
-                  <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', margin: '0 0 4px 0' }}>
-                    ${bundlePrice.usd} USD
+                  <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', margin: '0 0 4px 0' }}>
+                    GHS {bundlePrice.ghs} · one-time
                   </p>
                   <p style={{ color: '#10a37f', fontSize: '0.75rem', margin: 0, fontWeight: 'bold' }}>
-                    Save GHS {bundlePrice.save_ghs.toLocaleString()} (${bundlePrice.save_usd})
+                    All 6 paid courses included
                   </p>
                 </div>
               </div>
@@ -285,12 +300,12 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
                 </p>
                 {selectedPlan === 'bundle' ? (
                   [
-                    'AI Automation Specialist (GHS 499)',
-                    'AI Career Builder (GHS 399)',
-                    'AI for Marketers & Strategists (GHS 349)',
-                    'AI for Writers & Content Creators (GHS 349)',
-                    'AI for Researchers & Analysts (GHS 349)',
-                    'Building AI Agents & Assistants (GHS 599)',
+                    'AI Automation Specialist',
+                    'AI Career Builder',
+                    'AI for Marketers & Strategists',
+                    'AI for Writers & Content Creators',
+                    'AI for Researchers & Analysts',
+                    'Building AI Agents & Assistants',
                     'Lifetime access to all courses',
                     'All future course updates'
                   ].map((item, i) => (
@@ -348,8 +363,8 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
                 {paymentLoading
                   ? '⏳ Processing...'
                   : selectedPlan === 'bundle'
-                    ? `Unlock All Courses — GHS ${bundlePrice.ghs.toLocaleString()} →`
-                    : `Unlock Course — GHS ${coursePrice.ghs} →`
+                    ? `Unlock All Courses — $${bundlePrice.usd} (GHS ${bundlePrice.ghs}) →`
+                    : `Unlock This Course — $${coursePrice.usd} (GHS ${coursePrice.ghs}) →`
                 }
               </button>
             </>

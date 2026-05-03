@@ -100,7 +100,7 @@ export default async function AIResearchersAnalystsPage() {
             '📊 All Levels',
             '⏱️ 3 Weeks',
             `📚 ${lessons.length} Lessons`,
-            '💰 GHS 349'
+            '💰 $15 · Pilot Price'
           ].map((badge, i) => (
             <span key={i} style={{
               background: 'rgba(255,255,255,0.2)',

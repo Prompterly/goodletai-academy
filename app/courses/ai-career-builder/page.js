@@ -4,10 +4,10 @@ import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
   title: 'AI Career Builder | Goodlet AI Academy',
-  description: 'Turn your AI skills into a career. Build a portfolio, ace interviews, and land your dream AI role. 16 lessons over 4 weeks. GHS 399 — one-time, lifetime access.',
+  description: 'Turn your AI skills into a career. Build a portfolio, ace interviews, and land your dream AI role. 16 lessons over 4 weeks. $15 one-time payment, lifetime access.',
   openGraph: {
     title: 'AI Career Builder | Goodlet AI Academy',
-    description: 'Land AI roles with a structured 4-week course. Portfolio building, interview prep, and job market navigation. GHS 399.',
+    description: 'Land AI roles with a structured 4-week course. Portfolio building, interview prep, and job market navigation. $15 pilot price.',
     url: 'https://www.goodletaiacademy.com/courses/ai-career-builder',
     type: 'website',
   },
@@ -58,7 +58,7 @@ export default async function AICareerPage() {
           Turn your AI skills into a career. Build a portfolio, ace interviews, and land your dream role.
         </p>
         <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          {['📊 Intermediate', '⏱️ 4 Weeks', `📚 ${lessons.length} Lessons`, '🚀 Paid Course'].map((badge, i) => (
+          {['📊 Intermediate', '⏱️ 4 Weeks', `📚 ${lessons.length} Lessons`, '💰 $15 · Pilot Price'].map((badge, i) => (
             <span key={i} style={{ background: 'rgba(255,255,255,0.2)', padding: '8px 20px', borderRadius: '20px', fontSize: '0.95rem' }}>
               {badge}
             </span>

@@ -38,7 +38,7 @@ export default function Courses() {
       level: "Intermediate",
       duration: "6 weeks",
       lessons: 30,
-      price: "GHS 499 (~$50)",
+      price: "$15 (GHS 225)",
       url: "/courses/ai-automation-specialist",
       color: "linear-gradient(135deg, #10a37f 0%, #0d8a6a 100%)",
       shadow: "rgba(16, 163, 127, 0.3)",
@@ -58,7 +58,7 @@ export default function Courses() {
       level: "Intermediate",
       duration: "4 weeks",
       lessons: 16,
-      price: "GHS 399 (~$40)",
+      price: "$15 (GHS 225)",
       url: "/courses/ai-career-builder",
       color: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
       shadow: "rgba(245, 87, 108, 0.3)",
@@ -75,7 +75,7 @@ export default function Courses() {
       level: "All Levels",
       duration: "3 weeks",
       lessons: 12,
-      price: "GHS 349 (~$35)",
+      price: "$15 (GHS 225)",
       url: "/courses/ai-marketers-strategists"
     },
     {
@@ -86,7 +86,7 @@ export default function Courses() {
       level: "All Levels",
       duration: "3 weeks",
       lessons: 12,
-      price: "GHS 349 (~$35)",
+      price: "$15 (GHS 225)",
       url: "/courses/ai-writers-creators"
     },
     {
@@ -97,7 +97,7 @@ export default function Courses() {
       level: "All Levels",
       duration: "3 weeks",
       lessons: 12,
-      price: "GHS 349 (~$35)",
+      price: "$15 (GHS 225)",
       url: "/courses/ai-researchers-analysts"
     },
     {
@@ -108,7 +108,7 @@ export default function Courses() {
       level: "Advanced",
       duration: "4 weeks",
       lessons: 16,
-      price: "GHS 499 (~$50)",
+      price: "$15 (GHS 225)",
       url: "/courses/ai-agents-assistants"
     },
     {

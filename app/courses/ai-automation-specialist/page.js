@@ -4,10 +4,10 @@ import InstructorTeaser from '../../components/InstructorTeaser'
 
 export const metadata = {
   title: 'AI Automation Specialist | Goodlet AI Academy',
-  description: 'Master AI-powered automation. Build no-code workflows, Custom GPTs, and AI agents. 30 lessons over 6 weeks. One-time payment, lifetime access. GHS 499.',
+  description: 'Master AI-powered automation. Build no-code workflows, Custom GPTs, and AI agents. 30 lessons over 6 weeks. $15 one-time payment, lifetime access.',
   openGraph: {
     title: 'AI Automation Specialist | Goodlet AI Academy',
-    description: 'Master AI automation in 6 weeks. No-code workflows, Custom GPTs, and real AI agents. GHS 499 — one-time, lifetime access.',
+    description: 'Master AI automation in 6 weeks. No-code workflows, Custom GPTs, and real AI agents. $15 pilot price — one-time, lifetime access.',
     url: 'https://www.goodletaiacademy.com/courses/ai-automation-specialist',
     type: 'website',
   },
@@ -77,7 +77,7 @@ export default async function AIAutomationPage() {
             '📊 Intermediate',
             '⏱️ 6 Weeks',
             `📚 ${lessons.length} Lessons`,
-            '⚡ Paid Course'
+            '💰 $15 · Pilot Price'
           ].map((badge, i) => (
             <span key={i} style={{
               background: 'rgba(255,255,255,0.2)',
