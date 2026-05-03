@@ -1,6 +1,7 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
+import JsonLd from '../../components/JsonLd'
 
 export const metadata = {
   title: 'AI Foundations — Free Course | Goodlet AI Academy',
@@ -10,6 +11,16 @@ export const metadata = {
     description: 'Free 4-week course. Learn prompt engineering, AI tools, and build your first AI workflow. No coding required.',
     url: 'https://www.goodletaiacademy.com/courses/ai-foundations',
     type: 'website',
+    images: [{
+      url: 'https://www.goodletaiacademy.com/api/og?title=AI+Foundations&price=Free&level=Beginner&lessons=20',
+      width: 1200,
+      height: 630,
+      alt: 'AI Foundations — Free Course | Goodlet AI Academy',
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['https://www.goodletaiacademy.com/api/og?title=AI+Foundations&price=Free&level=Beginner&lessons=20'],
   },
 }
 
@@ -30,8 +41,36 @@ export default async function AIFoundationsPage() {
     4: 'Building Your First AI Workflow'
   }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI Foundations',
+    description: 'Build your AI fundamentals from scratch. Free course covering LLMs, prompt engineering, AI tools, and your first AI workflow. No coding experience required.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-foundations',
+    provider: {
+      '@type': 'Organization',
+      name: 'Goodlet AI Academy',
+      url: 'https://www.goodletaiacademy.com',
+    },
+    instructor: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    educationalLevel: 'Beginner',
+    courseMode: 'online',
+    numberOfCredits: 20,
+    timeRequired: 'P4W',
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <JsonLd data={courseJsonLd} />
 
       {/* Navigation */}
       <nav style={{

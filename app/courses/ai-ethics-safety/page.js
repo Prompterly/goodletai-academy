@@ -1,6 +1,7 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
+import JsonLd from '../../components/JsonLd'
 
 export const metadata = {
   title: 'AI Ethics & Responsible Use — Free Course | Goodlet AI Academy',
@@ -18,6 +19,12 @@ export const metadata = {
     description: 'Understand AI bias, privacy, and governance. Learn to use AI responsibly. Free 8-lesson course — no coding required.',
     url: 'https://www.goodletaiacademy.com/courses/ai-ethics-safety',
     type: 'website',
+    images: [{
+      url: 'https://www.goodletaiacademy.com/api/og?title=AI+Ethics+%26+Responsible+Use&price=Free&level=All+Levels&lessons=8',
+      width: 1200,
+      height: 630,
+      alt: 'AI Ethics & Responsible Use — Free Course | Goodlet AI Academy',
+    }],
     siteName: 'Goodlet AI Academy',
     locale: 'en_GB',
     images: [
@@ -54,8 +61,36 @@ export default async function AIEthicsSafetyPage() {
     2: 'Responsible Practice'
   }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI Ethics & Responsible Use',
+    description: 'Understand AI bias, privacy risks, and governance frameworks. Learn to build and use AI responsibly. Free 8-lesson course for professionals and beginners alike.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-ethics-safety',
+    provider: {
+      '@type': 'Organization',
+      name: 'Goodlet AI Academy',
+      url: 'https://www.goodletaiacademy.com',
+    },
+    instructor: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    educationalLevel: 'All Levels',
+    courseMode: 'online',
+    numberOfCredits: 8,
+    timeRequired: 'P2W',
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <JsonLd data={courseJsonLd} />
 
       {/* Navigation */}
       <nav style={{

@@ -24,12 +24,18 @@ export const metadata = {
     url: 'https://www.goodletaiacademy.com',
     siteName: 'Goodlet AI Academy',
     type: 'website',
-    images: [{ url: '/goodlet-ai-logo.png', width: 800, height: 600, alt: 'Goodlet AI Academy' }],
+    images: [{
+      url: 'https://www.goodletaiacademy.com/api/og?title=Goodlet+AI+Academy&price=Free&level=Free+%26+Paid+Courses',
+      width: 1200,
+      height: 630,
+      alt: 'Goodlet AI Academy — Master AI Skills & Automation',
+    }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Goodlet AI Academy | Master AI Skills & Automation',
     description: 'Go from AI-curious to AI-proficient. Free and paid courses in AI, automation, and career building.',
+    images: ['https://www.goodletaiacademy.com/api/og?title=Goodlet+AI+Academy&price=Free&level=Free+%26+Paid+Courses'],
   },
 };
 

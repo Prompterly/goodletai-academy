@@ -1,6 +1,7 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
+import JsonLd from '../../components/JsonLd'
 
 export const metadata = {
   title: 'AI Automation Specialist | Goodlet AI Academy',
@@ -10,6 +11,16 @@ export const metadata = {
     description: 'Master AI automation in 6 weeks. No-code workflows, Custom GPTs, and real AI agents. $15 pilot price — one-time, lifetime access.',
     url: 'https://www.goodletaiacademy.com/courses/ai-automation-specialist',
     type: 'website',
+    images: [{
+      url: 'https://www.goodletaiacademy.com/api/og?title=AI+Automation+Specialist&price=%2415&level=Intermediate&lessons=30',
+      width: 1200,
+      height: 630,
+      alt: 'AI Automation Specialist | Goodlet AI Academy',
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['https://www.goodletaiacademy.com/api/og?title=AI+Automation+Specialist&price=%2415&level=Intermediate&lessons=30'],
   },
 }
 
@@ -32,8 +43,36 @@ export default async function AIAutomationPage() {
     6: 'Professional Launch'
   }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI Automation Specialist',
+    description: 'Master AI-powered automation. Build no-code workflows, Custom GPTs, and AI agents. 30 lessons over 6 weeks.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-automation-specialist',
+    provider: {
+      '@type': 'Organization',
+      name: 'Goodlet AI Academy',
+      url: 'https://www.goodletaiacademy.com',
+    },
+    instructor: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '15',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    educationalLevel: 'Intermediate',
+    courseMode: 'online',
+    numberOfCredits: 30,
+    timeRequired: 'P6W',
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <JsonLd data={courseJsonLd} />
 
       {/* Navigation */}
       <nav style={{

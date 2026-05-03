@@ -4,6 +4,182 @@
   box-sizing: border-box;
 }
 
+/* =============================================
+   RESPONSIVE DESIGN SYSTEM
+   ============================================= */
+
+/* --- Navigation --- */
+.nav-links-desktop {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.nav-hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.nav-mobile-menu {
+  display: none;
+  flex-direction: column;
+  border-top: 1px solid #f0f0f0;
+  margin: 0 -20px;
+  padding: 8px 0 16px;
+}
+
+.nav-mobile-menu.open {
+  display: flex;
+}
+
+.nav-mobile-menu a {
+  padding: 14px 24px;
+  color: #2d3748;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid #f7fafc;
+  transition: background 0.15s;
+}
+
+.nav-mobile-menu a:active {
+  background: #f7fafc;
+}
+
+.nav-mobile-menu .nav-mobile-cta {
+  margin: 12px 24px 0;
+  padding: 14px !important;
+  border-bottom: none !important;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  text-align: center;
+  font-weight: bold !important;
+  font-size: 0.95rem !important;
+  display: block;
+}
+
+/* --- Responsive grids: use min() to prevent overflow --- */
+.resp-grid-2col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 30px;
+}
+
+.resp-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 30px;
+}
+
+.resp-grid-paths {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 30px;
+}
+
+.resp-grid-4col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 25px;
+}
+
+/* --- AccessGate pricing side-by-side --- */
+.resp-pricing-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+/* --- Email CTA form row --- */
+.resp-email-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.resp-email-input {
+  flex: 1;
+  max-width: 350px;
+  min-width: 220px;
+}
+
+/* --- Stats bar dividers --- */
+.resp-stats-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* =============================================
+   BREAKPOINTS
+   ============================================= */
+
+@media (max-width: 768px) {
+  /* Nav — show hamburger, hide desktop links */
+  .nav-links-desktop {
+    display: none;
+  }
+  .nav-hamburger {
+    display: flex;
+  }
+
+  /* Stats bar — hide vertical dividers when items wrap */
+  .resp-stats-divider {
+    display: none;
+  }
+
+  /* Email form — stack vertically */
+  .resp-email-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .resp-email-input {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  .resp-email-btn {
+    width: 100%;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Pricing cards — stack on small phones */
+  .resp-pricing-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;

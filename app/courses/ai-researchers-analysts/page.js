@@ -1,6 +1,7 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
+import JsonLd from '../../components/JsonLd'
 
 export const metadata = {
   title: 'AI for Researchers & Analysts Course | Goodlet AI Academy',
@@ -22,10 +23,10 @@ export const metadata = {
     locale: 'en_GB',
     images: [
       {
-        url: 'https://www.goodletaiacademy.com/goodlet-ai-logo.png',
+        url: 'https://www.goodletaiacademy.com/api/og?title=AI+for+Researchers+%26+Analysts&price=%2415&level=All+Levels&lessons=12',
         width: 1200,
         height: 630,
-        alt: 'AI for Researchers & Analysts — Goodlet AI Academy',
+        alt: 'AI for Researchers & Analysts | Goodlet AI Academy',
       }
     ],
   },
@@ -55,8 +56,36 @@ export default async function AIResearchersAnalystsPage() {
     3: 'Insight & Communication'
   }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI for Researchers & Analysts',
+    description: 'Apply AI to research workflows, data analysis, and insight generation. 12 lessons over 3 weeks.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-researchers-analysts',
+    provider: {
+      '@type': 'Organization',
+      name: 'Goodlet AI Academy',
+      url: 'https://www.goodletaiacademy.com',
+    },
+    instructor: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '15',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    educationalLevel: 'All Levels',
+    courseMode: 'online',
+    numberOfCredits: 12,
+    timeRequired: 'P3W',
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <JsonLd data={courseJsonLd} />
 
       {/* Navigation */}
       <nav style={{

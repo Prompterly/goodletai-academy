@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import JsonLd from './components/JsonLd'
 
 export default function Home() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
-const [hoveredPath, setHoveredPath] = useState<number | null>(null)
+  const [hoveredPath, setHoveredPath] = useState<number | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const handleSubscribe = async () => {
     if (!email || !email.includes('@')) {
@@ -36,66 +38,94 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
     }
   }
 
+  const orgJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Goodlet AI Academy',
+    url: 'https://www.goodletaiacademy.com',
+    description: 'Practical AI education for professionals in Africa and beyond. Learn AI skills, tools, and workflows with real-world projects.',
+    founder: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    sameAs: [],
+  }
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Goodlet AI Academy',
+    url: 'https://www.goodletaiacademy.com',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://www.goodletaiacademy.com/courses?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: "'Segoe UI', Arial, sans-serif", overflowX: 'hidden' }}>
-      
+      <JsonLd data={orgJsonLd} />
+      <JsonLd data={websiteJsonLd} />
+
       {/* ==================== NAVIGATION ==================== */}
       <nav style={{
         background: 'rgba(255,255,255,0.97)',
         padding: '15px 20px',
         boxShadow: '0 2px 20px rgba(0,0,0,0.06)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
         position: 'sticky',
         top: 0,
         zIndex: 1000,
         backdropFilter: 'blur(10px)'
       }}>
-        <a href="/" style={{ 
-          display: 'flex',
-          alignItems: 'center',
-          textDecoration: 'none'
-        }}>
-          <div style={{ 
-  display: 'flex', 
-  alignItems: 'center', 
-  gap: '10px',
-  marginBottom: '15px' 
-}}>
-  <img 
-    src="/goodlet-ai-logo.png" 
-    alt="Goodlet AI Academy"
-    style={{ height: '40px', width: 'auto' }}
-  />
-  <span style={{
-    fontSize: '1.1rem',
-    fontWeight: '700',
-    color: 'black',
-    letterSpacing: '-0.3px'
-  }}>
-    Goodlet AI Academy
-  </span>
-</div>
-        </a>
-        <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-          <a href="/" style={{ color: '#667eea', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.95rem' }}>Home</a>
-          <a href="/courses" style={{ color: '#555', textDecoration: 'none', fontSize: '0.95rem' }}>Courses</a>
-          <a href="/jobs" style={{ color: '#555', textDecoration: 'none', fontSize: '0.95rem' }}>Jobs</a>
-          <a href="/about" style={{ color: '#555', textDecoration: 'none', fontSize: '0.95rem' }}>About</a>
-          <a href="/courses" style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
-            padding: '10px 24px',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontWeight: 'bold',
-            fontSize: '0.9rem',
-            boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
-            transition: 'all 0.3s ease'
-          }}>
-            Get Started
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <img
+                src="/goodlet-ai-logo.png"
+                alt="Goodlet AI Academy"
+                style={{ height: '40px', width: 'auto' }}
+              />
+              <span style={{ fontSize: '1.1rem', fontWeight: '700', color: 'black', letterSpacing: '-0.3px' }}>
+                Goodlet AI Academy
+              </span>
+            </div>
           </a>
+          <div className="nav-links-desktop">
+            <a href="/" style={{ color: '#667eea', textDecoration: 'none', fontWeight: 'bold', fontSize: '0.95rem' }}>Home</a>
+            <a href="/courses" style={{ color: '#555', textDecoration: 'none', fontSize: '0.95rem' }}>Courses</a>
+            <a href="/jobs" style={{ color: '#555', textDecoration: 'none', fontSize: '0.95rem' }}>Jobs</a>
+            <a href="/about" style={{ color: '#555', textDecoration: 'none', fontSize: '0.95rem' }}>About</a>
+            <a href="/courses" style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              padding: '10px 24px',
+              borderRadius: '8px',
+              textDecoration: 'none',
+              fontWeight: 'bold',
+              fontSize: '0.9rem',
+              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
+              transition: 'all 0.3s ease'
+            }}>
+              Get Started
+            </a>
+          </div>
+          <button
+            className={`nav-hamburger ${menuOpen ? 'open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span/>
+            <span/>
+            <span/>
+          </button>
+        </div>
+        <div className={`nav-mobile-menu ${menuOpen ? 'open' : ''}`}>
+          <a href="/">Home</a>
+          <a href="/courses">Courses</a>
+          <a href="/jobs">Jobs</a>
+          <a href="/about">About</a>
+          <a href="/courses" className="nav-mobile-cta">Get Started</a>
         </div>
       </nav>
 
@@ -243,17 +273,17 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
               <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#a78bfa' }}>170M+</div>
               <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>New AI Jobs by 2030</div>
             </div>
-            <div style={{ width: '1px', background: 'rgba(255,255,255,0.15)' }}/>
+            <div className="resp-stats-divider"/>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#34d399' }}>+56%</div>
               <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>AI Salary Premium</div>
             </div>
-            <div style={{ width: '1px', background: 'rgba(255,255,255,0.15)' }}/>
+            <div className="resp-stats-divider"/>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f9a8d4' }}>20%</div>
               <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>Annual Job Growth</div>
             </div>
-            <div style={{ width: '1px', background: 'rgba(255,255,255,0.15)' }}/>
+            <div className="resp-stats-divider"/>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', fontWeight: 'bold', color: '#fbbf24' }}>3+</div>
               <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>AI Models Covered</div>
@@ -293,11 +323,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
             </p>
           </div>
 
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
-            gap: '30px'
-          }}>
+          <div className="resp-grid-2col">
             {/* Without AI Skills */}
             <div style={{
               background: 'linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%)',
@@ -602,11 +628,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
             </p>
           </div>
 
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '30px'
-          }}>
+          <div className="resp-grid-paths">
             {[
               {
                 icon: '🧠',
@@ -1262,21 +1284,20 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
               </div>
             ) : (
               <>
-                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <div className="resp-email-row">
                   <input
                     type="email"
                     placeholder="Enter your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
+                    className="resp-email-input"
                     style={{
                       padding: '16px 24px',
                       borderRadius: '12px',
                       border: '1px solid rgba(255,255,255,0.2)',
                       background: 'rgba(255,255,255,0.1)',
                       color: 'white',
-                      flex: '1',
-                      maxWidth: '350px',
                       fontSize: '1rem',
                       outline: 'none'
                     }}
@@ -1284,6 +1305,7 @@ const [hoveredPath, setHoveredPath] = useState<number | null>(null)
                   <button
                     onClick={handleSubscribe}
                     disabled={submitting}
+                    className="resp-email-btn"
                     style={{
                       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                       color: 'white',

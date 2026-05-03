@@ -1,6 +1,7 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
+import JsonLd from '../../components/JsonLd'
 
 export const metadata = {
   title: 'AI Career Builder | Goodlet AI Academy',
@@ -10,6 +11,16 @@ export const metadata = {
     description: 'Land AI roles with a structured 4-week course. Portfolio building, interview prep, and job market navigation. $15 pilot price.',
     url: 'https://www.goodletaiacademy.com/courses/ai-career-builder',
     type: 'website',
+    images: [{
+      url: 'https://www.goodletaiacademy.com/api/og?title=AI+Career+Builder&price=%2415&level=Intermediate&lessons=16',
+      width: 1200,
+      height: 630,
+      alt: 'AI Career Builder | Goodlet AI Academy',
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['https://www.goodletaiacademy.com/api/og?title=AI+Career+Builder&price=%2415&level=Intermediate&lessons=16'],
   },
 }
 
@@ -30,8 +41,36 @@ export default async function AICareerPage() {
     4: 'Building Your AI Career Long-Term'
   }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI Career Builder',
+    description: 'Build an AI-powered career from scratch. Learn to use AI tools to land jobs, build a portfolio, and grow professionally. 16 lessons over 4 weeks.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-career-builder',
+    provider: {
+      '@type': 'Organization',
+      name: 'Goodlet AI Academy',
+      url: 'https://www.goodletaiacademy.com',
+    },
+    instructor: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '15',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    educationalLevel: 'Intermediate',
+    courseMode: 'online',
+    numberOfCredits: 16,
+    timeRequired: 'P4W',
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <JsonLd data={courseJsonLd} />
       <nav style={{
         background: 'white', padding: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',

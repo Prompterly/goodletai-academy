@@ -1,6 +1,7 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
+import JsonLd from '../../components/JsonLd'
 
 export const metadata = {
   title: 'AI for Writers & Content Creators Course | Goodlet AI Academy',
@@ -22,10 +23,10 @@ export const metadata = {
     locale: 'en_GB',
     images: [
       {
-        url: 'https://www.goodletaiacademy.com/goodlet-ai-logo.png',
+        url: 'https://www.goodletaiacademy.com/api/og?title=AI+for+Writers+%26+Content+Creators&price=%2415&level=All+Levels&lessons=12',
         width: 1200,
         height: 630,
-        alt: 'AI for Writers & Content Creators — Goodlet AI Academy',
+        alt: 'AI for Writers & Content Creators | Goodlet AI Academy',
       }
     ],
   },
@@ -55,8 +56,36 @@ export default async function AIWritersCreatorsPage() {
     3: 'Voice, Strategy & Systems'
   }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI for Writers & Content Creators',
+    description: 'Use AI to write faster, create better content, and build a content business. 12 lessons over 3 weeks.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-writers-creators',
+    provider: {
+      '@type': 'Organization',
+      name: 'Goodlet AI Academy',
+      url: 'https://www.goodletaiacademy.com',
+    },
+    instructor: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '15',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    educationalLevel: 'All Levels',
+    courseMode: 'online',
+    numberOfCredits: 12,
+    timeRequired: 'P3W',
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <JsonLd data={courseJsonLd} />
 
       {/* Navigation */}
       <nav style={{

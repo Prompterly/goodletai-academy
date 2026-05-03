@@ -1,6 +1,7 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
+import JsonLd from '../../components/JsonLd'
 
 export const metadata = {
   title: 'AI for Marketers & Strategists | Goodlet AI Academy',
@@ -10,6 +11,16 @@ export const metadata = {
     description: 'Use AI to dominate market research, content, and campaigns. 12 practical lessons. $15 pilot price.',
     url: 'https://www.goodletaiacademy.com/courses/ai-marketers-strategists',
     type: 'website',
+    images: [{
+      url: 'https://www.goodletaiacademy.com/api/og?title=AI+for+Marketers+%26+Strategists&price=%2415&level=All+Levels&lessons=12',
+      width: 1200,
+      height: 630,
+      alt: 'AI for Marketers & Strategists | Goodlet AI Academy',
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['https://www.goodletaiacademy.com/api/og?title=AI+for+Marketers+%26+Strategists&price=%2415&level=All+Levels&lessons=12'],
   },
 }
 
@@ -29,8 +40,36 @@ export default async function AIMarketersPage() {
     3: 'Campaigns & Measurement'
   }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'AI for Marketers & Strategists',
+    description: 'Learn to use AI for marketing strategy, content creation, and campaign optimisation. 12 lessons over 3 weeks.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-marketers-strategists',
+    provider: {
+      '@type': 'Organization',
+      name: 'Goodlet AI Academy',
+      url: 'https://www.goodletaiacademy.com',
+    },
+    instructor: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '15',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    educationalLevel: 'All Levels',
+    courseMode: 'online',
+    numberOfCredits: 12,
+    timeRequired: 'P3W',
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <JsonLd data={courseJsonLd} />
       <nav style={{
         background: 'white', padding: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',

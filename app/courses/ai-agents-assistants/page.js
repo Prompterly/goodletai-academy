@@ -1,6 +1,7 @@
 import { getLessons } from '../../../lib/sanity'
 import LessonList from './LessonList'
 import InstructorTeaser from '../../components/InstructorTeaser'
+import JsonLd from '../../components/JsonLd'
 
 export const metadata = {
   title: 'Build AI Agents & Assistants Course | Goodlet AI Academy',
@@ -22,10 +23,10 @@ export const metadata = {
     locale: 'en_GB',
     images: [
       {
-        url: 'https://www.goodletaiacademy.com/goodlet-ai-logo.png',
+        url: 'https://www.goodletaiacademy.com/api/og?title=Building+AI+Agents+%26+Assistants&price=%2415&level=Advanced&lessons=16',
         width: 1200,
         height: 630,
-        alt: 'Build AI Agents & Assistants — Goodlet AI Academy',
+        alt: 'Building AI Agents & Assistants | Goodlet AI Academy',
       }
     ],
   },
@@ -56,8 +57,36 @@ export default async function AIAgentsAssistantsPage() {
     4: 'Deployment & Scale'
   }
 
+  const courseJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: 'Building AI Agents & Assistants',
+    description: 'Design and build custom AI agents and assistants. Learn agentic workflows, tool use, and multi-step AI systems. 16 lessons over 4 weeks.',
+    url: 'https://www.goodletaiacademy.com/courses/ai-agents-assistants',
+    provider: {
+      '@type': 'Organization',
+      name: 'Goodlet AI Academy',
+      url: 'https://www.goodletaiacademy.com',
+    },
+    instructor: {
+      '@type': 'Person',
+      name: 'Goodlet Owusu Ansah',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: '15',
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    educationalLevel: 'Advanced',
+    courseMode: 'online',
+    numberOfCredits: 16,
+    timeRequired: 'P4W',
+  }
+
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'Arial, sans-serif' }}>
+      <JsonLd data={courseJsonLd} />
 
       {/* Navigation */}
       <nav style={{

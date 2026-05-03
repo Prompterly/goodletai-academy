@@ -39,6 +39,22 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
     }
   }, [courseType])
 
+  const checkServerAccess = async (email) => {
+    try {
+      const res = await fetch(
+        `/api/access/check?email=${encodeURIComponent(email)}&courseType=${courseType}`
+      )
+      const data = await res.json()
+      if (data.hasAccess) {
+        localStorage.setItem(`course_${courseType}_access`, 'true')
+        setHasAccess(true)
+      }
+      return data.hasAccess
+    } catch {
+      return false
+    }
+  }
+
   useEffect(() => {
     // Free courses — always accessible
     if (courseType === 'free') {
@@ -47,15 +63,23 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
       return
     }
 
-    // Paid courses — check payment
+    // Fast path: localStorage cache
     const fullAccess = localStorage.getItem('allCoursesAccess')
     const courseAccess = localStorage.getItem(`course_${courseType}_access`)
     if (fullAccess === 'true' || courseAccess === 'true') {
       setHasAccess(true)
+      setChecking(false)
+      return
     }
+
     const email = localStorage.getItem('subscribedEmail')
-    if (email) setHasEmail(true)
-    setChecking(false)
+    if (email) {
+      setHasEmail(true)
+      // Server-side check — handles cross-device and cleared localStorage
+      checkServerAccess(email).finally(() => setChecking(false))
+    } else {
+      setChecking(false)
+    }
   }, [courseType])
 
   const handlePayment = (plan) => {
@@ -195,7 +219,11 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
                 buttonText="Continue →"
                 compact={true}
                 dark={true}
-                onSuccess={() => setHasEmail(true)}
+                onSuccess={async (capturedEmail) => {
+                  setHasEmail(true)
+                  // Check if they already paid on another device
+                  await checkServerAccess(capturedEmail)
+                }}
               />
             </div>
           )}
@@ -203,12 +231,7 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
           {/* Pricing Cards */}
           {hasEmail && (
             <>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '15px',
-                marginBottom: '25px'
-              }}>
+              <div className="resp-pricing-2col">
                 {/* Single Course */}
                 <div
                   onClick={() => setSelectedPlan('single')}
