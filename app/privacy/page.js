@@ -21,7 +21,7 @@ export default function PrivacyPage() {
 
           <Section title="1. Who We Are">
             <p>Goodlet AI Academy ("we", "us", or "our") is an online education platform that teaches AI skills through practical, self-paced courses. Our website is <strong>goodletaiacademy.com</strong>.</p>
-            <p>If you have any questions about this policy, contact us at: <a href="mailto:hello@goodletaiacademy.com" style={{ color: '#7c3aed' }}>hello@goodletaiacademy.com</a></p>
+            <p>If you have any questions about this policy, contact us at: <a href="mailto:info@goodletaiacademy.com" style={{ color: '#7c3aed' }}>info@goodletaiacademy.com</a></p>
           </Section>
 
           <Section title="2. Information We Collect">
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
               <li><strong>Delete</strong> your data (subject to legal and contractual requirements)</li>
               <li><strong>Unsubscribe</strong> from marketing emails at any time</li>
             </ul>
-            <p>To exercise any of these rights, email us at <a href="mailto:hello@goodletaiacademy.com" style={{ color: '#7c3aed' }}>hello@goodletaiacademy.com</a>.</p>
+            <p>To exercise any of these rights, contact us via email or WhatsApp (details in Section 12).</p>
           </Section>
 
           <Section title="10. Children's Privacy">
@@ -112,8 +112,11 @@ export default function PrivacyPage() {
           </Section>
 
           <Section title="12. Contact Us">
-            <p>For privacy-related questions or requests, contact us at:</p>
-            <p><strong>Goodlet AI Academy</strong><br />Email: <a href="mailto:hello@goodletaiacademy.com" style={{ color: '#7c3aed' }}>hello@goodletaiacademy.com</a></p>
+            <p>For privacy-related questions or requests, reach us through either of the following:</p>
+            <p>
+              📧 <strong>Email:</strong> <a href="mailto:info@goodletaiacademy.com" style={{ color: '#7c3aed' }}>info@goodletaiacademy.com</a><br />
+              💬 <strong>WhatsApp:</strong> <a href="https://wa.me/447379219268" target="_blank" rel="noopener noreferrer" style={{ color: '#7c3aed' }}>+44 7379 219268</a>
+            </p>
           </Section>
 
         </div>

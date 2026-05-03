@@ -42,7 +42,7 @@ export default function TermsPage() {
           <Section title="3. Payment and Pricing">
             <p>All prices are listed in USD and GHS. Payments are processed by Paystack and are subject to their terms of service.</p>
             <SubHeading>No refund policy</SubHeading>
-            <p>Due to the digital nature of our courses, <strong>all sales are final and non-refundable</strong> once course content has been accessed. If you have a technical issue preventing access, contact us within 7 days of purchase at <a href="mailto:hello@goodletaiacademy.com" style={{ color: '#7c3aed' }}>hello@goodletaiacademy.com</a> and we will work to resolve it.</p>
+            <p>Due to the digital nature of our courses, <strong>all sales are final and non-refundable</strong> once course content has been accessed. If you have a technical issue preventing access, contact us within 7 days of purchase at <a href="mailto:info@goodletaiacademy.com" style={{ color: '#7c3aed' }}>info@goodletaiacademy.com</a> or via WhatsApp at <a href="https://wa.me/447379219268" target="_blank" rel="noopener noreferrer" style={{ color: '#7c3aed' }}>+44 7379 219268</a> and we will work to resolve it.</p>
             <p>We may, at our sole discretion, issue a refund in exceptional circumstances.</p>
           </Section>
 
@@ -98,8 +98,11 @@ export default function TermsPage() {
           </Section>
 
           <Section title="11. Contact">
-            <p>For questions about these Terms, contact us at:</p>
-            <p><strong>Goodlet AI Academy</strong><br />Email: <a href="mailto:hello@goodletaiacademy.com" style={{ color: '#7c3aed' }}>hello@goodletaiacademy.com</a></p>
+            <p>For questions about these Terms, reach us through either of the following:</p>
+            <p>
+              📧 <strong>Email:</strong> <a href="mailto:info@goodletaiacademy.com" style={{ color: '#7c3aed' }}>info@goodletaiacademy.com</a><br />
+              💬 <strong>WhatsApp:</strong> <a href="https://wa.me/447379219268" target="_blank" rel="noopener noreferrer" style={{ color: '#7c3aed' }}>+44 7379 219268</a>
+            </p>
           </Section>
 
         </div>
