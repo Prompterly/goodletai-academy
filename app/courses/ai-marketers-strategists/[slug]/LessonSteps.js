@@ -1,6 +1,6 @@
 'use client'
 import './animations.css'
-import SharedLessonSteps from '../../../../components/LessonSteps'
+import SharedLessonSteps from '../../../components/LessonSteps'
 
 const CONFIG = {
   key: '_marketers',
