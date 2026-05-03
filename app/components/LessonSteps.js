@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { PortableText } from '../lib/sanity'
+import { PortableText } from '../../lib/sanity'
 
 // config shape:
 // { key, courseUrl, backLabel, grad, light, shadow, sidebarBg, dotColor, accentColor }
