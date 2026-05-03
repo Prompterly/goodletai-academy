@@ -202,7 +202,7 @@ export default function Home() {
           }}>
             {['Master', 'AI', 'Skills', '&'].map((word, i) => (
               <span key={i} className="word-anim" style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
-                {word}{' '}
+                {word}
               </span>
             ))}
             <br/>
@@ -214,7 +214,7 @@ export default function Home() {
             }}>
               {['Automation', 'for', 'the', 'Future', 'of', 'Work'].map((word, i) => (
                 <span key={i} className="word-anim" style={{ animationDelay: `${0.55 + i * 0.09}s` }}>
-                  {word}{' '}
+                  {word}
                 </span>
               ))}
             </span>
