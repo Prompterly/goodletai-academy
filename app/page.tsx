@@ -1458,8 +1458,8 @@ export default function Home() {
               © 2025 Goodlet AI Academy. All rights reserved.
             </p>
             <div style={{ display: 'flex', gap: '20px' }}>
-              <a href="#" style={{ color: '#4a5568', textDecoration: 'none', fontSize: '0.85rem' }}>Privacy Policy</a>
-              <a href="#" style={{ color: '#4a5568', textDecoration: 'none', fontSize: '0.85rem' }}>Terms of Service</a>
+              <a href="/privacy" style={{ color: '#4a5568', textDecoration: 'none', fontSize: '0.85rem' }}>Privacy Policy</a>
+              <a href="/terms" style={{ color: '#4a5568', textDecoration: 'none', fontSize: '0.85rem' }}>Terms of Service</a>
             </div>
           </div>
         </div>
