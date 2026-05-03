@@ -75,7 +75,10 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
         checkServerAccess(cachedEmail).then(confirmed => {
           if (!confirmed) {
             localStorage.removeItem('allCoursesAccess')
-            localStorage.removeItem(`course_${courseType}_access`)
+            // Clear all per-course keys so stale access doesn't persist
+            Object.keys(localStorage)
+              .filter(k => k.startsWith('course_') && k.endsWith('_access'))
+              .forEach(k => localStorage.removeItem(k))
             setHasAccess(false)
           }
         })
@@ -462,5 +465,6 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
     )
   }
 
-  return children
+  // Should never reach here for paid courses — safety net
+  return null
 }
