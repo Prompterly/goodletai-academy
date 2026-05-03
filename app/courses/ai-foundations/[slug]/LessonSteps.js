@@ -27,6 +27,51 @@ const stepTypeStyles = {
   summary:     { icon: '📌', label: 'Summary',        accent: '#48bb78', pillBg: '#48bb78', contentBg: '#f0fff4', calloutBg: '#f0fff4' }
 }
 
+const stepCardConfigs = {
+  hook:        { cardBg: '#fffbf0', borderLeft: '4px solid #f59e0b', headerBg: null,      headerText: null },
+  explanation: { cardBg: '#ffffff', borderLeft: '4px solid #764ba2', headerBg: null,      headerText: null },
+  example:     { cardBg: '#f0fafa', borderLeft: '4px solid #38b2ac', headerBg: '#38b2ac', headerText: '💡 Real-World Example' },
+  motivation:  { cardBg: '#fffbf0', borderLeft: '4px solid #f59e0b', headerBg: null,      headerText: null },
+  exercise:    { cardBg: '#fff8f0', border: '2px dashed #ed8936',    headerBg: '#ed8936', headerText: '🖊️ Your Turn' },
+  summary:     { cardBg: '#f0fff4', borderLeft: '4px solid #48bb78', headerBg: '#48bb78', headerText: '📌 Key Takeaways' },
+}
+
+function getPortableTextComponents(accent) {
+  return {
+    block: {
+      normal:     ({ children }) => <p style={{ marginBottom: '1.1em', lineHeight: '1.85', color: '#2d3748' }}>{children}</p>,
+      h2:         ({ children }) => <h2 style={{ fontSize: '1.35rem', fontWeight: '700', color: '#1a202c', margin: '1.5em 0 0.6em', lineHeight: '1.3' }}>{children}</h2>,
+      h3:         ({ children }) => <h3 style={{ fontSize: '1.15rem', fontWeight: '600', color: '#2d3748', margin: '1.25em 0 0.5em', lineHeight: '1.3' }}>{children}</h3>,
+      blockquote: ({ children }) => (
+        <blockquote style={{ margin: '24px 0', padding: '18px 22px', background: `${accent}15`, borderLeft: `4px solid ${accent}`, borderRadius: '0 10px 10px 0', fontStyle: 'italic', color: '#4a5568', fontSize: '1.05rem', lineHeight: '1.8' }}>{children}</blockquote>
+      ),
+    },
+    list: {
+      bullet: ({ children }) => <ul style={{ padding: 0, margin: '16px 0', listStyle: 'none' }}>{children}</ul>,
+      number: ({ children }) => <ol style={{ padding: 0, margin: '16px 0', listStyle: 'none' }}>{children}</ol>,
+    },
+    listItem: {
+      bullet: ({ children }) => (
+        <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '10px', lineHeight: '1.75' }}>
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: accent, flexShrink: 0, marginTop: '9px', display: 'inline-block' }} />
+          <span style={{ flex: 1 }}>{children}</span>
+        </li>
+      ),
+      number: ({ children, index }) => (
+        <li style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', marginBottom: '12px', lineHeight: '1.75' }}>
+          <span style={{ minWidth: '28px', height: '28px', borderRadius: '50%', background: accent, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: '700', flexShrink: 0 }}>{index + 1}</span>
+          <span style={{ flex: 1, paddingTop: '4px' }}>{children}</span>
+        </li>
+      ),
+    },
+    marks: {
+      strong: ({ children }) => <strong style={{ fontWeight: '700', color: '#1a202c' }}>{children}</strong>,
+      em:     ({ children }) => <em style={{ fontStyle: 'italic', color: '#4a5568' }}>{children}</em>,
+      link:   ({ value, children }) => <a href={value?.href} target="_blank" rel="noopener noreferrer" style={{ color: accent, textDecoration: 'underline', fontWeight: '500' }}>{children}</a>,
+    },
+  }
+}
+
 function MilestoneScreen({ milestone, onContinue }) {
   return (
     <div className="milestone-screen" style={{
@@ -699,18 +744,28 @@ export default function LessonSteps({ lesson }) {
             {step.stepTitle}
           </h2>
 
-          <div className="step-body step-content-box" style={{
-            background: 'white',
-            borderRadius: '16px',
-            padding: '40px',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.07)',
-            fontSize: '1.05rem',
-            lineHeight: '1.9',
-            color: '#2d3748',
-            borderLeft: `4px solid ${stepStyle.accent}`
-          }}>
-            {step.content && <PortableText value={step.content} />}
-          </div>
+          {(() => {
+            const card = stepCardConfigs[step?.stepType] || stepCardConfigs.explanation
+            return (
+              <div className="step-body step-content-box" style={{
+                background: card.cardBg,
+                borderRadius: '16px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.07)',
+                overflow: 'hidden',
+                borderLeft: card.border ? undefined : card.borderLeft,
+                border: card.border || undefined,
+              }}>
+                {card.headerText && (
+                  <div style={{ background: card.headerBg, color: 'white', padding: '10px 28px', fontSize: '0.78rem', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+                    {card.headerText}
+                  </div>
+                )}
+                <div style={{ padding: '32px 40px', fontSize: '1.05rem', lineHeight: '1.9', color: '#2d3748' }}>
+                  {step.content && <PortableText value={step.content} components={getPortableTextComponents(stepStyle.accent)} />}
+                </div>
+              </div>
+            )
+          })()}
         </div>
 
         <div className="desktop-nav-buttons" style={{
