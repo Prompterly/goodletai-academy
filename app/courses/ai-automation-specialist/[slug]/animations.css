@@ -385,3 +385,40 @@
     font-size: 1rem !important;
   }
 }
+
+
+/* PortableText / rich content overflow prevention */
+.step-content-box img,
+.lesson-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.step-content-box table,
+.lesson-content table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+  border-collapse: collapse;
+}
+
+.step-content-box pre,
+.lesson-content pre {
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.step-content-box code,
+.lesson-content code {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+.step-content-box iframe,
+.lesson-content iframe {
+  max-width: 100%;
+}
+
