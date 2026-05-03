@@ -126,7 +126,7 @@ export default function AccessGate({ lesson, children, courseType = 'free' }) {
       email: email,
       amount: amount,
       currency: 'GHS',
-      ref: 'GAA_' + Math.floor(Math.random() * 1000000000 + 1),
+      ref: 'GAA_' + crypto.randomUUID().replace(/-/g, ''),
       metadata: {
         custom_fields: [
           {

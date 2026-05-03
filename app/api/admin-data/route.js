@@ -1,15 +1,24 @@
 import { NextResponse } from 'next/server'
 import { createClient } from 'next-sanity'
+import { rateLimit } from '@/app/lib/rateLimit'
 
+// Use a dedicated read-only token (SANITY_READ_TOKEN) if available.
+// Falls back to no token — same as /api/access/check.
+// Never use the write token for read-only operations.
 const readClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
-  token: process.env.SANITY_WRITE_TOKEN,
+  token: process.env.SANITY_READ_TOKEN,
   useCdn: false,
 })
 
 export async function POST(request) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown'
+  if (!rateLimit(ip, 5, 60_000)) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+  }
+
   const { password } = await request.json()
 
   if (password !== process.env.ADMIN_PASSWORD) {
