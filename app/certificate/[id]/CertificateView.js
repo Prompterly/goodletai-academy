@@ -39,18 +39,7 @@ function LinkedInShareButton({ name, course, certId }) {
   const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(certUrl)}&summary=${text}`
 
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{
-        display: 'inline-flex', alignItems: 'center', gap: '8px',
-        background: '#0077b5', color: 'white', padding: '14px 28px',
-        borderRadius: '10px', fontWeight: '700', fontSize: '0.95rem',
-        textDecoration: 'none', boxShadow: '0 4px 15px rgba(0,119,181,0.35)',
-        transition: 'transform 0.15s',
-      }}
-    >
+    <a href={url} target="_blank" rel="noopener noreferrer" className="cert-btn cert-btn-linkedin">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
       </svg>
@@ -82,155 +71,342 @@ export default function CertificateView({ cert }) {
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
-      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      padding: '40px 20px', fontFamily: 'Georgia, serif',
-    }}>
+    <div className="cert-page">
+      <style>{`
+        .cert-page {
+          min-height: 100vh;
+          background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 40px 20px;
+          font-family: Georgia, serif;
+          box-sizing: border-box;
+        }
 
-      {/* ── Certificate Card ─────────────────────────────────── */}
-      <div
-        ref={certRef}
-        style={{
-          width: '100%', maxWidth: '780px', background: '#fffefb',
-          borderRadius: '4px', padding: 'clamp(30px, 6vw, 60px) clamp(24px, 6vw, 70px)',
-          boxShadow: '0 30px 80px rgba(0,0,0,0.45)',
-          position: 'relative', overflow: 'hidden',
-        }}
-      >
-        {/* Corner ornaments */}
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '90px', height: '90px', borderTop: '5px solid #764ba2', borderLeft: '5px solid #764ba2', borderRadius: '4px 0 0 0' }} />
-        <div style={{ position: 'absolute', top: 0, right: 0, width: '90px', height: '90px', borderTop: '5px solid #764ba2', borderRight: '5px solid #764ba2', borderRadius: '0 4px 0 0' }} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, width: '90px', height: '90px', borderBottom: '5px solid #764ba2', borderLeft: '5px solid #764ba2', borderRadius: '0 0 0 4px' }} />
-        <div style={{ position: 'absolute', bottom: 0, right: 0, width: '90px', height: '90px', borderBottom: '5px solid #764ba2', borderRight: '5px solid #764ba2', borderRadius: '0 0 4px 0' }} />
+        /* ── Card ── */
+        .cert-card {
+          width: 100%;
+          max-width: 780px;
+          background: #fffefb;
+          border-radius: 4px;
+          padding: 60px 70px;
+          box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+          position: relative;
+          overflow: hidden;
+          box-sizing: border-box;
+        }
 
-        {/* Subtle background pattern */}
-        <div style={{
-          position: 'absolute', inset: 0, opacity: 0.03,
-          backgroundImage: 'repeating-linear-gradient(45deg, #764ba2 0, #764ba2 1px, transparent 0, transparent 50%)',
-          backgroundSize: '20px 20px',
-        }} />
+        /* Corner ornaments */
+        .cert-corner {
+          position: absolute;
+          width: 80px;
+          height: 80px;
+        }
+        .cert-corner.tl { top: 0; left: 0; border-top: 5px solid #764ba2; border-left: 5px solid #764ba2; border-radius: 4px 0 0 0; }
+        .cert-corner.tr { top: 0; right: 0; border-top: 5px solid #764ba2; border-right: 5px solid #764ba2; border-radius: 0 4px 0 0; }
+        .cert-corner.bl { bottom: 0; left: 0; border-bottom: 5px solid #764ba2; border-left: 5px solid #764ba2; border-radius: 0 0 0 4px; }
+        .cert-corner.br { bottom: 0; right: 0; border-bottom: 5px solid #764ba2; border-right: 5px solid #764ba2; border-radius: 0 0 4px 0; }
 
-        {/* Content */}
-        <div style={{ position: 'relative', textAlign: 'center' }}>
+        .cert-bg-pattern {
+          position: absolute; inset: 0; opacity: 0.03;
+          background-image: repeating-linear-gradient(45deg, #764ba2 0, #764ba2 1px, transparent 0, transparent 50%);
+          background-size: 20px 20px;
+          pointer-events: none;
+        }
+
+        .cert-content {
+          position: relative;
+          text-align: center;
+        }
+
+        /* Academy row */
+        .cert-academy-row {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 8px;
+        }
+        .cert-academy-line {
+          height: 1px;
+          width: 40px;
+        }
+        .cert-academy-name {
+          font-size: 0.72rem;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #764ba2;
+          font-family: Arial, sans-serif;
+          font-weight: 700;
+        }
+
+        /* Title */
+        .cert-title {
+          font-size: 2.2rem;
+          font-weight: 400;
+          color: #1a0a2e;
+          margin: 0 0 28px;
+          letter-spacing: 1px;
+          line-height: 1.3;
+          font-family: Georgia, serif;
+        }
+
+        /* Divider */
+        .cert-divider {
+          margin: 0 auto 24px;
+          width: 60px;
+          height: 2px;
+          background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        /* Labels */
+        .cert-label {
+          font-size: 0.85rem;
+          color: #718096;
+          letter-spacing: 1px;
+          margin: 0 0 10px;
+          font-family: Arial, sans-serif;
+        }
+        .cert-label-below {
+          font-size: 0.85rem;
+          color: #718096;
+          letter-spacing: 1px;
+          margin: 16px 0 10px;
+          font-family: Arial, sans-serif;
+        }
+
+        /* Student name */
+        .cert-name {
+          font-size: 2.8rem;
+          font-weight: 700;
+          color: #1a0a2e;
+          margin: 0 0 0;
+          line-height: 1.2;
+          font-family: Georgia, serif;
+          border-bottom: 2px solid #e2d9f3;
+          padding-bottom: 16px;
+          display: inline-block;
+          max-width: 100%;
+          word-break: break-word;
+        }
+
+        /* Course name */
+        .cert-course {
+          font-size: 1.55rem;
+          font-weight: 700;
+          color: #764ba2;
+          margin: 0 0 32px;
+          line-height: 1.3;
+          font-family: Georgia, serif;
+        }
+
+        /* Footer */
+        .cert-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-top: 1px solid #e8e0f5;
+          padding-top: 24px;
+          gap: 16px;
+        }
+        .cert-footer-date { text-align: left; }
+        .cert-footer-certid { text-align: right; }
+        .cert-footer-label {
+          font-size: 0.65rem;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #a0aec0;
+          font-family: Arial, sans-serif;
+          margin: 0 0 4px;
+        }
+        .cert-footer-value {
+          font-size: 0.9rem;
+          color: #2d3748;
+          font-weight: 600;
+          font-family: Arial, sans-serif;
+          margin: 0;
+        }
+        .cert-footer-certid .cert-footer-value {
+          color: #764ba2;
+          font-family: monospace, Arial;
+        }
+
+        /* Seal */
+        .cert-seal-wrap { text-align: center; flex-shrink: 0; }
+        .cert-seal-circle {
+          width: 72px;
+          height: 72px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 6px;
+          box-shadow: 0 4px 20px rgba(102,126,234,0.4);
+          border: 3px solid white;
+          outline: 2px solid #764ba2;
+          font-size: 1.8rem;
+        }
+        .cert-seal-label {
+          font-size: 0.6rem;
+          letter-spacing: 1.5px;
+          color: #764ba2;
+          text-transform: uppercase;
+          font-family: Arial, sans-serif;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        /* Below-card elements */
+        .cert-verified-badge {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: rgba(72, 187, 120, 0.15);
+          border: 1px solid rgba(72,187,120,0.4);
+          border-radius: 30px;
+          padding: 8px 20px;
+          margin-top: 24px;
+          color: #68d391;
+          font-size: 0.85rem;
+          font-family: Arial, sans-serif;
+          font-weight: 600;
+        }
+
+        .cert-actions {
+          display: flex;
+          gap: 14px;
+          margin-top: 24px;
+          flex-wrap: wrap;
+          justify-content: center;
+          width: 100%;
+          max-width: 780px;
+        }
+
+        .cert-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          padding: 14px 28px;
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 0.95rem;
+          cursor: pointer;
+          font-family: Arial, sans-serif;
+          text-decoration: none;
+          transition: transform 0.15s;
+          border: none;
+        }
+        .cert-btn:hover { transform: translateY(-2px); }
+        .cert-btn-download {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          box-shadow: 0 4px 15px rgba(102,126,234,0.35);
+        }
+        .cert-btn-linkedin {
+          background: #0077b5;
+          color: white;
+          box-shadow: 0 4px 15px rgba(0,119,181,0.35);
+        }
+
+        .cert-verify-url {
+          color: rgba(255,255,255,0.3);
+          font-size: 0.72rem;
+          margin-top: 24px;
+          font-family: Arial, sans-serif;
+          text-align: center;
+        }
+
+        /* ── Mobile ── */
+        @media (max-width: 600px) {
+          .cert-page { padding: 24px 14px; }
+
+          .cert-card { padding: 32px 22px; }
+
+          .cert-corner { width: 50px; height: 50px; }
+
+          .cert-title { font-size: 1.45rem; margin-bottom: 18px; }
+
+          .cert-name { font-size: 1.75rem; padding-bottom: 12px; }
+
+          .cert-course { font-size: 1.1rem; margin-bottom: 22px; }
+
+          .cert-seal-circle { width: 52px; height: 52px; font-size: 1.3rem; }
+
+          .cert-footer { gap: 8px; padding-top: 18px; }
+
+          .cert-footer-value { font-size: 0.78rem; }
+          .cert-footer-label { font-size: 0.58rem; }
+
+          .cert-actions { flex-direction: column; }
+          .cert-btn { width: 100%; }
+        }
+      `}</style>
+
+      {/* ── Certificate Card ── */}
+      <div ref={certRef} className="cert-card">
+        <div className="cert-corner tl" />
+        <div className="cert-corner tr" />
+        <div className="cert-corner bl" />
+        <div className="cert-corner br" />
+        <div className="cert-bg-pattern" />
+
+        <div className="cert-content">
 
           {/* Academy name */}
-          <div style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            gap: '10px', marginBottom: '6px',
-          }}>
-            <div style={{ height: '1px', width: '40px', background: 'linear-gradient(90deg, transparent, #764ba2)' }} />
-            <span style={{ fontSize: '0.75rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#764ba2', fontFamily: 'Arial, sans-serif', fontWeight: '700' }}>
-              Goodlet AI Academy
-            </span>
-            <div style={{ height: '1px', width: '40px', background: 'linear-gradient(90deg, #764ba2, transparent)' }} />
+          <div className="cert-academy-row">
+            <div className="cert-academy-line" style={{ background: 'linear-gradient(90deg, transparent, #764ba2)' }} />
+            <span className="cert-academy-name">Goodlet AI Academy</span>
+            <div className="cert-academy-line" style={{ background: 'linear-gradient(90deg, #764ba2, transparent)' }} />
           </div>
 
-          {/* Title */}
-          <h1 style={{
-            fontSize: '2.2rem', fontWeight: '400', color: '#1a0a2e',
-            margin: '0 0 32px', letterSpacing: '1px', lineHeight: '1.3',
-            fontFamily: 'Georgia, serif',
-          }}>
-            Certificate of Completion
-          </h1>
+          <h1 className="cert-title">Certificate of Completion</h1>
 
-          {/* Divider */}
-          <div style={{ margin: '0 auto 28px', width: '60px', height: '2px', background: 'linear-gradient(90deg, #667eea, #764ba2)' }} />
+          <div className="cert-divider" />
 
-          {/* "This certifies that" */}
-          <p style={{ fontSize: '0.9rem', color: '#718096', letterSpacing: '1px', margin: '0 0 10px', fontFamily: 'Arial, sans-serif' }}>
-            This certifies that
-          </p>
+          <p className="cert-label">This certifies that</p>
 
-          {/* Student name */}
-          <h2 style={{
-            fontSize: 'clamp(1.6rem, 5vw, 2.8rem)', fontWeight: '700', color: '#1a0a2e',
-            margin: '0 0 18px', lineHeight: '1.2',
-            fontFamily: 'Georgia, serif',
-            borderBottom: '2px solid #e2d9f3', paddingBottom: '18px',
-            display: 'inline-block', maxWidth: '100%',
-          }}>
-            {cert.name}
-          </h2>
+          <h2 className="cert-name">{cert.name}</h2>
 
-          {/* "has successfully completed" */}
-          <p style={{ fontSize: '0.9rem', color: '#718096', letterSpacing: '1px', margin: '18px 0 10px', fontFamily: 'Arial, sans-serif' }}>
-            has successfully completed
-          </p>
+          <p className="cert-label-below">has successfully completed</p>
 
-          {/* Course name */}
-          <h3 style={{
-            fontSize: 'clamp(1.2rem, 3.5vw, 1.6rem)', fontWeight: '700',
-            color: '#764ba2',
-            margin: '0 0 36px', lineHeight: '1.3',
-          }}>
-            {cert.courseName}
-          </h3>
+          <h3 className="cert-course">{cert.courseName}</h3>
 
           {/* Footer row */}
-          <div style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            borderTop: '1px solid #e8e0f5', paddingTop: '24px', gap: '12px',
-            flexWrap: 'nowrap',
-          }}>
-            {/* Date */}
-            <div style={{ textAlign: 'left' }}>
-              <p style={{ margin: '0 0 4px', fontSize: '0.7rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#a0aec0', fontFamily: 'Arial, sans-serif' }}>Date Awarded</p>
-              <p style={{ margin: 0, fontSize: '0.95rem', color: '#2d3748', fontWeight: '600', fontFamily: 'Arial, sans-serif' }}>{formatDate(cert.completedAt)}</p>
+          <div className="cert-footer">
+            <div className="cert-footer-date">
+              <p className="cert-footer-label">Date Awarded</p>
+              <p className="cert-footer-value">{formatDate(cert.completedAt)}</p>
             </div>
 
-            {/* Seal */}
-            <div style={{ textAlign: 'center', flexShrink: 0 }}>
-              <div style={{
-                width: '60px', height: '60px', borderRadius: '50%',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                margin: '0 auto 6px',
-                boxShadow: '0 4px 20px rgba(102,126,234,0.4)',
-                border: '3px solid white',
-                outline: '2px solid #764ba2',
-              }}>
-                <span style={{ fontSize: '1.5rem' }}>🎓</span>
-              </div>
-              <p style={{ margin: 0, fontSize: '0.65rem', letterSpacing: '1.5px', color: '#764ba2', textTransform: 'uppercase', fontFamily: 'Arial, sans-serif', fontWeight: '700' }}>Verified</p>
+            <div className="cert-seal-wrap">
+              <div className="cert-seal-circle">🎓</div>
+              <p className="cert-seal-label">Verified</p>
             </div>
 
-            {/* Certificate ID */}
-            <div style={{ textAlign: 'right' }}>
-              <p style={{ margin: '0 0 4px', fontSize: '0.7rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#a0aec0', fontFamily: 'Arial, sans-serif' }}>Certificate ID</p>
-              <p style={{ margin: 0, fontSize: '0.95rem', color: '#764ba2', fontWeight: '700', fontFamily: 'monospace, Arial' }}>{cert.certificateId}</p>
+            <div className="cert-footer-certid">
+              <p className="cert-footer-label">Certificate ID</p>
+              <p className="cert-footer-value">{cert.certificateId}</p>
             </div>
           </div>
+
         </div>
       </div>
-      {/* ────────────────────────────────────────────────────── */}
 
       {/* Verification badge */}
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: '8px',
-        background: 'rgba(72, 187, 120, 0.15)', border: '1px solid rgba(72,187,120,0.4)',
-        borderRadius: '30px', padding: '8px 20px', marginTop: '24px',
-        color: '#68d391', fontSize: '0.85rem', fontFamily: 'Arial, sans-serif', fontWeight: '600',
-      }}>
+      <div className="cert-verified-badge">
         <span>✓</span>
         <span>Verified Certificate — Issued by Goodlet AI Academy</span>
       </div>
 
       {/* Action buttons */}
-      <div style={{
-        display: 'flex', gap: '14px', marginTop: '28px', flexWrap: 'wrap', justifyContent: 'center',
-      }}>
+      <div className="cert-actions">
         <button
+          className="cert-btn cert-btn-download"
           onClick={() => downloadPDF(certRef, cert.name, cert.courseName)}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white', padding: '14px 28px', border: 'none', borderRadius: '10px',
-            fontWeight: '700', fontSize: '0.95rem', cursor: 'pointer',
-            boxShadow: '0 4px 15px rgba(102,126,234,0.35)', fontFamily: 'Arial, sans-serif',
-          }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -243,7 +419,7 @@ export default function CertificateView({ cert }) {
         <LinkedInShareButton name={cert.name} course={cert.courseName} certId={cert.certificateId} />
       </div>
 
-      <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.75rem', marginTop: '30px', fontFamily: 'Arial, sans-serif' }}>
+      <p className="cert-verify-url">
         Verify this certificate at goodletaiacademy.com/certificate/{cert.certificateId}
       </p>
     </div>
