@@ -428,13 +428,33 @@ export default function Jobs() {
         </div>
       </main>
 
+      {/* Disclaimer */}
+      <div style={{
+        maxWidth: '800px',
+        margin: '60px auto',
+        padding: '28px 36px',
+        background: '#f8fafc',
+        border: '1px solid #e2e8f0',
+        borderRadius: '12px',
+        textAlign: 'center',
+      }}>
+        <p style={{ fontSize: '0.9rem', fontWeight: '700', color: '#4a5568', marginBottom: '8px' }}>
+          A quick note on our jobs board
+        </p>
+        <p style={{ fontSize: '0.875rem', color: '#718096', lineHeight: '1.7', margin: 0 }}>
+          The listings here are curated to help you find AI opportunities in one place — think of it as a head start, not a guarantee.
+          We don't post or verify these roles directly, and securing a job is ultimately down to the skills and effort you bring.
+          That's exactly what we're here to help you build.
+        </p>
+      </div>
+
       {/* Footer */}
       <footer style={{
         background: '#1a202c',
         color: 'white',
         padding: '50px 20px',
         textAlign: 'center',
-        marginTop: '80px'
+        marginTop: '0',
       }}>
         <p style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '15px' }}>
           Goodlet AI Academy
