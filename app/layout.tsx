@@ -16,9 +16,7 @@ export const metadata = {
   metadataBase: new URL('https://www.goodletaiacademy.com'),
   title: 'Goodlet AI Academy | Master AI Skills & Automation',
   description: 'Go from AI-curious to AI-proficient. Learn prompt engineering, workflow automation, and AI tools from a working professional who made the transition himself. Free and paid courses available.',
-  icons: {
-    icon: '/goodlet-ai-icon.png',
-  },
+
   openGraph: {
     title: 'Goodlet AI Academy | Master AI Skills & Automation',
     description: 'Go from AI-curious to AI-proficient. Structured courses in AI Foundations, Automation, Career Building, and Marketing. Start free today.',
