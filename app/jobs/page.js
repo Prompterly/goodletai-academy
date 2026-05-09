@@ -124,15 +124,15 @@ const TITLE_BLOCKLIST = [
   'social media manager', 'community manager',
 ]
 
-function isAiRole(title, tags) {
+function isAiRole(title) {
   const t = (title || '').toLowerCase()
-  const tagStr = (tags || []).join(' ').toLowerCase()
 
   // Reject if on the blocklist
   if (TITLE_BLOCKLIST.some(blocked => t.includes(blocked))) return false
 
-  // Accept if title OR tags contain an AI keyword
-  return AI_TITLE_KEYWORDS.some(kw => t.includes(kw) || tagStr.includes(kw))
+  // Accept only if the TITLE itself contains an AI keyword
+  // (tags excluded — companies tag everything with "ai" regardless of role)
+  return AI_TITLE_KEYWORDS.some(kw => t.includes(kw))
 }
 
 // ─── Data fetching ───────────────────────────────────────────────────────────
@@ -159,7 +159,7 @@ function normalise(job) {
     id: job.id,
     title: job.title,
     company: job.company_name,
-    companyLogo: job.company_logo || null,
+    companyLogo: null, // Remotive logos are unreliable — disabled
     location: job.candidate_required_location || 'Remote',
     type: formatJobType(job.job_type),
     level: inferLevel(job.title),
@@ -181,7 +181,7 @@ async function getJobs() {
       .filter(job => {
         if (seen.has(job.id)) return false
         seen.add(job.id)
-        return isAiRole(job.title, job.tags)
+        return isAiRole(job.title)
       })
       .map(normalise)
 
