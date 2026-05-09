@@ -93,31 +93,97 @@ const FALLBACK_JOBS = [
   },
 ]
 
+// ─── AI relevance filter ─────────────────────────────────────────────────────
+// Applied to job TITLES only — keeps results explicitly AI-focused
+// and blocks non-AI roles that merely mention AI in their description.
+
+const AI_TITLE_KEYWORDS = [
+  'ai', 'artificial intelligence',
+  'machine learning', 'ml engineer', 'ml specialist', 'ml ops', 'mlops',
+  'llm', 'large language model',
+  'gpt', 'nlp', 'natural language',
+  'prompt engineer', 'prompt specialist',
+  'generative ai', 'gen ai',
+  'deep learning', 'neural network',
+  'data scientist', 'data science',
+  'computer vision',
+  'ai researcher', 'ai engineer', 'ai specialist', 'ai consultant',
+  'ai analyst', 'ai product', 'ai trainer', 'ai writer',
+  'ai automation', 'ai agent', 'ai ops',
+  'chatbot', 'conversational ai',
+  'language model', 'foundation model',
+  'rag ', 'vector', 'embedding',
+]
+
+// Blocklist — titles that slip through despite containing a keyword
+const TITLE_BLOCKLIST = [
+  'customer success', 'customer retention', 'account manager',
+  'sales representative', 'business development', 'office manager',
+  'hr manager', 'recruiter', 'talent acquisition',
+  'financial analyst', 'bookkeeper', 'accountant',
+  'social media manager', 'community manager',
+]
+
+function isAiRole(title, tags) {
+  const t = (title || '').toLowerCase()
+  const tagStr = (tags || []).join(' ').toLowerCase()
+
+  // Reject if on the blocklist
+  if (TITLE_BLOCKLIST.some(blocked => t.includes(blocked))) return false
+
+  // Accept if title OR tags contain an AI keyword
+  return AI_TITLE_KEYWORDS.some(kw => t.includes(kw) || tagStr.includes(kw))
+}
+
 // ─── Data fetching ───────────────────────────────────────────────────────────
+// Three parallel searches → deduplicate by id → apply AI title filter
+
+const SEARCH_TERMS = ['AI engineer', 'machine learning', 'LLM']
+
+async function fetchTerm(term) {
+  try {
+    const res = await fetch(
+      `https://remotive.com/api/remote-jobs?search=${encodeURIComponent(term)}&limit=25`,
+      { next: { revalidate: 7200 } }
+    )
+    if (!res.ok) return []
+    const data = await res.json()
+    return data.jobs || []
+  } catch {
+    return []
+  }
+}
+
+function normalise(job) {
+  return {
+    id: job.id,
+    title: job.title,
+    company: job.company_name,
+    companyLogo: job.company_logo || null,
+    location: job.candidate_required_location || 'Remote',
+    type: formatJobType(job.job_type),
+    level: inferLevel(job.title),
+    salary: job.salary || null,
+    description: stripHtml(job.description).slice(0, 230) + '…',
+    link: job.url,
+    category: mapCategory(job.category, job.tags),
+    postedAt: job.publication_date || null,
+  }
+}
 
 async function getJobs() {
   try {
-    const res = await fetch(
-      'https://remotive.com/api/remote-jobs?search=AI&limit=40',
-      { next: { revalidate: 7200 } }
-    )
-    if (!res.ok) return FALLBACK_JOBS
+    const results = await Promise.all(SEARCH_TERMS.map(fetchTerm))
 
-    const data = await res.json()
-    const jobs = (data.jobs || []).map(job => ({
-      id: job.id,
-      title: job.title,
-      company: job.company_name,
-      companyLogo: job.company_logo || null,
-      location: job.candidate_required_location || 'Remote',
-      type: formatJobType(job.job_type),
-      level: inferLevel(job.title),
-      salary: job.salary || null,
-      description: stripHtml(job.description).slice(0, 230) + '…',
-      link: job.url,
-      category: mapCategory(job.category, job.tags),
-      postedAt: job.publication_date || null,
-    }))
+    const seen = new Set()
+    const jobs = results
+      .flat()
+      .filter(job => {
+        if (seen.has(job.id)) return false
+        seen.add(job.id)
+        return isAiRole(job.title, job.tags)
+      })
+      .map(normalise)
 
     return jobs.length >= 3 ? jobs : FALLBACK_JOBS
   } catch {
