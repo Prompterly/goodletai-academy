@@ -1,6 +1,6 @@
 import JobsClient from './JobsClient'
 
-export const revalidate = 21600 // refresh every 6 hours (~240 API calls/month, free tier: 500)
+export const revalidate = 7200 // refresh every 2 hours
 
 const MERCOR_LINK = 'https://t.mercor.com/g860i'
 
@@ -144,19 +144,24 @@ const SEARCH_TERMS = ['AI engineer remote', 'machine learning engineer remote']
 async function fetchTerm(term) {
   try {
     const res = await fetch(
-      `https://jsearch.p.rapidapi.com/search?query=${encodeURIComponent(term)}&num_pages=2&date_posted=month`,
+      `https://jsearch.p.rapidapi.com/search?query=${encodeURIComponent(term)}&num_pages=1&date_posted=month`,
       {
         headers: {
           'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
           'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
         },
-        next: { revalidate: 21600 }, // 6 hours
+        cache: 'no-store', // bypass ISR cache — page-level revalidate handles freshness
       }
     )
-    if (!res.ok) return []
+    if (!res.ok) {
+      console.error(`[jobs] JSearch ${term} → ${res.status} ${res.statusText}`)
+      return []
+    }
     const data = await res.json()
+    console.log(`[jobs] JSearch "${term}" → ${(data.data || []).length} results`)
     return data.data || []
-  } catch {
+  } catch (err) {
+    console.error(`[jobs] JSearch fetch error for "${term}":`, err)
     return []
   }
 }
