@@ -94,7 +94,7 @@ export default function CertificateView({ cert }) {
         ref={certRef}
         style={{
           width: '100%', maxWidth: '780px', background: '#fffefb',
-          borderRadius: '4px', padding: '60px 70px',
+          borderRadius: '4px', padding: 'clamp(30px, 6vw, 60px) clamp(24px, 6vw, 70px)',
           boxShadow: '0 30px 80px rgba(0,0,0,0.45)',
           position: 'relative', overflow: 'hidden',
         }}
@@ -146,11 +146,11 @@ export default function CertificateView({ cert }) {
 
           {/* Student name */}
           <h2 style={{
-            fontSize: '2.8rem', fontWeight: '700', color: '#1a0a2e',
+            fontSize: 'clamp(1.6rem, 5vw, 2.8rem)', fontWeight: '700', color: '#1a0a2e',
             margin: '0 0 18px', lineHeight: '1.2',
             fontFamily: 'Georgia, serif',
             borderBottom: '2px solid #e2d9f3', paddingBottom: '18px',
-            display: 'inline-block', minWidth: '300px',
+            display: 'inline-block', maxWidth: '100%',
           }}>
             {cert.name}
           </h2>
@@ -162,19 +162,18 @@ export default function CertificateView({ cert }) {
 
           {/* Course name */}
           <h3 style={{
-            fontSize: '1.6rem', fontWeight: '700',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text', margin: '0 0 36px', lineHeight: '1.3',
+            fontSize: 'clamp(1.2rem, 3.5vw, 1.6rem)', fontWeight: '700',
+            color: '#764ba2',
+            margin: '0 0 36px', lineHeight: '1.3',
           }}>
             {cert.courseName}
           </h3>
 
           {/* Footer row */}
           <div style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
-            borderTop: '1px solid #e8e0f5', paddingTop: '28px', gap: '20px',
-            flexWrap: 'wrap',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            borderTop: '1px solid #e8e0f5', paddingTop: '24px', gap: '12px',
+            flexWrap: 'nowrap',
           }}>
             {/* Date */}
             <div style={{ textAlign: 'left' }}>
@@ -183,9 +182,9 @@ export default function CertificateView({ cert }) {
             </div>
 
             {/* Seal */}
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', flexShrink: 0 }}>
               <div style={{
-                width: '80px', height: '80px', borderRadius: '50%',
+                width: '60px', height: '60px', borderRadius: '50%',
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 margin: '0 auto 6px',
@@ -193,7 +192,7 @@ export default function CertificateView({ cert }) {
                 border: '3px solid white',
                 outline: '2px solid #764ba2',
               }}>
-                <span style={{ fontSize: '2rem' }}>🎓</span>
+                <span style={{ fontSize: '1.5rem' }}>🎓</span>
               </div>
               <p style={{ margin: 0, fontSize: '0.65rem', letterSpacing: '1.5px', color: '#764ba2', textTransform: 'uppercase', fontFamily: 'Arial, sans-serif', fontWeight: '700' }}>Verified</p>
             </div>
