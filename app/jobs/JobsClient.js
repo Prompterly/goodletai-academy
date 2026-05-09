@@ -315,7 +315,7 @@ export default function JobsClient({ jobs, mercorLink }) {
                 {filtered.length} roles
               </span>
             </h2>
-            <p style={{ fontSize: '0.78rem', color: '#b0bec5', margin: 0 }}>🔄 Refreshed every 2 hours</p>
+            <p style={{ fontSize: '0.78rem', color: '#b0bec5', margin: 0 }}>🔄 Refreshed every 6 hours</p>
           </div>
 
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
