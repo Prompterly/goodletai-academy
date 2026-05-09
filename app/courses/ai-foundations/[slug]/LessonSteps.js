@@ -557,7 +557,13 @@ export default function LessonSteps({ lesson }) {
     return (
       <MilestoneScreen
         milestone={lesson.milestone}
-        onContinue={() => window.location.href = '/courses/ai-foundations'}
+        onContinue={() => {
+          const courseSlug = lesson.course?.slug?.current || 'ai-foundations'
+          const nextSlug = lesson.nextLesson?.slug
+          window.location.href = nextSlug
+            ? `/courses/${courseSlug}/${nextSlug}`
+            : `/courses/${courseSlug}`
+        }}
       />
     )
   }
@@ -663,18 +669,22 @@ export default function LessonSteps({ lesson }) {
             </div>
           </div>
 
-          <a className="milestone-button btn-next" href="/courses/ai-foundations" style={{
-            display: 'inline-block',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
-            padding: '16px 40px',
-            borderRadius: '12px',
-            fontWeight: 'bold',
-            fontSize: '1.1rem',
-            textDecoration: 'none',
-            boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)'
-          }}>
-            Next Lesson →
+          <a className="milestone-button btn-next"
+            href={lesson.nextLesson?.slug
+              ? `/courses/${lesson.course?.slug?.current || 'ai-foundations'}/${lesson.nextLesson.slug}`
+              : `/courses/${lesson.course?.slug?.current || 'ai-foundations'}`}
+            style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              padding: '16px 40px',
+              borderRadius: '12px',
+              fontWeight: 'bold',
+              fontSize: '1.1rem',
+              textDecoration: 'none',
+              boxShadow: '0 8px 30px rgba(102, 126, 234, 0.4)'
+            }}>
+            {lesson.nextLesson?.slug ? 'Next Lesson →' : 'Back to Course →'}
           </a>
         </div>
       </div>

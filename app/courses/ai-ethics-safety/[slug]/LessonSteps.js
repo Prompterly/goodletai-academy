@@ -309,7 +309,11 @@ export default function LessonSteps({ lesson }) {
   }
   // ────────────────────────────────────────────────────────────────────────
 
-  if (showMilestone) return <MilestoneScreen milestone={lesson.milestone} onContinue={() => window.location.href = '/courses/ai-ethics-safety'} />
+  if (showMilestone) return <MilestoneScreen milestone={lesson.milestone} onContinue={() => {
+    const courseSlug = lesson.course?.slug?.current || 'ai-ethics-safety'
+    const nextSlug = lesson.nextLesson?.slug
+    window.location.href = nextSlug ? `/courses/${courseSlug}/${nextSlug}` : `/courses/${courseSlug}`
+  }} />
 
   if (lessonCompleted) {
     return (
@@ -326,7 +330,7 @@ export default function LessonSteps({ lesson }) {
               <a href="https://chat.whatsapp.com/IXumRpvFQYuK458qMwYDZO?mode=gi_t" target="_blank" rel="noopener noreferrer" style={{ background: '#25D366', color: 'white', padding: '8px 18px', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-block' }}>Join WhatsApp Group →</a>
             </div>
           </div>
-          <a className="milestone-button btn-next" href="/courses/ai-ethics-safety" style={{ display: 'inline-block', background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)', color: 'white', padding: '16px 40px', borderRadius: '12px', fontWeight: 'bold', fontSize: '1.1rem', textDecoration: 'none', boxShadow: '0 8px 30px rgba(99, 102, 241, 0.4)' }}>Next Lesson →</a>
+          <a className="milestone-button btn-next" href={lesson.nextLesson?.slug ? `/courses/${lesson.course?.slug?.current || 'ai-ethics-safety'}/${lesson.nextLesson.slug}` : `/courses/${lesson.course?.slug?.current || 'ai-ethics-safety'}`} style={{ display: 'inline-block', background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)', color: 'white', padding: '16px 40px', borderRadius: '12px', fontWeight: 'bold', fontSize: '1.1rem', textDecoration: 'none', boxShadow: '0 8px 30px rgba(99, 102, 241, 0.4)' }}>{lesson.nextLesson?.slug ? 'Next Lesson →' : 'Back to Course →'}</a>
         </div>
       </div>
     )

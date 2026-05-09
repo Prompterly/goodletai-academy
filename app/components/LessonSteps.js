@@ -380,7 +380,13 @@ export default function LessonSteps({ lesson, config }) {
   }
 
   if (showMilestone) {
-    return <MilestoneScreen milestone={lesson.milestone} onContinue={() => window.location.href = courseUrl} config={config} />
+    return <MilestoneScreen milestone={lesson.milestone} onContinue={() => {
+      const nextSlug = lesson.nextLesson?.slug
+      const courseBase = lesson.course?.slug?.current
+      window.location.href = nextSlug
+        ? `/courses/${courseBase || courseUrl.replace('/courses/', '')}/${nextSlug}`
+        : courseUrl
+    }} config={config} />
   }
 
   const defaultEmail = typeof window !== 'undefined'
@@ -404,7 +410,7 @@ export default function LessonSteps({ lesson, config }) {
               <a href="https://chat.whatsapp.com/IXumRpvFQYuK458qMwYDZO?mode=gi_t" target="_blank" rel="noopener noreferrer" style={{ background: '#25D366', color: 'white', padding: '8px 18px', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-block' }}>Join WhatsApp Group →</a>
             </div>
           </div>
-          <a className="milestone-button btn-next" href={courseUrl} style={{ display: 'inline-block', background: grad, color: 'white', padding: '16px 40px', borderRadius: '12px', fontWeight: 'bold', fontSize: '1.1rem', textDecoration: 'none', boxShadow: `0 8px 30px ${shadow}` }}>Next Lesson →</a>
+          <a className="milestone-button btn-next" href={lesson.nextLesson?.slug ? `/courses/${lesson.course?.slug?.current || courseUrl.replace('/courses/', '')}/${lesson.nextLesson.slug}` : courseUrl} style={{ display: 'inline-block', background: grad, color: 'white', padding: '16px 40px', borderRadius: '12px', fontWeight: 'bold', fontSize: '1.1rem', textDecoration: 'none', boxShadow: `0 8px 30px ${shadow}` }}>{lesson.nextLesson?.slug ? 'Next Lesson →' : 'Back to Course →'}</a>
         </div>
       </div>
     )
