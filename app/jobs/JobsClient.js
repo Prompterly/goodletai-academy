@@ -162,6 +162,7 @@ function JobCard({ job }) {
             {job.companyLogo && (
               <img
                 src={job.companyLogo} alt={job.company}
+                onError={e => { e.currentTarget.style.display = 'none' }}
                 style={{ width: '26px', height: '26px', borderRadius: '6px', objectFit: 'contain', border: '1px solid #e2e8f0', padding: '2px', background: 'white' }}
               />
             )}
