@@ -1,6 +1,6 @@
 import JobsClient from './JobsClient'
 
-export const revalidate = 7200 // refresh every 2 hours
+export const revalidate = 7200 // refresh every 2 hours — ~1080 fetches/month, free
 
 const MERCOR_LINK = 'https://t.mercor.com/g860i'
 
@@ -135,73 +135,39 @@ function isAiRole(title) {
   return AI_TITLE_KEYWORDS.some(kw => t.includes(kw))
 }
 
-// ─── Data fetching (JSearch via RapidAPI) ────────────────────────────────────
-// Pulls from Indeed, LinkedIn, Glassdoor & ZipRecruiter simultaneously.
-// Two searches × 4 revalidations/day × 30 days = ~240 req/month (free tier: 500)
+// ─── Data fetching (Remotive — free, no auth required) ───────────────────────
+// Three parallel searches → deduplicate by id → apply AI title filter
 
-const SEARCH_TERMS = ['AI engineer remote', 'machine learning engineer remote']
+const SEARCH_TERMS = ['AI engineer', 'machine learning', 'LLM']
 
 async function fetchTerm(term) {
   try {
     const res = await fetch(
-      `https://jsearch.p.rapidapi.com/search?query=${encodeURIComponent(term)}&num_pages=1&date_posted=month`,
-      {
-        headers: {
-          'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
-          'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
-        },
-        next: { revalidate: 21600 },
-      }
+      `https://remotive.com/api/remote-jobs?search=${encodeURIComponent(term)}&limit=25`,
+      { next: { revalidate: 7200 } }
     )
-    if (!res.ok) {
-      console.error(`[jobs] JSearch ${term} → ${res.status} ${res.statusText}`)
-      return []
-    }
+    if (!res.ok) return []
     const data = await res.json()
-    console.log(`[jobs] JSearch "${term}" → ${(data.data || []).length} results`)
-    return data.data || []
-  } catch (err) {
-    console.error(`[jobs] JSearch fetch error for "${term}":`, err)
+    return data.jobs || []
+  } catch {
     return []
   }
 }
 
-function formatSalary(job) {
-  if (!job.job_min_salary && !job.job_max_salary) return null
-  const currency = job.job_salary_currency || 'USD'
-  const symbol = currency === 'USD' ? '$' : currency === 'GBP' ? '£' : currency === 'EUR' ? '€' : currency
-  const period = job.job_salary_period === 'YEAR' ? '/yr' : job.job_salary_period === 'HOUR' ? '/hr' : ''
-  const min = job.job_min_salary ? `${symbol}${Math.round(job.job_min_salary / 1000)}k` : null
-  const max = job.job_max_salary ? `${symbol}${Math.round(job.job_max_salary / 1000)}k` : null
-  if (min && max) return `${min} – ${max}${period}`
-  return `${min || max}${period}`
-}
-
-function formatLocation(job) {
-  if (job.job_is_remote) return 'Remote'
-  const parts = [job.job_city, job.job_state, job.job_country].filter(Boolean)
-  return parts.slice(0, 2).join(', ') || 'Remote'
-}
-
-function formatEmploymentType(type) {
-  const map = { FULLTIME: 'Full-time', PARTTIME: 'Part-time', CONTRACTOR: 'Contract', INTERN: 'Internship' }
-  return map[type] || 'Full-time'
-}
-
 function normalise(job) {
   return {
-    id: job.job_id,
-    title: job.job_title,
-    company: job.employer_name,
-    companyLogo: job.employer_logo || null,
-    location: formatLocation(job),
-    type: formatEmploymentType(job.job_employment_type),
-    level: inferLevel(job.job_title),
-    salary: formatSalary(job),
-    description: stripHtml(job.job_description).slice(0, 230) + '…',
-    link: job.job_apply_link,
-    category: mapCategory('', job.job_required_skills || []),
-    postedAt: job.job_posted_at_datetime_utc || null,
+    id: job.id,
+    title: job.title,
+    company: job.company_name,
+    companyLogo: null,
+    location: job.candidate_required_location || 'Remote',
+    type: formatJobType(job.job_type),
+    level: inferLevel(job.title),
+    salary: job.salary || null,
+    description: stripHtml(job.description).slice(0, 230) + '…',
+    link: job.url,
+    category: mapCategory(job.category, job.tags),
+    postedAt: job.publication_date || null,
   }
 }
 
@@ -213,9 +179,9 @@ async function getJobs() {
     const jobs = results
       .flat()
       .filter(job => {
-        if (seen.has(job.job_id)) return false
-        seen.add(job.job_id)
-        return isAiRole(job.job_title)
+        if (seen.has(job.id)) return false
+        seen.add(job.id)
+        return isAiRole(job.title)
       })
       .map(normalise)
 
