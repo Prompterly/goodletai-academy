@@ -150,7 +150,7 @@ async function fetchTerm(term) {
           'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
           'X-RapidAPI-Host': 'jsearch.p.rapidapi.com',
         },
-        cache: 'no-store', // bypass ISR cache — page-level revalidate handles freshness
+        next: { revalidate: 21600 },
       }
     )
     if (!res.ok) {
