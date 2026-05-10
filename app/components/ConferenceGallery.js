@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 
 const photos = [
   {
@@ -143,17 +144,17 @@ export default function ConferenceGallery() {
           }}
           onClick={() => setLightbox(true)}
         >
-          <img
+          <Image
             src={photo.src}
             alt={photo.caption}
+            fill
+            sizes="(max-width: 768px) 100vw, 900px"
             style={{
-              width: '100%',
-              height: '100%',
               objectFit: 'cover',
-              display: 'block',
               opacity: fading ? 0 : 1,
               transition: 'opacity 0.3s ease'
             }}
+            priority={current === 0}
           />
 
           {/* Gradient overlay */}
@@ -324,12 +325,15 @@ export default function ConferenceGallery() {
           }}
         >
           <div style={{ maxWidth: '900px', width: '100%', textAlign: 'center' }}>
-            <img
+            <Image
               src={photo.src}
               alt={photo.caption}
+              width={1200}
+              height={800}
               style={{
                 maxWidth: '100%',
                 maxHeight: '80vh',
+                height: 'auto',
                 borderRadius: '12px',
                 objectFit: 'contain',
                 boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
