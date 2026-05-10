@@ -53,6 +53,31 @@ const photos = [
     caption: 'With Dr. Isi Idemudia & Dr. Oyinkansola Onwuchekwa · Edinburgh',
     tag: 'Edinburgh'
   },
+  {
+    src: '/conferences/Edinburgh%20conference.jpg',
+    caption: 'Taking it all in · European Chatbot & AI Summit, Edinburgh',
+    tag: 'Edinburgh'
+  },
+  {
+    src: '/conferences/Session%20on%20Humanizing%20AI.jpg',
+    caption: 'Session: Humanizing AI · Edinburgh',
+    tag: 'Edinburgh'
+  },
+  {
+    src: '/conferences/Panel%20Discussion.jpg',
+    caption: 'Panel: Harnessing Agentic AI · Edinburgh',
+    tag: 'Edinburgh'
+  },
+  {
+    src: '/conferences/Session%20on%20HITL.JPG',
+    caption: 'Session: Human in the Loop (HITL) · Edinburgh',
+    tag: 'Edinburgh'
+  },
+  {
+    src: '/conferences/%40Arato%20AI%27s%20Stand.JPG',
+    caption: 'At Arato AI\'s Stand · Edinburgh',
+    tag: 'Edinburgh'
+  },
 ]
 
 export default function ConferenceGallery() {
